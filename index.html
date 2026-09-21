@@ -1143,6 +1143,58 @@
       submitBtn.textContent = submitBtnOriginalText;
     }
   });
+
+  /* ---------- tela de retorno (depois que o cliente volta do Mercado Pago) ---------- */
+  (function mostrarRetornoPagamento() {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+    const pedidoId = params.get('pedido');
+    if (!status) return; // não veio de um retorno de pagamento, não mostra nada
+
+    const banner = document.createElement('div');
+    banner.id = 'statusBanner';
+    banner.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4';
+    banner.innerHTML = `
+      <div class="hud bg-surface border border-line p-7 w-full max-w-sm text-center">
+        <div id="statusIcon" class="text-5xl mb-4"></div>
+        <h3 id="statusTitle" class="font-display font-bold text-xl mb-2"></h3>
+        <p id="statusText" class="text-muted text-sm mb-6 leading-relaxed"></p>
+        <button id="statusCloseBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Continuar navegando</button>
+      </div>`;
+    document.body.appendChild(banner);
+    document.getElementById('statusCloseBtn').addEventListener('click', () => banner.remove());
+
+    function render(statusAtual) {
+      const icon = document.getElementById('statusIcon');
+      const title = document.getElementById('statusTitle');
+      const text = document.getElementById('statusText');
+
+      if (statusAtual === 'pago' || statusAtual === 'sucesso' || statusAtual === 'approved') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
+        title.textContent = 'Pagamento aprovado! 🎉';
+        text.textContent = 'Recebemos seu pedido e já vamos começar a produção da sua peça. Você receberá atualizações por e-mail.';
+      } else if (statusAtual === 'pendente' || statusAtual === 'in_process') {
+        icon.innerHTML = '<i class="fa-solid fa-clock text-amber-400"></i>';
+        title.textContent = 'Pagamento em análise';
+        text.textContent = 'Estamos aguardando a confirmação do Mercado Pago. Assim que for aprovado, iniciamos a produção da sua peça — isso pode levar algumas horas.';
+      } else {
+        icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
+        title.textContent = 'Pagamento não concluído';
+        text.textContent = 'Algo impediu a finalização do pagamento. Você pode voltar ao configurador e tentar novamente, ou falar com a gente pelo WhatsApp.';
+      }
+    }
+
+    render(status); // mostra logo com o que veio na URL
+
+    // confere o status real no backend, já que pode ter mudado desde o redirect
+    if (pedidoId) {
+      fetch(`${BACKEND_URL}/api/pedidos/${pedidoId}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((pedido) => { if (pedido && pedido.status) render(pedido.status); })
+        .catch(() => {});
+    }
+  })();
+
 </script>
 </body>
 </html>
