@@ -397,7 +397,7 @@
       <!-- product 1 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <i class="fa-solid fa-person-rifle prod-img text-6xl text-purple/80 transition-transform duration-500"></i>
+          <img src="images/sentinela-noturna.jpg" alt="Sentinela Noturna" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 18CM · PESO: 320G · RESINA 8K
@@ -419,7 +419,7 @@
       <!-- product 2 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <i class="fa-solid fa-dragon prod-img text-6xl text-purple/80 transition-transform duration-500"></i>
+          <img src="images/wyrm-de-obsidiana.jpg" alt="Wyrm de Obsidiana" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-purple text-white px-2 py-0.5 font-semibold">BEST SELLER</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 24CM · PESO: 410G · PINTURA MANUAL
@@ -441,7 +441,7 @@
       <!-- product 3 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <i class="fa-solid fa-robot prod-img text-6xl text-purple/80 transition-transform duration-500"></i>
+          <img src="images/mecha-vk-09.jpg" alt="Mecha VK-09" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-white/90 text-bg px-2 py-0.5 font-semibold">NOVO</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 20CM · PESO: 380G · PLA REFORÇADO
@@ -463,7 +463,7 @@
       <!-- product 4 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <i class="fa-solid fa-hat-wizard prod-img text-6xl text-purple/80 transition-transform duration-500"></i>
+          <img src="images/feiticeira-do-veu.jpg" alt="Feiticeira do Véu" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 16CM · PESO: 290G · RESINA 8K
@@ -497,20 +497,69 @@
         <div>
           <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O MODELO</p>
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="modelGroup">
-            <button data-model="Caçador" data-icon="fa-person-rifle" class="model-btn hud bg-surface border border-line hover:border-purple/60 py-4 flex flex-col items-center gap-2 transition">
-              <i class="fa-solid fa-person-rifle text-purple text-xl"></i><span class="font-mono text-[10px]">Caçador</span>
+            <button data-model="Caçador" data-icon="fa-person-rifle" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do modelo Caçador">
+                <defs><linearGradient id="bgCacador" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
+                <rect width="120" height="120" fill="url(#bgCacador)"/>
+                <circle cx="60" cy="42" r="14" fill="#8B5CF6" opacity="0.9"/>
+                <path d="M42 46 L36 30 L48 38 Z" fill="#8B5CF6" opacity="0.7"/>
+                <rect x="48" y="54" width="24" height="34" rx="6" fill="#8B5CF6" opacity="0.85"/>
+                <rect x="30" y="60" width="10" height="30" rx="3" fill="#8B5CF6" opacity="0.6" transform="rotate(-18 35 75)"/>
+                <rect x="80" y="60" width="10" height="30" rx="3" fill="#8B5CF6" opacity="0.6" transform="rotate(18 85 75)"/>
+                <rect x="50" y="86" width="9" height="26" rx="3" fill="#8B5CF6" opacity="0.75"/>
+                <rect x="61" y="86" width="9" height="26" rx="3" fill="#8B5CF6" opacity="0.75"/>
+              </svg>
+              <span class="font-mono text-[10px] pb-3">Caçador</span>
             </button>
-            <button data-model="Dragão" data-icon="fa-dragon" class="model-btn hud bg-surface border border-line hover:border-purple/60 py-4 flex flex-col items-center gap-2 transition">
-              <i class="fa-solid fa-dragon text-purple text-xl"></i><span class="font-mono text-[10px]">Dragão</span>
+            <button data-model="Dragão" data-icon="fa-dragon" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do modelo Dragão">
+                <defs><linearGradient id="bgDragao" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
+                <rect width="120" height="120" fill="url(#bgDragao)"/>
+                <path d="M60 30 C40 30 25 45 25 62 C25 78 40 90 60 90 C80 90 95 78 95 62 C95 45 80 30 60 30 Z" fill="#8B5CF6" opacity="0.8"/>
+                <path d="M25 55 L10 40 L28 46 Z" fill="#8B5CF6" opacity="0.65"/>
+                <path d="M95 55 L110 40 L92 46 Z" fill="#8B5CF6" opacity="0.65"/>
+                <circle cx="48" cy="58" r="4" fill="#120E1B"/>
+                <circle cx="72" cy="58" r="4" fill="#120E1B"/>
+                <path d="M45 74 Q60 84 75 74" stroke="#120E1B" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M60 90 C58 100 55 108 50 114" stroke="#8B5CF6" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.7"/>
+              </svg>
+              <span class="font-mono text-[10px] pb-3">Dragão</span>
             </button>
-            <button data-model="Mecha" data-icon="fa-robot" class="model-btn hud bg-surface border border-line hover:border-purple/60 py-4 flex flex-col items-center gap-2 transition">
-              <i class="fa-solid fa-robot text-purple text-xl"></i><span class="font-mono text-[10px]">Mecha</span>
+            <button data-model="Mecha" data-icon="fa-robot" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do modelo Mecha">
+                <defs><linearGradient id="bgMecha" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
+                <rect width="120" height="120" fill="url(#bgMecha)"/>
+                <rect x="38" y="30" width="44" height="34" rx="6" fill="#8B5CF6" opacity="0.85"/>
+                <circle cx="52" cy="47" r="5" fill="#120E1B"/>
+                <circle cx="68" cy="47" r="5" fill="#120E1B"/>
+                <rect x="30" y="66" width="60" height="40" rx="8" fill="#8B5CF6" opacity="0.7"/>
+                <rect x="12" y="70" width="16" height="28" rx="4" fill="#8B5CF6" opacity="0.55"/>
+                <rect x="92" y="70" width="16" height="28" rx="4" fill="#8B5CF6" opacity="0.55"/>
+                <rect x="52" y="80" width="16" height="16" rx="3" fill="#120E1B"/>
+              </svg>
+              <span class="font-mono text-[10px] pb-3">Mecha</span>
             </button>
-            <button data-model="Arcanista" data-icon="fa-hat-wizard" class="model-btn hud bg-surface border border-line hover:border-purple/60 py-4 flex flex-col items-center gap-2 transition">
-              <i class="fa-solid fa-hat-wizard text-purple text-xl"></i><span class="font-mono text-[10px]">Arcanista</span>
+            <button data-model="Arcanista" data-icon="fa-hat-wizard" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do modelo Arcanista">
+                <defs><linearGradient id="bgArcanista" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
+                <rect width="120" height="120" fill="url(#bgArcanista)"/>
+                <path d="M60 24 L78 54 L42 54 Z" fill="#8B5CF6" opacity="0.85"/>
+                <circle cx="62" cy="30" r="3" fill="#8B5CF6"/>
+                <rect x="44" y="54" width="32" height="10" rx="3" fill="#8B5CF6" opacity="0.6"/>
+                <rect x="50" y="66" width="20" height="34" rx="6" fill="#8B5CF6" opacity="0.8"/>
+                <rect x="76" y="60" width="6" height="46" rx="3" fill="#8B5CF6" opacity="0.6" transform="rotate(12 79 83)"/>
+                <circle cx="86" cy="58" r="6" fill="#8B5CF6" opacity="0.9"/>
+              </svg>
+              <span class="font-mono text-[10px] pb-3">Arcanista</span>
             </button>
-            <button data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 py-4 flex flex-col items-center gap-2 transition">
-              <i class="fa-solid fa-cube text-purple text-xl"></i><span class="font-mono text-[10px]">Seu STL</span>
+            <button data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Envie seu próprio arquivo STL">
+                <defs><linearGradient id="bgCubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
+                <rect width="120" height="120" fill="url(#bgCubo)"/>
+                <path d="M60 28 L92 44 L92 76 L60 92 L28 76 L28 44 Z" fill="#8B5CF6" opacity="0.35" stroke="#8B5CF6" stroke-width="2"/>
+                <path d="M60 28 L60 60 M60 60 L92 44 M60 60 L28 44 M60 60 L60 92" stroke="#8B5CF6" stroke-width="2" opacity="0.8"/>
+              </svg>
+              <span class="font-mono text-[10px] pb-3">Seu STL</span>
             </button>
           </div>
         </div>
