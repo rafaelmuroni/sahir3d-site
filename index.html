@@ -898,16 +898,31 @@
 
 <!-- ============ MODAL DE MEUS PEDIDOS ============ -->
 <div id="pedidosModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
-  <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[80vh] overflow-y-auto">
-    <button type="button" onclick="fecharPedidosModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
+  <div class="hud bg-surface border border-line w-full max-w-md relative max-h-[85vh] flex flex-col overflow-hidden">
+    <button type="button" onclick="fecharPedidosModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition z-10" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
     </button>
-    <h3 class="font-display font-bold text-lg mb-1">Meus pedidos</h3>
-    <p id="pedidosContaEmail" class="text-muted text-xs mb-5"></p>
-    <div id="pedidosLista" class="space-y-3 font-mono text-xs">
-      <p class="text-muted">Carregando...</p>
+
+    <div class="flex items-center gap-3 p-6 pb-5 border-b border-line bg-gradient-to-br from-[#2A1F42] to-[#120E1B]">
+      <div id="pedidosAvatar" class="w-11 h-11 rounded-full bg-purple/20 border border-purple/50 flex items-center justify-center font-display font-bold text-purple text-lg shrink-0">?</div>
+      <div class="min-w-0">
+        <h3 class="font-display font-bold text-lg leading-tight">Meus pedidos</h3>
+        <p id="pedidosContaEmail" class="text-muted text-xs truncate"></p>
+      </div>
     </div>
-    <button type="button" onclick="sair()" class="w-full btn-outline rounded-full py-2.5 font-semibold text-xs mt-5">Sair da conta</button>
+
+    <div id="pedidosLista" class="space-y-3 p-6 overflow-y-auto flex-1">
+      <div class="animate-pulse space-y-3">
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+      </div>
+    </div>
+
+    <div class="p-6 pt-4 border-t border-line">
+      <button type="button" onclick="sair()" class="w-full btn-outline rounded-full py-2.5 font-semibold text-xs flex items-center justify-center gap-2">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da conta
+      </button>
+    </div>
   </div>
 </div>
 
@@ -1217,12 +1232,44 @@
   }
   pedidosModal.addEventListener('click', (e) => { if (e.target === pedidosModal) fecharPedidosModal(); });
 
+  // ícone por modelo (mesmo usado no configurador) — cai no cubo genérico se não reconhecer
+  const ICONE_POR_MODELO = {
+    'Caçador': 'fa-person-rifle',
+    'Dragão': 'fa-dragon',
+    'Mecha': 'fa-robot',
+    'Arcanista': 'fa-hat-wizard',
+    'Personalizado': 'fa-cube',
+  };
+
+  // aparência de cada status: cor, ícone e legenda amigável
+  const STATUS_INFO = {
+    pago: { cor: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30', icone: 'fa-circle-check', label: 'Pago' },
+    pendente: { cor: 'text-amber-400 bg-amber-400/10 border-amber-400/30', icone: 'fa-clock', label: 'Em análise' },
+    recusado: { cor: 'text-red-400 bg-red-400/10 border-red-400/30', icone: 'fa-circle-xmark', label: 'Recusado' },
+    cancelado: { cor: 'text-red-400 bg-red-400/10 border-red-400/30', icone: 'fa-ban', label: 'Cancelado' },
+    reembolsado: { cor: 'text-muted bg-surface2 border-line', icone: 'fa-rotate-left', label: 'Reembolsado' },
+  };
+
+  function formatarData(isoString) {
+    if (!isoString) return '';
+    const data = new Date(isoString);
+    return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
   async function abrirPedidosModal() {
     pedidosModal.classList.remove('hidden');
     pedidosModal.classList.add('flex');
-    document.getElementById('pedidosContaEmail').textContent = sessaoAtual?.user?.email || '';
+
+    const email = sessaoAtual?.user?.email || '';
+    document.getElementById('pedidosContaEmail').textContent = email;
+    document.getElementById('pedidosAvatar').textContent = email.charAt(0).toUpperCase() || '?';
+
     const lista = document.getElementById('pedidosLista');
-    lista.innerHTML = '<p class="text-muted">Carregando...</p>';
+    lista.innerHTML = `
+      <div class="animate-pulse space-y-3">
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+      </div>`;
 
     try {
       const resp = await fetch(`${BACKEND_URL}/api/pedidos/meus`, {
@@ -1232,21 +1279,44 @@
       const pedidos = await resp.json();
 
       if (!pedidos.length) {
-        lista.innerHTML = '<p class="text-muted">Você ainda não fez nenhum pedido.</p>';
+        lista.innerHTML = `
+          <div class="text-center py-8">
+            <i class="fa-solid fa-box-open text-4xl text-muted/50 mb-3"></i>
+            <p class="text-muted text-sm mb-4">Você ainda não fez nenhum pedido.</p>
+            <a href="#configurador" onclick="fecharPedidosModal()" class="btn-primary rounded-full px-6 py-2.5 font-semibold text-xs text-white inline-block">Montar minha primeira peça</a>
+          </div>`;
         return;
       }
 
-      lista.innerHTML = pedidos.map((p) => `
-        <div class="border border-line rounded-lg p-3">
-          <div class="flex justify-between mb-1">
-            <span class="text-ink">${p.modelo || 'Peça personalizada'}</span>
-            <span class="text-purple">${p.status.toUpperCase()}</span>
-          </div>
-          <div class="text-muted">${p.material} · ${p.tamanho} · R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
-        </div>
-      `).join('');
+      lista.innerHTML = pedidos.map((p) => {
+        const icone = ICONE_POR_MODELO[p.modelo] || 'fa-cube';
+        const status = STATUS_INFO[p.status] || { cor: 'text-muted bg-surface2 border-line', icone: 'fa-circle-question', label: p.status };
+        const precoFormatado = Number(p.preco).toFixed(2).replace('.', ',');
+
+        return `
+          <div class="border border-line rounded-lg p-4 hover:border-purple/40 transition">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center shrink-0">
+                <i class="fa-solid ${icone} text-purple/80"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2 mb-1">
+                  <span class="font-display font-semibold text-sm text-ink truncate">${p.modelo || 'Peça personalizada'}</span>
+                  <span class="shrink-0 inline-flex items-center gap-1 border rounded-full px-2 py-0.5 font-mono text-[9px] font-bold ${status.cor}">
+                    <i class="fa-solid ${status.icone}"></i> ${status.label.toUpperCase()}
+                  </span>
+                </div>
+                <div class="font-mono text-[10px] text-muted mb-1.5">${p.material} · ${p.tamanho} · ${p.acabamento || 'Sem pintura'}</div>
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[10px] text-muted">${formatarData(p.criado_em)}</span>
+                  <span class="font-display font-bold text-sm">R$ ${precoFormatado}</span>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
     } catch (erro) {
-      lista.innerHTML = '<p class="text-red-400">Não foi possível carregar seus pedidos.</p>';
+      lista.innerHTML = '<p class="text-red-400 text-sm text-center py-6">Não foi possível carregar seus pedidos. Tente novamente.</p>';
     }
   }
 
