@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -227,6 +228,10 @@
       <button class="hidden md:flex items-center gap-2 text-ink/60 hover:text-purple transition-colors text-sm" aria-label="Buscar peça ou código">
         <i class="fa-solid fa-magnifying-glass"></i>
         <span class="font-mono text-xs">BUSCAR CÓDIGO</span>
+      </button>
+      <button id="btnConta" type="button" class="hidden md:flex items-center gap-2 text-ink/60 hover:text-purple transition-colors text-sm" aria-label="Entrar ou ver minha conta">
+        <i class="fa-solid fa-user text-lg"></i>
+        <span id="contaLabel" class="font-mono text-xs">ENTRAR</span>
       </button>
       <button class="relative hover:text-purple transition-colors" aria-label="Abrir inventário, 2 itens">
         <i class="fa-solid fa-box-archive text-lg"></i>
@@ -861,6 +866,51 @@
   </div>
 </footer>
 
+<!-- ============ MODAL DE LOGIN / CADASTRO ============ -->
+<div id="authModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
+    <button type="button" onclick="fecharAuthModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+
+    <div class="flex gap-2 mb-5 font-mono text-xs">
+      <button type="button" id="tabLogin" onclick="mudarAbaAuth('login')" class="flex-1 py-2 rounded-full border border-purple bg-purple text-white transition">ENTRAR</button>
+      <button type="button" id="tabCadastro" onclick="mudarAbaAuth('cadastro')" class="flex-1 py-2 rounded-full border border-line text-muted transition">CRIAR CONTA</button>
+    </div>
+
+    <form id="authForm" class="space-y-4">
+      <div>
+        <label for="authEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
+        <input id="authEmail" type="email" required
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div>
+        <label for="authSenha" class="block font-mono text-[10px] text-muted mb-1.5">SENHA</label>
+        <input id="authSenha" type="password" required minlength="6"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <p id="authError" class="hidden text-red-400 text-xs"></p>
+      <p id="authInfo" class="hidden text-emerald-400 text-xs"></p>
+      <button type="submit" id="authSubmitBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL DE MEUS PEDIDOS ============ -->
+<div id="pedidosModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+  <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[80vh] overflow-y-auto">
+    <button type="button" onclick="fecharPedidosModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+    <h3 class="font-display font-bold text-lg mb-1">Meus pedidos</h3>
+    <p id="pedidosContaEmail" class="text-muted text-xs mb-5"></p>
+    <div id="pedidosLista" class="space-y-3 font-mono text-xs">
+      <p class="text-muted">Carregando...</p>
+    </div>
+    <button type="button" onclick="sair()" class="w-full btn-outline rounded-full py-2.5 font-semibold text-xs mt-5">Sair da conta</button>
+  </div>
+</div>
+
 <!-- ============ MODAL DE CHECKOUT (nome/e-mail antes de ir pro pagamento) ============ -->
 <div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
   <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
@@ -1080,6 +1130,151 @@
   // Troque pela URL real do seu backend depois do deploy.
   const BACKEND_URL = 'https://sahir3d-backend.onrender.com';
 
+  /* ---------- Supabase (login/cadastro) ---------- */
+  // Troque pelos valores reais do SEU projeto Supabase (Project Settings > API).
+  // A "anon key" é pública por natureza, pode ficar aqui no front-end sem problema.
+  const SUPABASE_URL = 'https://cyvawlljkgoirhzkitcm.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5dmF3bGxqa2dvaXJoemtpdGNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NTM0NzUsImV4cCI6MjEwNTUyOTQ3NX0.FHk-tNY_tQwKNdE5GfWsQ1X-5jrm0BoRMEvOqFb-8Xg';
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const btnConta = document.getElementById('btnConta');
+  const contaLabel = document.getElementById('contaLabel');
+  const authModal = document.getElementById('authModal');
+  const authForm = document.getElementById('authForm');
+  const authError = document.getElementById('authError');
+  const authInfo = document.getElementById('authInfo');
+  const pedidosModal = document.getElementById('pedidosModal');
+  let abaAuthAtual = 'login';
+  let sessaoAtual = null; // guarda a sessão logada (token) pra usar no checkout
+
+  function abrirAuthModal() {
+    authError.classList.add('hidden');
+    authInfo.classList.add('hidden');
+    authModal.classList.remove('hidden');
+    authModal.classList.add('flex');
+  }
+  function fecharAuthModal() {
+    authModal.classList.add('hidden');
+    authModal.classList.remove('flex');
+  }
+  authModal.addEventListener('click', (e) => { if (e.target === authModal) fecharAuthModal(); });
+
+  function mudarAbaAuth(aba) {
+    abaAuthAtual = aba;
+    authError.classList.add('hidden');
+    authInfo.classList.add('hidden');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabCadastro = document.getElementById('tabCadastro');
+    const submitBtn = document.getElementById('authSubmitBtn');
+    if (aba === 'login') {
+      tabLogin.classList.add('border-purple', 'bg-purple', 'text-white');
+      tabLogin.classList.remove('border-line', 'text-muted');
+      tabCadastro.classList.remove('border-purple', 'bg-purple', 'text-white');
+      tabCadastro.classList.add('border-line', 'text-muted');
+      submitBtn.textContent = 'Entrar';
+    } else {
+      tabCadastro.classList.add('border-purple', 'bg-purple', 'text-white');
+      tabCadastro.classList.remove('border-line', 'text-muted');
+      tabLogin.classList.remove('border-purple', 'bg-purple', 'text-white');
+      tabLogin.classList.add('border-line', 'text-muted');
+      submitBtn.textContent = 'Criar conta';
+    }
+  }
+
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    authError.classList.add('hidden');
+    authInfo.classList.add('hidden');
+
+    const email = document.getElementById('authEmail').value.trim();
+    const senha = document.getElementById('authSenha').value;
+    const submitBtn = document.getElementById('authSubmitBtn');
+    submitBtn.disabled = true;
+
+    try {
+      if (abaAuthAtual === 'login') {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password: senha });
+        if (error) throw error;
+        fecharAuthModal();
+      } else {
+        const { error } = await supabaseClient.auth.signUp({ email, password: senha });
+        if (error) throw error;
+        authInfo.textContent = 'Conta criada! Verifique seu e-mail para confirmar antes de entrar.';
+        authInfo.classList.remove('hidden');
+      }
+    } catch (erro) {
+      authError.textContent = erro.message || 'Não foi possível concluir. Tente novamente.';
+      authError.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  function fecharPedidosModal() {
+    pedidosModal.classList.add('hidden');
+    pedidosModal.classList.remove('flex');
+  }
+  pedidosModal.addEventListener('click', (e) => { if (e.target === pedidosModal) fecharPedidosModal(); });
+
+  async function abrirPedidosModal() {
+    pedidosModal.classList.remove('hidden');
+    pedidosModal.classList.add('flex');
+    document.getElementById('pedidosContaEmail').textContent = sessaoAtual?.user?.email || '';
+    const lista = document.getElementById('pedidosLista');
+    lista.innerHTML = '<p class="text-muted">Carregando...</p>';
+
+    try {
+      const resp = await fetch(`${BACKEND_URL}/api/pedidos/meus`, {
+        headers: { Authorization: `Bearer ${sessaoAtual.access_token}` },
+      });
+      if (!resp.ok) throw new Error('Falha ao carregar pedidos');
+      const pedidos = await resp.json();
+
+      if (!pedidos.length) {
+        lista.innerHTML = '<p class="text-muted">Você ainda não fez nenhum pedido.</p>';
+        return;
+      }
+
+      lista.innerHTML = pedidos.map((p) => `
+        <div class="border border-line rounded-lg p-3">
+          <div class="flex justify-between mb-1">
+            <span class="text-ink">${p.modelo || 'Peça personalizada'}</span>
+            <span class="text-purple">${p.status.toUpperCase()}</span>
+          </div>
+          <div class="text-muted">${p.material} · ${p.tamanho} · R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
+        </div>
+      `).join('');
+    } catch (erro) {
+      lista.innerHTML = '<p class="text-red-400">Não foi possível carregar seus pedidos.</p>';
+    }
+  }
+
+  async function sair() {
+    await supabaseClient.auth.signOut();
+    fecharPedidosModal();
+  }
+
+  function atualizarBotaoConta(session) {
+    sessaoAtual = session;
+    if (session) {
+      contaLabel.textContent = session.user.email.split('@')[0].toUpperCase();
+    } else {
+      contaLabel.textContent = 'ENTRAR';
+    }
+  }
+
+  btnConta.addEventListener('click', () => {
+    if (sessaoAtual) {
+      abrirPedidosModal();
+    } else {
+      abrirAuthModal();
+    }
+  });
+
+  supabaseClient.auth.getSession().then(({ data }) => atualizarBotaoConta(data.session));
+  supabaseClient.auth.onAuthStateChange((_event, session) => atualizarBotaoConta(session));
+
   const checkoutModal = document.getElementById('checkoutModal');
   const checkoutForm = document.getElementById('checkoutForm');
   const checkoutError = document.getElementById('checkoutError');
@@ -1120,9 +1315,14 @@
     submitBtn.textContent = 'Gerando pagamento...';
 
     try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (sessaoAtual?.access_token) {
+        headers['Authorization'] = `Bearer ${sessaoAtual.access_token}`;
+      }
+
       const resp = await fetch(`${BACKEND_URL}/api/pedidos`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({
           modelo: state.model,
           material: state.material,
