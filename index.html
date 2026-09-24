@@ -916,13 +916,13 @@
 
 <!-- ============ MODAL DE CHECKOUT (nome/e-mail antes de ir pro pagamento) ============ -->
 <div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
-  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
+  <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
     <button type="button" onclick="document.getElementById('checkoutModal').classList.add('hidden'); document.getElementById('checkoutModal').classList.remove('flex');"
       class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
     </button>
     <h3 class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
-    <p class="text-muted text-xs mb-5">Precisamos do seu nome e e-mail para gerar o link de pagamento.</p>
+    <p class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
     <form id="checkoutForm" class="space-y-4">
       <div>
         <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
@@ -933,6 +933,17 @@
         <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
         <input id="checkoutEmail" type="email" required autocomplete="email"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" type="text" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3"></p></div>
+      <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" type="text" required inputmode="numeric" autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
+      <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-3 gap-3"><div class="col-span-2"><label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label><input id="checkoutCidade" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class=""><label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label><input id="checkoutUf" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
+      <div id="freteBox" class="hidden space-y-2">
+        <p class="font-mono text-[10px] text-muted">OPÇÕES DE ENTREGA (CORREIOS)</p>
+        <div id="freteOpcoes" class="space-y-2"></div>
+        <p id="freteResumo" class="font-mono text-[11px] text-ink"></p>
       </div>
       <p id="checkoutError" class="hidden text-red-400 text-xs"></p>
       <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Ir para pagamento</button>
@@ -1448,6 +1459,66 @@
   }
   document.getElementById('btnMobileCheckout')?.addEventListener('click', abrirCheckoutModal);
 
+
+  /* ---------- CEP: máscara + preenchimento automático (ViaCEP) ---------- */
+  const cepInput = document.getElementById('checkoutCep');
+  const cepStatus = document.getElementById('cepStatus');
+  /* ---------- frete (Correios via backend) ---------- */
+  let freteOpcoes = [], freteSel = null, freteReq = 0;
+  const freteBox = document.getElementById('freteBox');
+  const freteLista = document.getElementById('freteOpcoes');
+  const brl = (n) => Number(n).toFixed(2).replace('.', ',');
+  function atualizarResumoFrete() {
+    const el = document.getElementById('freteResumo');
+    if (!freteSel) { el.textContent = ''; return; }
+    const peca = parseFloat((document.getElementById('outPrice').textContent || '0').replace(',', '.')) || 0;
+    el.textContent = `Peça R$ ${brl(peca)} + frete R$ ${brl(freteSel.valor)} = R$ ${brl(peca + freteSel.valor)}`;
+  }
+  async function buscarFrete(cep) {
+    const id = ++freteReq;
+    freteSel = null; freteOpcoes = [];
+    freteBox.classList.remove('hidden');
+    freteLista.innerHTML = '<p class="font-mono text-[11px] text-muted">Calculando frete... (pode levar alguns segundos)</p>';
+    atualizarResumoFrete();
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 30000);
+    try {
+      const r = await fetch(`${BACKEND_URL}/api/frete?cep=${cep}&tamanho=${encodeURIComponent(state.size || '')}`, { signal: ctrl.signal });
+      if (!r.ok) throw new Error('frete');
+      const { opcoes } = await r.json();
+      if (id !== freteReq) return;
+      if (!opcoes || !opcoes.length) throw new Error('vazio');
+      freteOpcoes = opcoes;
+      freteLista.innerHTML = opcoes.map((o, i) => `
+        <label class="flex items-center justify-between gap-3 border border-line rounded-lg px-3 py-2 cursor-pointer hover:border-purple/60 text-sm">
+          <span class="flex items-center gap-2"><input type="radio" name="freteSel" value="${i}" class="accent-[#8B5CF6]"> <b class="font-display">${esc(o.nome)}</b> <span class="font-mono text-[10px] text-muted">${esc(o.prazoDias)} dias úteis</span></span>
+          <span class="font-display font-semibold">R$ ${brl(o.valor)}</span>
+        </label>`).join('');
+      freteLista.querySelectorAll('input').forEach(inp => inp.addEventListener('change', () => { freteSel = freteOpcoes[+inp.value]; atualizarResumoFrete(); }));
+    } catch (e) {
+      if (id !== freteReq) return;
+      freteLista.innerHTML = '<p class="font-mono text-[11px] text-amber-400">Não foi possível calcular o frete agora. Você pode continuar: confirmamos o frete com você antes da produção.</p>';
+    } finally { clearTimeout(t); }
+  }
+  cepInput.addEventListener('input', async () => {
+    let d = cepInput.value.replace(/\D/g, '').slice(0, 8);
+    cepInput.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
+    if (d.length < 8) { cepStatus.textContent = ''; return; }
+    cepStatus.textContent = 'Buscando...';
+    buscarFrete(d);
+    try {
+      const r = await fetch(`https://viacep.com.br/ws/${d}/json/`);
+      const j = await r.json();
+      if (j.erro) { cepStatus.textContent = 'CEP não encontrado'; return; }
+      document.getElementById('checkoutRua').value = j.logradouro || '';
+      document.getElementById('checkoutBairro').value = j.bairro || '';
+      document.getElementById('checkoutCidade').value = j.localidade || '';
+      document.getElementById('checkoutUf').value = j.uf || '';
+      cepStatus.textContent = 'Endereço encontrado';
+      document.getElementById('checkoutNumero').focus();
+    } catch { cepStatus.textContent = 'Preencha manualmente'; }
+  });
+  // TODO backend: aceitar cliente.telefone e entrega{}, e calcular/confirmar o frete (Melhor Envio, Correios ou tabela por região)
   checkoutModal.addEventListener('click', (e) => { if (e.target === checkoutModal) fecharCheckoutModal(); });
 
   checkoutForm.addEventListener('submit', async (e) => {
@@ -1458,6 +1529,11 @@
     const email = document.getElementById('checkoutEmail').value.trim();
     if (!nome || !email) return;
 
+    if (freteOpcoes.length && !freteSel) {
+      checkoutError.textContent = 'Escolha uma opção de entrega.';
+      checkoutError.classList.remove('hidden');
+      return;
+    }
     const submitBtn = checkoutForm.querySelector('button[type="submit"]');
     const submitBtnOriginalText = submitBtn.textContent;
     submitBtn.disabled = true;
@@ -1481,7 +1557,17 @@
           personagem: state.character,
           tamanho: state.size,
           acabamento: state.finish || 'Sem pintura',
-          cliente: { nome, email },
+          cliente: { nome, email, telefone: document.getElementById('checkoutTel').value.trim() },
+          frete: freteSel ? { servico: freteSel.servico } : null,
+          entrega: {
+            cep: document.getElementById('checkoutCep').value.replace(/\D/g, ''),
+            rua: document.getElementById('checkoutRua').value.trim(),
+            numero: document.getElementById('checkoutNumero').value.trim(),
+            complemento: document.getElementById('checkoutCompl').value.trim(),
+            bairro: document.getElementById('checkoutBairro').value.trim(),
+            cidade: document.getElementById('checkoutCidade').value.trim(),
+            uf: document.getElementById('checkoutUf').value.trim().toUpperCase(),
+          },
         }),
       });
 
