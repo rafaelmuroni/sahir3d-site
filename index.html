@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahir 3D | Colecionáveis geek impressos em 3D</title>
-<meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em resina 8K ou PLA, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
+<!-- Atualizado: Removida a menção de Resina 8K -->
+<meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em PLA Premium, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -114,7 +115,6 @@
   }
 
   /* ---------- product card hover data ---------- */
-  /* on touch devices :hover never fires, so info stays visible by default; the fade-in is a desktop-only refinement */
   .prod-card .prod-data { opacity:1; }
   @media (min-width: 768px) {
     .prod-card .prod-data { opacity:0; transform: translateY(6px); transition: all .3s ease; }
@@ -194,6 +194,7 @@
   }
 
   .vert-text { writing-mode: vertical-rl; }
+  .hidden { display: none !important; }
 </style>
 </head>
 <body class="bg-bg text-ink font-sans antialiased">
@@ -288,7 +289,6 @@
     <div class="relative mt-4 lg:mt-0">
       <div class="bust-wrap relative mx-auto max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] select-none">
         <div class="hud model-frame aspect-[3/4] relative overflow-hidden">
-          <!-- EXEMPLO: troque o "src" abaixo pelo link do seu próprio arquivo .glb/.gltf -->
           <model-viewer
             src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
             alt="Prévia do colecionável em 3D"
@@ -314,7 +314,7 @@
         <span class="text-neon">STATUS: DISPONÍVEL</span>
       </div>
       <div class="absolute -bottom-3 -right-3 sm:-right-8 font-mono text-[10px] leading-tight text-purple/80 bg-bg/80 border border-line px-2.5 py-1.5 backdrop-blur text-right">
-        MATERIAL: RESINA 8K<br>ESCALA: 1/6
+        MATERIAL: PLA PREMIUM<br>ESCALA: 1/6
       </div>
       <p class="text-center mt-5 font-mono text-[11px] text-muted flex items-center justify-center gap-2">
         <i class="fa-solid fa-arrows-left-right"></i> arraste para girar
@@ -335,7 +335,6 @@
     </p>
 
     <div class="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-5 overflow-x-auto snap-row md:overflow-visible -mx-5 px-5 md:mx-0 md:px-0 pb-4 md:pb-0">
-      <!-- card template x6 -->
       <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
         <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
           <div class="scanline-overlay cat-scan"></div>
@@ -394,13 +393,12 @@
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <!-- product 1 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/sentinela-noturna.jpg" alt="Máscara Deadpool" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 18CM · PESO: 320G · RESINA 8K
+            ALTURA: 18CM · PESO: 320G · PLA PREMIUM
           </div>
         </div>
         <div class="p-4">
@@ -416,7 +414,6 @@
         </div>
       </article>
 
-      <!-- product 2 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/wyrm-de-obsidiana.jpg" alt="Boneco Harry Potter (Crochê)" class="prod-img w-full h-full object-cover transition-transform duration-500" />
@@ -438,7 +435,6 @@
         </div>
       </article>
 
-      <!-- product 3 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/mecha-vk-09.jpg" alt="Busto Kratos 20cm" class="prod-img w-full h-full object-cover transition-transform duration-500" />
@@ -460,13 +456,12 @@
         </div>
       </article>
 
-      <!-- product 4 -->
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/feiticeira-do-veu.jpg" alt="Suporte Headset Homem-Aranha" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 16CM · PESO: 290G · RESINA 8K
+            ALTURA: 16CM · PESO: 290G · PLA PREMIUM
           </div>
         </div>
         <div class="p-4">
@@ -495,78 +490,39 @@
       <div class="space-y-8">
 
         <div>
-          <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O MODELO</p>
+          <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O UNIVERSO</p>
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="modelGroup">
             <button data-model="Heróis" data-icon="fa-shield-halved" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do universo Heróis">
-                <defs><linearGradient id="bgHerois" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
-                <rect width="120" height="120" fill="url(#bgHerois)"/>
-                <circle cx="60" cy="55" r="30" fill="none" stroke="#8B5CF6" stroke-width="8" opacity="0.8"/>
-                <circle cx="60" cy="55" r="18" fill="none" stroke="#8B5CF6" stroke-width="4" opacity="0.5"/>
-                <polygon points="60,42 64,52 74,52 66,58 69,68 60,62 51,68 54,58 46,52 56,52" fill="#8B5CF6" opacity="0.9"/>
-              </svg>
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgHerois" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgHerois)"/><circle cx="60" cy="55" r="30" fill="none" stroke="#8B5CF6" stroke-width="8" opacity="0.8"/><circle cx="60" cy="55" r="18" fill="none" stroke="#8B5CF6" stroke-width="4" opacity="0.5"/><polygon points="60,42 64,52 74,52 66,58 69,68 60,62 51,68 54,58 46,52 56,52" fill="#8B5CF6" opacity="0.9"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Marvel / DC</span>
             </button>
 
             <button data-model="Anime" data-icon="fa-user-ninja" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do universo Anime">
-                <defs><linearGradient id="bgAnime" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
-                <rect width="120" height="120" fill="url(#bgAnime)"/>
-                <path d="M60 20 L68 48 L96 56 L68 64 L60 92 L52 64 L24 56 L52 48 Z" fill="#8B5CF6" opacity="0.85"/>
-                <circle cx="60" cy="56" r="10" fill="#120E1B"/>
-                <circle cx="60" cy="56" r="4" fill="#8B5CF6" opacity="0.6"/>
-              </svg>
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgAnime" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgAnime)"/><path d="M60 20 L68 48 L96 56 L68 64 L60 92 L52 64 L24 56 L52 48 Z" fill="#8B5CF6" opacity="0.85"/><circle cx="60" cy="56" r="10" fill="#120E1B"/><circle cx="60" cy="56" r="4" fill="#8B5CF6" opacity="0.6"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Anime</span>
             </button>
 
             <button data-model="Videogames" data-icon="fa-gamepad" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do universo Videogames">
-                <defs><linearGradient id="bgGames" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
-                <rect width="120" height="120" fill="url(#bgGames)"/>
-                <rect x="22" y="38" width="76" height="44" rx="22" fill="#8B5CF6" opacity="0.85"/>
-                <rect x="36" y="52" width="16" height="5" fill="#120E1B" rx="1"/>
-                <rect x="41.5" y="46.5" width="5" height="16" fill="#120E1B" rx="1"/>
-                <circle cx="78" cy="52" r="4.5" fill="#120E1B"/>
-                <circle cx="68" cy="60" r="4.5" fill="#120E1B"/>
-              </svg>
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgGames" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgGames)"/><rect x="22" y="38" width="76" height="44" rx="22" fill="#8B5CF6" opacity="0.85"/><rect x="36" y="52" width="16" height="5" fill="#120E1B" rx="1"/><rect x="41.5" y="46.5" width="5" height="16" fill="#120E1B" rx="1"/><circle cx="78" cy="52" r="4.5" fill="#120E1B"/><circle cx="68" cy="60" r="4.5" fill="#120E1B"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Videogames</span>
             </button>
 
             <button data-model="Sci-Fi" data-icon="fa-jedi" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Ilustração do universo Sci-Fi">
-                <defs><linearGradient id="bgScifi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
-                <rect width="120" height="120" fill="url(#bgScifi)"/>
-                <line x1="32" y1="88" x2="84" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
-                <line x1="88" y1="88" x2="36" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
-                <line x1="22" y1="98" x2="34" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/>
-                <line x1="98" y1="98" x2="86" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/>
-              </svg>
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgScifi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgScifi)"/><line x1="32" y1="88" x2="84" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.9"/><line x1="88" y1="88" x2="36" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.6"/><line x1="22" y1="98" x2="34" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/><line x1="98" y1="98" x2="86" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Sci-Fi</span>
             </button>
 
             <button data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square" role="img" aria-label="Envie seu próprio arquivo STL">
-                <defs><linearGradient id="bgCubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs>
-                <rect width="120" height="120" fill="url(#bgCubo)"/>
-                <path d="M60 28 L92 44 L92 76 L60 92 L28 76 L28 44 Z" fill="#8B5CF6" opacity="0.35" stroke="#8B5CF6" stroke-width="2"/>
-                <path d="M60 28 L60 60 M60 60 L92 44 M60 60 L28 44 M60 60 L60 92" stroke="#8B5CF6" stroke-width="2" opacity="0.8"/>
-              </svg>
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgCubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgCubo)"/><path d="M60 28 L92 44 L92 76 L60 92 L28 76 L28 44 Z" fill="#8B5CF6" opacity="0.35" stroke="#8B5CF6" stroke-width="2"/><path d="M60 28 L60 60 M60 60 L92 44 M60 60 L28 44 M60 60 L60 92" stroke="#8B5CF6" stroke-width="2" opacity="0.8"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Seu STL</span>
             </button>
           </div>
         </div>
 
-        <div>
-          <p class="font-mono text-xs text-muted mb-3">ETAPA 2 — ESCOLHA O MATERIAL</p>
-          <div class="grid grid-cols-2 gap-3" id="materialGroup">
-            <button data-material="Resina 8K" data-mult="1.4" class="mat-btn hud bg-surface border border-line hover:border-purple/60 py-4 text-left px-4 transition">
-              <span class="font-display font-semibold text-sm block">Resina 8K</span>
-              <span class="font-mono text-[10px] text-muted">acabamento ultra detalhado</span>
-            </button>
-            <button data-material="PLA" data-mult="1" class="mat-btn hud bg-surface border border-line hover:border-purple/60 py-4 text-left px-4 transition">
-              <span class="font-display font-semibold text-sm block">PLA</span>
-              <span class="font-mono text-[10px] text-muted">resistente e mais em conta</span>
-            </button>
+        <div id="step2Container" class="hidden animate-[fadeIn_0.3s_ease-out]">
+          <p class="font-mono text-xs text-muted mb-3">ETAPA 2 — ESCOLHA O PERSONAGEM</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="characterGroup">
+            <!-- Botões injetados via JavaScript -->
           </div>
         </div>
 
@@ -592,18 +548,19 @@
 
       <!-- live preview / estimate -->
       <div class="hud bg-surface border border-line p-6 lg:sticky lg:top-24">
-        <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5 relative overflow-hidden">
-          <i id="previewIcon" class="fa-solid fa-cube text-7xl text-purple/80 transition-all duration-300"></i>
-          <div class="bust-scan opacity-60"></div>
+        <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5 relative overflow-hidden rounded-md border border-line">
+          <img id="previewImage" src="" alt="Preview do Personagem" class="hidden w-full h-full object-cover relative z-10" />
+          <i id="previewIcon" class="fa-solid fa-cube text-7xl text-purple/80 transition-all duration-300 absolute z-0"></i>
+          <div class="bust-scan opacity-60 z-20"></div>
         </div>
         <dl class="space-y-2 font-mono text-xs text-muted mb-5">
-          <div class="flex justify-between"><dt>MODELO</dt><dd id="outModel" class="text-ink">—</dd></div>
-          <div class="flex justify-between"><dt>MATERIAL</dt><dd id="outMaterial" class="text-ink">—</dd></div>
+          <div class="flex justify-between"><dt>UNIVERSO</dt><dd id="outModel" class="text-ink">—</dd></div>
+          <div class="flex justify-between"><dt>PERSONAGEM</dt><dd id="outCharacter" class="text-ink text-right">—</dd></div>
           <div class="flex justify-between"><dt>TAMANHO</dt><dd id="outSize" class="text-ink">—</dd></div>
           <div class="flex justify-between"><dt>ACABAMENTO</dt><dd id="outFinish" class="text-ink">—</dd></div>
         </dl>
         <div class="border-t border-line pt-4">
-          <p class="font-mono text-[10px] text-muted mb-1">ESTIMATIVA</p>
+          <p class="font-mono text-[10px] text-muted mb-1">MATERIAL: PLA EXCLUSIVO</p>
           <p class="font-display font-bold text-3xl mb-4">R$ <span id="outPrice">0,00</span></p>
           <button id="btnFinalizarPedido" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
         </div>
@@ -793,7 +750,7 @@
       </div>
       <div class="hud bg-surface border border-line p-6">
         <div class="text-purple text-sm mb-3">★★★★★</div>
-        <p class="text-ink/90 mb-4">Mandei meu próprio STL e o acabamento em resina 8K ficou impecável, todos os detalhes.</p>
+        <p class="text-ink/90 mb-4">Mandei meu próprio STL e o acabamento em PLA ficou impecável, todos os detalhes.</p>
         <p class="font-mono text-xs text-muted">— Camila T.</p>
       </div>
       <div class="hud bg-surface border border-line p-6">
@@ -822,7 +779,7 @@
           <span class="font-display font-medium">Quanto tempo demora para produzir?</span>
           <i class="fa-solid fa-plus faq-chevron text-purple"></i>
         </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Entre 5 e 12 dias úteis, dependendo do tamanho, material e fila de produção da semana.</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Entre 5 e 12 dias úteis, dependendo do tamanho e fila de produção da semana.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
@@ -847,10 +804,10 @@
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Qual a diferença entre PLA e resina?</span>
+          <span class="font-display font-medium">Como é o material utilizado?</span>
           <i class="fa-solid fa-plus faq-chevron text-purple"></i>
         </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">PLA é mais resistente a impactos e custa menos. A resina 8K captura muito mais detalhe, ideal para bustos e peças finas.</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Trabalhamos com PLA Premium de alta qualidade, um polímero biodegradável extremamente resistente que garante ótimo acabamento para colecionáveis e Action Figures.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
@@ -1011,10 +968,6 @@
     menuIcon.className = 'fa-solid fa-bars text-lg';
   }));
 
-  /* ---------- hero 3D model ---------- */
-  /* the <model-viewer> element (added via CDN script in <head>) already handles
-     drag-to-orbit, pinch-zoom and touch gestures natively — no custom JS needed. */
-
   /* ---------- add to inventory feedback ---------- */
   let inventoryCount = 2;
   function addToInventory(btn) {
@@ -1033,15 +986,39 @@
       if (badge) badge.textContent = inventoryCount;
     });
 
-    // depois de mostrar a confirmação, rola suavemente até o configurador
-    // pra o cliente já poder montar/personalizar essa peça
     setTimeout(() => {
       document.getElementById('configurador')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 500);
   }
 
   /* ---------- configurador ---------- */
-  const state = { model: null, modelIcon: 'fa-cube', material: null, mult: 1, size: null, base: 0, finish: null, add: 0 };
+  const state = { model: null, modelIcon: 'fa-cube', character: null, characterImg: null, size: null, base: 0, finish: null, add: 0 };
+
+  const PERSONAGENS_POR_UNIVERSO = {
+    'Heróis': [
+      { nome: 'Homem-Aranha', img: 'images/aranha.jpg' },
+      { nome: 'Wolverine', img: 'images/wolverine.jpg' },
+      { nome: 'Batman', img: 'images/batman.jpg' },
+      { nome: 'Homem de Ferro', img: 'images/ironman.jpg' }
+    ],
+    'Anime': [
+      { nome: 'Goku', img: 'images/goku.jpg' },
+      { nome: 'Naruto', img: 'images/naruto.jpg' },
+      { nome: 'Zoro', img: 'images/zoro.jpg' },
+      { nome: 'Luffy', img: 'images/luffy.jpg' }
+    ],
+    'Videogames': [
+      { nome: 'Kratos', img: 'images/kratos.jpg' },
+      { nome: 'Master Chief', img: 'images/chief.jpg' },
+      { nome: 'Mario', img: 'images/mario.jpg' },
+      { nome: 'Link', img: 'images/link.jpg' }
+    ],
+    'Sci-Fi': [
+      { nome: 'Darth Vader', img: 'images/vader.jpg' },
+      { nome: 'Xenomorfo', img: 'images/alien.jpg' },
+      { nome: 'Mandaloriano', img: 'images/mando.jpg' }
+    ]
+  };
 
   function selectGroup(groupId, btnClass, cb) {
     document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(btn => {
@@ -1055,11 +1032,35 @@
   }
 
   selectGroup('modelGroup', 'model-btn', (btn) => {
-    state.model = btn.dataset.model; state.modelIcon = btn.dataset.icon;
+    state.model = btn.dataset.model; 
+    state.modelIcon = btn.dataset.icon;
+    state.character = null;
+    state.characterImg = null;
+
+    const step2 = document.getElementById('step2Container');
+    const charGroup = document.getElementById('characterGroup');
+
+    if (state.model === 'Personalizado') {
+      step2.classList.add('hidden');
+      state.character = 'Arquivo Próprio';
+    } else {
+      step2.classList.remove('hidden');
+      
+      charGroup.innerHTML = PERSONAGENS_POR_UNIVERSO[state.model].map(c => `
+        <button data-char="${c.nome}" data-img="${c.img}" class="char-btn hud bg-surface border border-line hover:border-purple/60 py-3 px-2 font-mono text-xs font-medium text-center transition">
+          ${c.nome}
+        </button>
+      `).join('');
+
+      selectGroup('characterGroup', 'char-btn', (charBtn) => {
+        state.character = charBtn.dataset.char;
+        state.characterImg = charBtn.dataset.img;
+        updateEstimate();
+      });
+    }
+    updateEstimate();
   });
-  selectGroup('materialGroup', 'mat-btn', (btn) => {
-    state.material = btn.dataset.material; state.mult = parseFloat(btn.dataset.mult);
-  });
+
   selectGroup('sizeGroup', 'size-btn', (btn) => {
     state.size = btn.dataset.size; state.base = parseFloat(btn.dataset.base);
   });
@@ -1069,14 +1070,26 @@
 
   function updateEstimate() {
     document.getElementById('outModel').textContent = state.model || '—';
-    document.getElementById('outMaterial').textContent = state.material || '—';
+    document.getElementById('outCharacter').textContent = state.character || '—';
     document.getElementById('outSize').textContent = state.size || '—';
     document.getElementById('outFinish').textContent = state.finish || '—';
+    
     const icon = document.getElementById('previewIcon');
-    icon.className = 'fa-solid ' + state.modelIcon + ' text-7xl text-purple/80 transition-all duration-300';
+    const img = document.getElementById('previewImage');
 
-    if (state.base && state.mult) {
-      const price = state.base * state.mult + (state.add || 0);
+    if (state.characterImg && state.model !== 'Personalizado') {
+      img.src = state.characterImg;
+      img.classList.remove('hidden');
+      icon.classList.add('hidden');
+    } else {
+      img.classList.add('hidden');
+      img.src = '';
+      icon.classList.remove('hidden');
+      icon.className = 'fa-solid ' + state.modelIcon + ' text-7xl text-purple/80 transition-all duration-300 z-0';
+    }
+
+    if (state.base) {
+      const price = state.base + (state.add || 0);
       const formatted = price.toFixed(2).replace('.', ',');
       document.getElementById('outPrice').textContent = formatted;
       document.getElementById('outPriceMobile').textContent = formatted;
@@ -1133,7 +1146,7 @@
   /* ---------- fabrication steps ---------- */
   const stepData = {
     1: { icon:'fa-pen-ruler', title:'Modelagem', desc:'Seu personagem é esculpido digitalmente, polígono a polígono, até chegar na pose e nos detalhes certos.' },
-    2: { icon:'fa-print', title:'Impressão', desc:'O arquivo vai para a impressora certa — resina 8K ou PLA — camada por camada, com o suporte ideal para cada peça.' },
+    2: { icon:'fa-print', title:'Impressão', desc:'O arquivo vai para a impressora certa — PLA Premium — camada por camada, com o suporte ideal para cada peça.' },
     3: { icon:'fa-hand-sparkles', title:'Remoção de suportes', desc:'As estruturas de apoio são removidas com cuidado, uma a uma, sem marcar a superfície da peça.' },
     4: { icon:'fa-fill-drip', title:'Acabamento', desc:'Lixamos, selamos e corrigimos qualquer imperfeição até a superfície ficar pronta para pintura.' },
     5: { icon:'fa-paintbrush', title:'Pintura', desc:'Cores, camadas e sombreamento aplicados à mão, camada por camada, para dar vida ao personagem.' },
@@ -1154,14 +1167,14 @@
 
   /* ---------- community gallery ---------- */
   const galleryItems = [
-    { icon:'fa-person-rifle', name:'Sentinela Noturna', material:'Resina 8K', size:'18 cm', finish:'Pintura premium' },
-    { icon:'fa-dragon', name:'Wyrm de Obsidiana', material:'Resina 8K', size:'24 cm', finish:'Pintura manual' },
-    { icon:'fa-robot', name:'Mecha VK-09', material:'PLA', size:'20 cm', finish:'Pintura básica' },
-    { icon:'fa-hat-wizard', name:'Feiticeira do Véu', material:'Resina 8K', size:'16 cm', finish:'Pintura premium' },
-    { icon:'fa-shield-halved', name:'Guardião de Aço', material:'PLA', size:'22 cm', finish:'Pintura básica' },
-    { icon:'fa-skull', name:'Arauto da Névoa', material:'Resina 8K', size:'15 cm', finish:'Sem pintura' },
-    { icon:'fa-dice-d20', name:'Mestre das Runas', material:'Resina 8K', size:'19 cm', finish:'Pintura premium' },
-    { icon:'fa-rocket', name:'Frota Vanguarda', material:'PLA', size:'25 cm', finish:'Pintura básica' },
+    { icon:'fa-person-rifle', name:'Sentinela Noturna', material:'PLA Premium', size:'18 cm', finish:'Pintura premium' },
+    { icon:'fa-dragon', name:'Wyrm de Obsidiana', material:'PLA Premium', size:'24 cm', finish:'Pintura manual' },
+    { icon:'fa-robot', name:'Mecha VK-09', material:'PLA Premium', size:'20 cm', finish:'Pintura básica' },
+    { icon:'fa-hat-wizard', name:'Feiticeira do Véu', material:'PLA Premium', size:'16 cm', finish:'Pintura premium' },
+    { icon:'fa-shield-halved', name:'Guardião de Aço', material:'PLA Premium', size:'22 cm', finish:'Pintura básica' },
+    { icon:'fa-skull', name:'Arauto da Névoa', material:'PLA Premium', size:'15 cm', finish:'Sem pintura' },
+    { icon:'fa-dice-d20', name:'Mestre das Runas', material:'PLA Premium', size:'19 cm', finish:'Pintura premium' },
+    { icon:'fa-rocket', name:'Frota Vanguarda', material:'PLA Premium', size:'25 cm', finish:'Pintura básica' },
   ];
   const galleryGrid = document.getElementById('galleryGrid');
   galleryItems.forEach((item, i) => {
@@ -1189,12 +1202,7 @@
 
   /* ---------- checkout: envia o pedido pro backend e redireciona pro Mercado Pago ---------- */
 
-  // Troque pela URL real do seu backend depois do deploy.
   const BACKEND_URL = 'https://sahir3d-backend.onrender.com';
-
-  /* ---------- Supabase (login/cadastro) ---------- */
-  // Troque pelos valores reais do SEU projeto Supabase (Project Settings > API).
-  // A "anon key" é pública por natureza, pode ficar aqui no front-end sem problema.
   const SUPABASE_URL = 'https://cyvawlljkgoirhzkitcm.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5dmF3bGxqa2dvaXJoemtpdGNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NTM0NzUsImV4cCI6MjEwNTUyOTQ3NX0.FHk-tNY_tQwKNdE5GfWsQ1X-5jrm0BoRMEvOqFb-8Xg';
 
@@ -1208,7 +1216,7 @@
   const authInfo = document.getElementById('authInfo');
   const pedidosModal = document.getElementById('pedidosModal');
   let abaAuthAtual = 'login';
-  let sessaoAtual = null; // guarda a sessão logada (token) pra usar no checkout
+  let sessaoAtual = null;
 
   function abrirAuthModal() {
     authError.classList.add('hidden');
@@ -1279,7 +1287,6 @@
   }
   pedidosModal.addEventListener('click', (e) => { if (e.target === pedidosModal) fecharPedidosModal(); });
 
-  // ícone por modelo (mesmo usado no configurador) — cai no cubo genérico se não reconhecer
   const ICONE_POR_MODELO = {
     'Heróis': 'fa-shield-halved',
     'Anime': 'fa-user-ninja',
@@ -1288,7 +1295,6 @@
     'Personalizado': 'fa-cube',
   };
 
-  // aparência de cada status: cor, ícone e legenda amigável
   const STATUS_INFO = {
     pago: { cor: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30', icone: 'fa-circle-check', label: 'Pago' },
     pendente: { cor: 'text-amber-400 bg-amber-400/10 border-amber-400/30', icone: 'fa-clock', label: 'Em análise' },
@@ -1339,6 +1345,7 @@
         const icone = ICONE_POR_MODELO[p.modelo] || 'fa-cube';
         const status = STATUS_INFO[p.status] || { cor: 'text-muted bg-surface2 border-line', icone: 'fa-circle-question', label: p.status };
         const precoFormatado = Number(p.preco).toFixed(2).replace('.', ',');
+        const tituloPedido = p.modelo && p.personagem ? `${p.modelo} - ${p.personagem}` : (p.modelo || 'Peça Personalizada');
 
         return `
           <div class="border border-line rounded-lg p-4 hover:border-purple/40 transition">
@@ -1348,12 +1355,12 @@
               </div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-start justify-between gap-2 mb-1">
-                  <span class="font-display font-semibold text-sm text-ink truncate">${p.modelo || 'Peça personalizada'}</span>
+                  <span class="font-display font-semibold text-sm text-ink truncate">${tituloPedido}</span>
                   <span class="shrink-0 inline-flex items-center gap-1 border rounded-full px-2 py-0.5 font-mono text-[9px] font-bold ${status.cor}">
                     <i class="fa-solid ${status.icone}"></i> ${status.label.toUpperCase()}
                   </span>
                 </div>
-                <div class="font-mono text-[10px] text-muted mb-1.5">${p.material} · ${p.tamanho} · ${p.acabamento || 'Sem pintura'}</div>
+                <div class="font-mono text-[10px] text-muted mb-1.5">PLA Premium · ${p.tamanho} · ${p.acabamento || 'Sem pintura'}</div>
                 <div class="flex items-center justify-between">
                   <span class="font-mono text-[10px] text-muted">${formatarData(p.criado_em)}</span>
                   <span class="font-display font-bold text-sm">R$ ${precoFormatado}</span>
@@ -1398,8 +1405,8 @@
   const btnFinalizarPedido = document.getElementById('btnFinalizarPedido');
 
   function abrirCheckoutModal() {
-    if (!state.model || !state.material || !state.size) {
-      alert('Escolha o modelo, o material e o tamanho antes de continuar.');
+    if (!state.model || (state.model !== 'Personalizado' && !state.character) || !state.size) {
+      alert('Escolha o universo, o personagem e o tamanho antes de continuar.');
       return;
     }
     checkoutError.classList.add('hidden');
@@ -1442,7 +1449,7 @@
         headers,
         body: JSON.stringify({
           modelo: state.model,
-          material: state.material,
+          personagem: state.character,
           tamanho: state.size,
           acabamento: state.finish || 'Sem pintura',
           cliente: { nome, email },
@@ -1452,7 +1459,7 @@
       if (!resp.ok) throw new Error('Falha ao criar pedido');
 
       const { linkPagamento } = await resp.json();
-      window.location.href = linkPagamento; // manda o cliente pro checkout do Mercado Pago
+      window.location.href = linkPagamento; 
     } catch (erro) {
       checkoutError.textContent = 'Não foi possível iniciar o pagamento. Tente novamente em instantes.';
       checkoutError.classList.remove('hidden');
@@ -1466,7 +1473,7 @@
     const params = new URLSearchParams(window.location.search);
     const status = params.get('status');
     const pedidoId = params.get('pedido');
-    if (!status) return; // não veio de um retorno de pagamento, não mostra nada
+    if (!status) return; 
 
     const banner = document.createElement('div');
     banner.id = 'statusBanner';
@@ -1501,9 +1508,8 @@
       }
     }
 
-    render(status); // mostra logo com o que veio na URL
+    render(status);
 
-    // confere o status real no backend, já que pode ter mudado desde o redirect
     if (pedidoId) {
       fetch(`${BACKEND_URL}/api/pedidos/${pedidoId}`)
         .then((r) => (r.ok ? r.json() : null))
