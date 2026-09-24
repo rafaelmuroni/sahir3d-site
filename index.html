@@ -235,10 +235,6 @@
         <i class="fa-solid fa-user text-lg"></i>
         <span id="contaLabel" class="font-mono text-xs">ENTRAR</span>
       </button>
-      <button class="relative hover:text-purple transition-colors" aria-label="Abrir inventário, 2 itens">
-        <i class="fa-solid fa-box-archive text-lg"></i>
-        <span class="absolute -top-2 -right-2 bg-purple text-[10px] font-bold font-mono w-4 h-4 rounded-full flex items-center justify-center">2</span>
-      </button>
       <button type="button" id="menuToggle" class="lg:hidden" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
         <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
       </button>
@@ -402,8 +398,8 @@
           <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 189,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
-              <span>ADICIONAR ▸</span>
+            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis">
+              <span>PERSONALIZAR ▸</span>
             </button>
           </div>
         </div>
@@ -423,8 +419,8 @@
           <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 249,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
-              <span>ADICIONAR ▸</span>
+            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
+              <span>PERSONALIZAR ▸</span>
             </button>
           </div>
         </div>
@@ -444,8 +440,8 @@
           <div role="img" class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 219,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
-              <span>ADICIONAR ▸</span>
+            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Videogames" data-char="Kratos" data-size="20 cm">
+              <span>PERSONALIZAR ▸</span>
             </button>
           </div>
         </div>
@@ -465,8 +461,8 @@
           <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 174,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
-              <span>ADICIONAR ▸</span>
+            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Homem-Aranha">
+              <span>PERSONALIZAR ▸</span>
             </button>
           </div>
         </div>
@@ -879,12 +875,34 @@
       </div>
       <div>
         <label for="authSenha" class="block font-mono text-[10px] text-muted mb-1.5">SENHA</label>
-        <input id="authSenha" type="password" required minlength="6" autocomplete="current-password"
+        <input id="authSenha" type="password" required autocomplete="current-password"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <p id="authError" class="hidden text-red-400 text-xs"></p>
       <p id="authInfo" class="hidden text-emerald-400 text-xs"></p>
       <button type="submit" id="authSubmitBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Entrar</button>
+    </form>
+    <button type="button" id="authEsqueci" class="mt-4 w-full text-center font-mono text-[11px] text-muted hover:text-purple transition">Esqueci minha senha</button>
+  </div>
+</div>
+
+<!-- ============ MODAL DE NOVA SENHA (link de redefinição) ============ -->
+<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
+    <h3 class="font-display font-bold text-lg mb-1">Criar nova senha</h3>
+    <p class="text-muted text-xs mb-5">Escolha uma senha com pelo menos 8 caracteres.</p>
+    <form id="novaSenhaForm" class="space-y-4">
+      <div>
+        <label for="novaSenha" class="block font-mono text-[10px] text-muted mb-1.5">NOVA SENHA</label>
+        <input id="novaSenha" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div>
+        <label for="novaSenhaConf" class="block font-mono text-[10px] text-muted mb-1.5">CONFIRMAR SENHA</label>
+        <input id="novaSenhaConf" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <p id="novaSenhaErro" class="hidden text-red-400 text-xs"></p>
+      <p id="novaSenhaInfo" class="hidden text-emerald-400 text-xs"></p>
+      <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Salvar nova senha</button>
     </form>
   </div>
 </div>
@@ -911,7 +929,8 @@
       </div>
     </div>
 
-    <div class="p-6 pt-4 border-t border-line">
+    <div class="p-6 pt-4 border-t border-line space-y-2">
+      <button type="button" id="btnApagarPerfil" class="w-full text-center font-mono text-[11px] text-muted hover:text-red-400 transition py-1">Apagar meus dados salvos</button>
       <button type="button" onclick="sair()" class="w-full btn-outline rounded-full py-2.5 font-semibold text-xs flex items-center justify-center gap-2">
         <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da conta
       </button>
@@ -950,6 +969,10 @@
         <div id="freteOpcoes" class="space-y-2"></div>
         <p id="freteResumo" class="font-mono text-[11px] text-ink"></p>
       </div>
+      <label id="salvarPerfilBox" class="hidden flex items-start gap-2 font-mono text-[10px] text-muted leading-relaxed cursor-pointer">
+        <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
+        <span>Salvar nome, telefone e endereço na minha conta para os próximos pedidos. Você pode apagar depois em "Meus pedidos".</span>
+      </label>
       <p id="checkoutError" class="hidden text-red-400 text-xs"></p>
       <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Ir para pagamento</button>
     </form>
@@ -976,27 +999,14 @@
     menuIcon.className = 'fa-solid fa-bars text-lg';
   }));
 
-  /* ---------- add to inventory feedback ---------- */
-  let inventoryCount = 2;
-  function addToInventory(btn) {
-    const span = btn.querySelector('span');
-    const original = span.textContent;
-    span.textContent = 'ADICIONADO ✓';
-    btn.classList.add('bg-purple','text-white');
-    setTimeout(() => {
-      span.textContent = original;
-      btn.classList.remove('bg-purple','text-white');
-    }, 1400);
-    inventoryCount++;
-    document.querySelectorAll('[aria-label^="Abrir inventário"]').forEach(b => {
-      b.setAttribute('aria-label', `Abrir inventário, ${inventoryCount} itens`);
-      const badge = b.querySelector('span');
-      if (badge) badge.textContent = inventoryCount;
-    });
-
-    setTimeout(() => {
-      document.getElementById('configurador')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 500);
+  /* ---------- drops: abre o configurador já com a peça escolhida ---------- */
+  function personalizarDrop(btn) {
+    const { model, char, size } = btn.dataset;
+    const clicar = (sel) => document.querySelector(sel)?.click();
+    if (model) clicar(`#modelGroup [data-model="${model}"]`);
+    if (model && char) clicar(`#characterGroup [data-char="${char}"]`);
+    if (size) clicar(`#sizeGroup [data-size="${size}"]`);
+    document.getElementById('configurador')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /* ---------- configurador ---------- */
@@ -1232,7 +1242,8 @@
     if (/invalid login credentials/i.test(m)) return 'E-mail ou senha incorretos.';
     if (/email not confirmed/i.test(m)) return 'Confirme seu e-mail antes de entrar.';
     if (/already registered/i.test(m)) return 'Este e-mail já tem cadastro.';
-    if (/password should be at least/i.test(m)) return 'A senha deve ter pelo menos 6 caracteres.';
+    if (/password should be at least/i.test(m)) return 'A senha é curta demais. Use pelo menos 8 caracteres.';
+    if (/same as the old|different from the old/i.test(m)) return 'A nova senha deve ser diferente da atual.';
     if (/rate limit/i.test(m)) return 'Muitas tentativas. Aguarde um pouco.';
     return m || 'Não foi possível concluir. Tente novamente.';
   }
@@ -1265,6 +1276,8 @@
     const nomeInput = document.getElementById('authNome');
     nomeBox.classList.toggle('hidden', aba === 'login');
     nomeInput.required = aba !== 'login';
+    document.getElementById('authSenha').minLength = aba === 'login' ? 0 : 8;
+    document.getElementById('authEsqueci').classList.toggle('hidden', aba !== 'login');
     if (aba === 'login') nomeInput.value = '';
     authError.classList.add('hidden');
     authInfo.classList.add('hidden');
@@ -1419,6 +1432,7 @@
 
   function atualizarBotaoConta(session) {
     sessaoAtual = session;
+    carregarPerfil();
     if (session) {
       const nomeConta = (session.user.user_metadata?.nome || '').trim().split(' ')[0];
       contaLabel.textContent = (nomeConta || session.user.email.split('@')[0]).toUpperCase();
@@ -1438,8 +1452,80 @@
     }
   });
 
+/* ---------- perfil salvo (tabela public.perfis, protegida por RLS) ---------- */
+  let perfilAtual = null;
+  async function carregarPerfil() {
+    perfilAtual = null;
+    if (!sessaoAtual) return;
+    try {
+      const { data } = await supabaseClient.from('perfis').select('*').eq('id', sessaoAtual.user.id).maybeSingle();
+      perfilAtual = data || null;
+    } catch (e) { perfilAtual = null; }
+  }
+  async function salvarPerfil(d) {
+    const { error } = await supabaseClient.from('perfis').upsert({ id: sessaoAtual.user.id, ...d, updated_at: new Date().toISOString() });
+    if (error) throw error;
+    perfilAtual = { id: sessaoAtual.user.id, ...d };
+  }
+  function preencherCheckoutComPerfil() {
+    const p = perfilAtual;
+    if (!p) return;
+    const set = (id, v) => { const el = document.getElementById(id); if (el && v && !el.value) el.value = v; };
+    const cep = String(p.cep || '').replace(/\D/g, '');
+    set('checkoutNome', p.nome); set('checkoutTel', p.telefone);
+    set('checkoutCep', cep.length === 8 ? cep.slice(0, 5) + '-' + cep.slice(5) : cep);
+    set('checkoutRua', p.rua); set('checkoutNumero', p.numero); set('checkoutCompl', p.complemento);
+    set('checkoutBairro', p.bairro); set('checkoutCidade', p.cidade); set('checkoutUf', p.uf);
+    if (cep.length === 8) buscarFrete(cep);
+  }
+  document.getElementById('btnApagarPerfil')?.addEventListener('click', async () => {
+    if (!sessaoAtual || !confirm('Apagar nome, telefone e endereço salvos? Seus pedidos continuam no histórico.')) return;
+    try {
+      const { error } = await supabaseClient.from('perfis').delete().eq('id', sessaoAtual.user.id);
+      if (error) throw error;
+      perfilAtual = null;
+      alert('Dados apagados.');
+    } catch (e) { alert('Não foi possível apagar agora. Tente novamente.'); }
+  });
+
+  /* ---------- esqueci minha senha / nova senha ---------- */
+  document.getElementById('authEsqueci').addEventListener('click', async () => {
+    authError.classList.add('hidden'); authInfo.classList.add('hidden');
+    const email = document.getElementById('authEmail').value.trim();
+    if (!email) { authError.textContent = 'Digite seu e-mail acima e clique novamente.'; authError.classList.remove('hidden'); return; }
+    try {
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+      if (error) throw error;
+      authInfo.textContent = 'Se este e-mail tiver cadastro, enviamos um link para redefinir a senha.';
+      authInfo.classList.remove('hidden');
+    } catch (erro) {
+      authError.textContent = traduzErro(erro.message);
+      authError.classList.remove('hidden');
+    }
+  });
+  const novaSenhaModal = document.getElementById('novaSenhaModal');
+  function abrirNovaSenha() { fecharAuthModal(); novaSenhaModal.classList.remove('hidden'); novaSenhaModal.classList.add('flex'); }
+  function fecharNovaSenha() { novaSenhaModal.classList.add('hidden'); novaSenhaModal.classList.remove('flex'); }
+  document.getElementById('novaSenhaForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const erroEl = document.getElementById('novaSenhaErro'), infoEl = document.getElementById('novaSenhaInfo');
+    erroEl.classList.add('hidden'); infoEl.classList.add('hidden');
+    const nova = document.getElementById('novaSenha').value, conf = document.getElementById('novaSenhaConf').value;
+    if (nova !== conf) { erroEl.textContent = 'As senhas não coincidem.'; erroEl.classList.remove('hidden'); return; }
+    try {
+      const { error } = await supabaseClient.auth.updateUser({ password: nova });
+      if (error) throw error;
+      infoEl.textContent = 'Senha atualizada! Você já está logado.';
+      infoEl.classList.remove('hidden');
+      setTimeout(fecharNovaSenha, 1500);
+    } catch (erro) { erroEl.textContent = traduzErro(erro.message); erroEl.classList.remove('hidden'); }
+  });
+
   supabaseClient.auth.getSession().then(({ data }) => atualizarBotaoConta(data.session));
-  supabaseClient.auth.onAuthStateChange((_event, session) => atualizarBotaoConta(session));
+  supabaseClient.auth.onAuthStateChange((evento, session) => {
+    atualizarBotaoConta(session);
+    if (evento === 'PASSWORD_RECOVERY') abrirNovaSenha();
+  });
 
   const checkoutModal = document.getElementById('checkoutModal');
   const checkoutForm = document.getElementById('checkoutForm');
@@ -1460,6 +1546,8 @@
     if (sessaoAtual?.user?.email && !document.getElementById('checkoutEmail').value) document.getElementById('checkoutEmail').value = sessaoAtual.user.email;
     const nomeMeta = sessaoAtual?.user?.user_metadata?.nome;
     if (nomeMeta && !document.getElementById('checkoutNome').value) document.getElementById('checkoutNome').value = nomeMeta;
+    preencherCheckoutComPerfil();
+    document.getElementById('salvarPerfilBox').classList.toggle('hidden', !sessaoAtual);
     checkoutModal.classList.remove('hidden');
     checkoutModal.classList.add('flex');
   }
@@ -1554,6 +1642,20 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Gerando pagamento...';
 
+    if (sessaoAtual && document.getElementById('chkSalvarPerfil')?.checked) {
+      try {
+        await salvarPerfil({
+          nome, telefone: document.getElementById('checkoutTel').value.trim(),
+          cep: document.getElementById('checkoutCep').value.replace(/\D/g, ''),
+          rua: document.getElementById('checkoutRua').value.trim(),
+          numero: document.getElementById('checkoutNumero').value.trim(),
+          complemento: document.getElementById('checkoutCompl').value.trim(),
+          bairro: document.getElementById('checkoutBairro').value.trim(),
+          cidade: document.getElementById('checkoutCidade').value.trim(),
+          uf: document.getElementById('checkoutUf').value.trim().toUpperCase(),
+        });
+      } catch (e) { console.warn('Perfil não salvo', e); }
+    }
     const controller = new AbortController();
     const avisoTimer = setTimeout(() => { submitBtn.textContent = 'Acordando o servidor...'; }, 6000);
     const abortTimer = setTimeout(() => controller.abort(), 60000);
