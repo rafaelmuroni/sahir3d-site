@@ -1571,12 +1571,26 @@
         }),
       });
 
-      if (!resp.ok) throw new Error('Falha ao criar pedido');
+      if (!resp.ok) {
+        const corpo = await resp.text().catch(() => '');
+        console.error('[checkout] /api/pedidos respondeu', resp.status, corpo);
+        const err = new Error('Falha ao criar pedido');
+        err.status = resp.status; err.corpo = corpo;
+        throw err;
+      }
 
       const { linkPagamento } = await resp.json();
       window.location.href = linkPagamento; 
     } catch (erro) {
-      checkoutError.textContent = erro.name === 'AbortError' ? 'O servidor demorou para responder. Tente novamente ou fale pelo WhatsApp.' : 'Não foi possível iniciar o pagamento. Tente novamente em instantes.';
+      console.error('[checkout] erro', erro);
+      let detalhe = '';
+      if (erro.status) {
+        try { const j = JSON.parse(erro.corpo); detalhe = j.erro || j.error || j.message || ''; } catch {}
+        detalhe = ` (erro ${erro.status}${detalhe ? ': ' + String(detalhe).slice(0, 120) : ''})`;
+      } else if (erro.name === 'TypeError') {
+        detalhe = ' (sem resposta do servidor: rede, CORS ou servidor fora do ar)';
+      }
+      checkoutError.textContent = erro.name === 'AbortError' ? 'O servidor demorou para responder. Tente novamente ou fale pelo WhatsApp.' : 'Não foi possível iniciar o pagamento. Tente novamente em instantes.' + detalhe;
       checkoutError.classList.remove('hidden');
       submitBtn.disabled = false;
       submitBtn.textContent = submitBtnOriginalText;
