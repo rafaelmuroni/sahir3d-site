@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahir 3D | Colecionáveis geek impressos em 3D</title>
-<!-- Atualizado: Removida a menção de Resina 8K -->
 <meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em PLA Premium, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -116,7 +116,7 @@
 
   /* ---------- product card hover data ---------- */
   .prod-card .prod-data { opacity:1; }
-  @media (min-width: 768px) {
+  @media (hover:hover) and (min-width: 768px) {
     .prod-card .prod-data { opacity:0; transform: translateY(6px); transition: all .3s ease; }
     .prod-card:hover .prod-data { opacity:1; transform: translateY(0); }
   }
@@ -124,7 +124,7 @@
   .prod-card .prod-btn-label span { display:inline-block; transition: transform .25s ease; }
 
   /* ---------- guard against accidental horizontal scroll on mobile ---------- */
-  html, body { overflow-x: hidden; }
+  body { overflow-x: clip; }
 
   /* ---------- mobile sticky estimate bar (configurador) ---------- */
   #mobileEstimateBar {
@@ -194,7 +194,9 @@
   }
 
   .vert-text { writing-mode: vertical-rl; }
-  .hidden { display: none !important; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  /* .hud (position:relative) não pode anular o sticky do painel no desktop */
+  @media (min-width:1024px) { .hud.lg\:sticky { position: sticky; } }
 </style>
 </head>
 <body class="bg-bg text-ink font-sans antialiased">
@@ -249,6 +251,7 @@
     <a href="#configurador" class="py-1">Monte a sua</a>
     <a href="#processo" class="py-1">Como funciona</a>
     <a href="#estante" class="py-1">Estante da comunidade</a>
+    <button type="button" id="mobileConta" class="py-1 text-left flex items-center gap-2 text-purple"><i class="fa-solid fa-user"></i><span id="mobileContaLabel">Entrar</span></button>
   </nav>
 </header>
 
@@ -381,6 +384,7 @@
   </div>
 </section>
 
+<!-- TODO: nomes dos arquivos de imagem/subtítulos são de produtos antigos; preço do Kratos 20cm (219,90) difere do configurador (189,90); Harry Potter Crochê x PLA -->
 <!-- ============ DROPS DA SEMANA ============ -->
 <section id="drops" class="py-14 md:py-28 border-b border-line grid-bg-fine">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
@@ -395,7 +399,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/sentinela-noturna.jpg" alt="Máscara Deadpool" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/sentinela-noturna.jpg" alt="Máscara Deadpool" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 18CM · PESO: 320G · PLA PREMIUM
@@ -404,7 +408,7 @@
         <div class="p-4">
           <p class="font-mono text-[10px] text-muted mb-1">CAÇADOR — LINHA SOMBRA</p>
           <h3 class="font-display font-semibold">Máscara Deadpool</h3>
-          <div class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 189,90</span>
             <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
@@ -416,7 +420,7 @@
 
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/wyrm-de-obsidiana.jpg" alt="Boneco Harry Potter (Crochê)" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/wyrm-de-obsidiana.jpg" alt="Boneco Harry Potter (Crochê)" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-purple text-white px-2 py-0.5 font-semibold">BEST SELLER</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 24CM · PESO: 410G · PINTURA MANUAL
@@ -425,7 +429,7 @@
         <div class="p-4">
           <p class="font-mono text-[10px] text-muted mb-1">GUARDIÃO — LINHA ANCESTRAL</p>
           <h3 class="font-display font-semibold">Boneco Harry Potter (Crochê)</h3>
-          <div class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 249,90</span>
             <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
@@ -437,7 +441,7 @@
 
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/mecha-vk-09.jpg" alt="Busto Kratos 20cm" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/mecha-vk-09.jpg" alt="Busto Kratos 20cm" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-white/90 text-bg px-2 py-0.5 font-semibold">NOVO</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 20CM · PESO: 380G · PLA REFORÇADO
@@ -446,7 +450,7 @@
         <div class="p-4">
           <p class="font-mono text-[10px] text-muted mb-1">UNIDADE — LINHA VETOR</p>
           <h3 class="font-display font-semibold">Busto Kratos 20cm</h3>
-          <div class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 219,90</span>
             <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
@@ -458,7 +462,7 @@
 
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/feiticeira-do-veu.jpg" alt="Suporte Headset Homem-Aranha" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/feiticeira-do-veu.jpg" alt="Suporte Headset Homem-Aranha" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 16CM · PESO: 290G · PLA PREMIUM
@@ -467,7 +471,7 @@
         <div class="p-4">
           <p class="font-mono text-[10px] text-muted mb-1">ARCANISTA — LINHA GRIMÓRIO</p>
           <h3 class="font-display font-semibold">Suporte Headset Homem-Aranha</h3>
-          <div class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 174,90</span>
             <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="addToInventory(this)">
@@ -576,10 +580,11 @@
       <span class="text-muted block">ESTIMATIVA</span>
       <span class="font-display font-bold text-lg">R$ <span id="outPriceMobile">0,00</span></span>
     </div>
-    <a href="#configurador" class="btn-primary rounded-full px-5 py-2.5 font-semibold text-xs text-white shrink-0">Ir para pagamento</a>
+    <button type="button" id="btnMobileCheckout" class="btn-primary rounded-full px-5 py-2.5 font-semibold text-xs text-white shrink-0">Ir para pagamento</button>
   </div>
 </div>
 
+<!-- TODO: o upload ainda não envia o arquivo a lugar nenhum (ex.: Supabase Storage ou WhatsApp) -->
 <!-- ============ UPLOAD MODELO 3D ============ -->
 <section class="py-14 md:py-28 border-b border-line grid-bg">
   <div class="max-w-4xl mx-auto px-5 md:px-8 text-center">
@@ -734,6 +739,7 @@
   </div>
 </section>
 
+<!-- TODO: confirme que números e depoimentos são reais (CDC: publicidade enganosa) -->
 <!-- ============ PROVA SOCIAL ============ -->
 <section class="py-14 md:py-28 border-b border-line">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
@@ -846,6 +852,7 @@
   </div>
 </section>
 
+<!-- TODO: CNPJ, contato, política de privacidade (LGPD), termos, trocas/arrependimento; links reais de Instagram/TikTok -->
 <!-- ============ FOOTER ============ -->
 <footer class="py-12">
   <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -879,12 +886,12 @@
     <form id="authForm" class="space-y-4">
       <div>
         <label for="authEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="authEmail" type="email" required
+        <input id="authEmail" type="email" required autocomplete="email"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div>
         <label for="authSenha" class="block font-mono text-[10px] text-muted mb-1.5">SENHA</label>
-        <input id="authSenha" type="password" required minlength="6"
+        <input id="authSenha" type="password" required minlength="6" autocomplete="current-password"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <p id="authError" class="hidden text-red-400 text-xs"></p>
@@ -936,12 +943,12 @@
     <form id="checkoutForm" class="space-y-4">
       <div>
         <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
-        <input id="checkoutNome" type="text" required
+        <input id="checkoutNome" type="text" required autocomplete="name"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div>
         <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="checkoutEmail" type="email" required
+        <input id="checkoutEmail" type="email" required autocomplete="email"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <p id="checkoutError" class="hidden text-red-400 text-xs"></p>
@@ -952,6 +959,8 @@
 
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) document.querySelectorAll('model-viewer').forEach(m => m.removeAttribute('auto-rotate'));
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   /* ---------- mobile menu ---------- */
   const menuToggle = document.getElementById('menuToggle');
@@ -1023,8 +1032,9 @@
   function selectGroup(groupId, btnClass, cb) {
     document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(b => b.classList.remove('border-purple','bg-surface2'));
+        document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(b => { b.classList.remove('border-purple','bg-surface2'); b.setAttribute('aria-pressed','false'); });
         btn.classList.add('border-purple','bg-surface2');
+        btn.setAttribute('aria-pressed','true');
         cb(btn);
         updateEstimate();
       });
@@ -1083,11 +1093,13 @@
       icon.classList.add('hidden');
     } else {
       img.classList.add('hidden');
-      img.src = '';
+      img.removeAttribute('src');
       icon.classList.remove('hidden');
       icon.className = 'fa-solid ' + state.modelIcon + ' text-7xl text-purple/80 transition-all duration-300 z-0';
     }
 
+    const ehSTL = state.model === 'Personalizado';
+    ['btnFinalizarPedido','btnMobileCheckout'].forEach(id => { const b = document.getElementById(id); if (b) b.textContent = ehSTL ? 'Pedir orçamento no WhatsApp' : 'Ir para pagamento'; });
     if (state.base) {
       const price = state.base + (state.add || 0);
       const formatted = price.toFixed(2).replace('.', ',');
@@ -1125,13 +1137,15 @@
   ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, (e) => {
     e.preventDefault(); dropzone.classList.remove('drag-active');
   }));
-  dropzone.addEventListener('drop', (e) => {
-    const file = e.dataTransfer.files[0];
-    if (file) dzLabel.textContent = 'Arquivo recebido: ' + file.name;
-  });
-  fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) dzLabel.textContent = 'Arquivo recebido: ' + fileInput.files[0].name;
-  });
+  function aceitarArquivo(file) {
+    if (!file) return;
+    if (!/\.(stl|obj|3mf)$/i.test(file.name)) { dzLabel.textContent = 'Formato inválido. Envie STL, OBJ ou 3MF.'; return; }
+    if (file.size > 100 * 1024 * 1024) { dzLabel.textContent = 'Arquivo acima de 100 MB. Fale com a gente pelo WhatsApp.'; return; }
+    dzLabel.textContent = 'Arquivo selecionado: ' + file.name;
+    // TODO: enviar o arquivo (Supabase Storage / backend)
+  }
+  dropzone.addEventListener('drop', (e) => aceitarArquivo(e.dataTransfer.files[0]));
+  fileInput.addEventListener('change', () => aceitarArquivo(fileInput.files[0]));
 
   /* ---------- before/after slider ---------- */
   const compareRange = document.getElementById('compareRange');
@@ -1198,7 +1212,7 @@
     modal.classList.add('hidden'); modal.classList.remove('flex');
   }
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); fecharAuthModal(); fecharPedidosModal(); fecharCheckoutModal(); } });
 
   /* ---------- checkout: envia o pedido pro backend e redireciona pro Mercado Pago ---------- */
 
@@ -1206,7 +1220,23 @@
   const SUPABASE_URL = 'https://cyvawlljkgoirhzkitcm.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5dmF3bGxqa2dvaXJoemtpdGNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NTM0NzUsImV4cCI6MjEwNTUyOTQ3NX0.FHk-tNY_tQwKNdE5GfWsQ1X-5jrm0BoRMEvOqFb-8Xg';
 
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let supabaseClient;
+  try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (err) {
+    console.error('Supabase indisponível', err);
+    const indisponivel = async () => ({ error: new Error('Serviço de login indisponível no momento.') });
+    supabaseClient = { auth: { getSession: async () => ({ data: { session: null } }), onAuthStateChange: () => ({}), signInWithPassword: indisponivel, signUp: indisponivel, signOut: async () => {} } };
+  }
+  function traduzErro(msg) {
+    const m = String(msg || '');
+    if (/invalid login credentials/i.test(m)) return 'E-mail ou senha incorretos.';
+    if (/email not confirmed/i.test(m)) return 'Confirme seu e-mail antes de entrar.';
+    if (/already registered/i.test(m)) return 'Este e-mail já tem cadastro.';
+    if (/password should be at least/i.test(m)) return 'A senha deve ter pelo menos 6 caracteres.';
+    if (/rate limit/i.test(m)) return 'Muitas tentativas. Aguarde um pouco.';
+    return m || 'Não foi possível concluir. Tente novamente.';
+  }
 
   const btnConta = document.getElementById('btnConta');
   const contaLabel = document.getElementById('contaLabel');
@@ -1243,7 +1273,9 @@
       tabCadastro.classList.remove('border-purple', 'bg-purple', 'text-white');
       tabCadastro.classList.add('border-line', 'text-muted');
       submitBtn.textContent = 'Entrar';
+      document.getElementById('authSenha').autocomplete = 'current-password';
     } else {
+      document.getElementById('authSenha').autocomplete = 'new-password';
       tabCadastro.classList.add('border-purple', 'bg-purple', 'text-white');
       tabCadastro.classList.remove('border-line', 'text-muted');
       tabLogin.classList.remove('border-purple', 'bg-purple', 'text-white');
@@ -1274,7 +1306,7 @@
         authInfo.classList.remove('hidden');
       }
     } catch (erro) {
-      authError.textContent = erro.message || 'Não foi possível concluir. Tente novamente.';
+      authError.textContent = traduzErro(erro.message);
       authError.classList.remove('hidden');
     } finally {
       submitBtn.disabled = false;
@@ -1343,9 +1375,9 @@
 
       lista.innerHTML = pedidos.map((p) => {
         const icone = ICONE_POR_MODELO[p.modelo] || 'fa-cube';
-        const status = STATUS_INFO[p.status] || { cor: 'text-muted bg-surface2 border-line', icone: 'fa-circle-question', label: p.status };
+        const status = STATUS_INFO[p.status] || { cor: 'text-muted bg-surface2 border-line', icone: 'fa-circle-question', label: esc(p.status) };
         const precoFormatado = Number(p.preco).toFixed(2).replace('.', ',');
-        const tituloPedido = p.modelo && p.personagem ? `${p.modelo} - ${p.personagem}` : (p.modelo || 'Peça Personalizada');
+        const tituloPedido = esc(p.modelo && p.personagem ? `${p.modelo} - ${p.personagem}` : (p.modelo || 'Peça Personalizada'));
 
         return `
           <div class="border border-line rounded-lg p-4 hover:border-purple/40 transition">
@@ -1360,9 +1392,9 @@
                     <i class="fa-solid ${status.icone}"></i> ${status.label.toUpperCase()}
                   </span>
                 </div>
-                <div class="font-mono text-[10px] text-muted mb-1.5">PLA Premium · ${p.tamanho} · ${p.acabamento || 'Sem pintura'}</div>
+                <div class="font-mono text-[10px] text-muted mb-1.5">PLA Premium · ${esc(p.tamanho)} · ${esc(p.acabamento || 'Sem pintura')}</div>
                 <div class="flex items-center justify-between">
-                  <span class="font-mono text-[10px] text-muted">${formatarData(p.criado_em)}</span>
+                  <span class="font-mono text-[10px] text-muted">${esc(formatarData(p.criado_em))}</span>
                   <span class="font-display font-bold text-sm">R$ ${precoFormatado}</span>
                 </div>
               </div>
@@ -1383,11 +1415,14 @@
     sessaoAtual = session;
     if (session) {
       contaLabel.textContent = session.user.email.split('@')[0].toUpperCase();
+      document.getElementById('mobileContaLabel').textContent = 'Meus pedidos';
     } else {
       contaLabel.textContent = 'ENTRAR';
+      document.getElementById('mobileContaLabel').textContent = 'Entrar';
     }
   }
 
+  document.getElementById('mobileConta')?.addEventListener('click', () => { btnConta.click(); mobileMenu.classList.add('hidden'); menuToggle.setAttribute('aria-expanded','false'); menuIcon.className = 'fa-solid fa-bars text-lg'; });
   btnConta.addEventListener('click', () => {
     if (sessaoAtual) {
       abrirPedidosModal();
@@ -1405,11 +1440,17 @@
   const btnFinalizarPedido = document.getElementById('btnFinalizarPedido');
 
   function abrirCheckoutModal() {
+    if (state.model === 'Personalizado') {
+      const msg = `Olá! Quero um orçamento para um modelo próprio (STL).${state.size ? ' Tamanho: ' + state.size + '.' : ''}${state.finish ? ' Acabamento: ' + state.finish + '.' : ''}`;
+      window.open('https://wa.me/5547992624242?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      return;
+    }
     if (!state.model || (state.model !== 'Personalizado' && !state.character) || !state.size) {
       alert('Escolha o universo, o personagem e o tamanho antes de continuar.');
       return;
     }
     checkoutError.classList.add('hidden');
+    if (sessaoAtual?.user?.email && !document.getElementById('checkoutEmail').value) document.getElementById('checkoutEmail').value = sessaoAtual.user.email;
     checkoutModal.classList.remove('hidden');
     checkoutModal.classList.add('flex');
   }
@@ -1422,6 +1463,7 @@
   if (btnFinalizarPedido) {
     btnFinalizarPedido.addEventListener('click', abrirCheckoutModal);
   }
+  document.getElementById('btnMobileCheckout')?.addEventListener('click', abrirCheckoutModal);
 
   checkoutModal.addEventListener('click', (e) => { if (e.target === checkoutModal) fecharCheckoutModal(); });
 
@@ -1438,6 +1480,9 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Gerando pagamento...';
 
+    const controller = new AbortController();
+    const avisoTimer = setTimeout(() => { submitBtn.textContent = 'Acordando o servidor...'; }, 6000);
+    const abortTimer = setTimeout(() => controller.abort(), 60000);
     try {
       const headers = { 'Content-Type': 'application/json' };
       if (sessaoAtual?.access_token) {
@@ -1446,6 +1491,7 @@
 
       const resp = await fetch(`${BACKEND_URL}/api/pedidos`, {
         method: 'POST',
+        signal: controller.signal,
         headers,
         body: JSON.stringify({
           modelo: state.model,
@@ -1461,10 +1507,12 @@
       const { linkPagamento } = await resp.json();
       window.location.href = linkPagamento; 
     } catch (erro) {
-      checkoutError.textContent = 'Não foi possível iniciar o pagamento. Tente novamente em instantes.';
+      checkoutError.textContent = erro.name === 'AbortError' ? 'O servidor demorou para responder. Tente novamente ou fale pelo WhatsApp.' : 'Não foi possível iniciar o pagamento. Tente novamente em instantes.';
       checkoutError.classList.remove('hidden');
       submitBtn.disabled = false;
       submitBtn.textContent = submitBtnOriginalText;
+    } finally {
+      clearTimeout(avisoTimer); clearTimeout(abortTimer);
     }
   });
 
@@ -1493,7 +1541,15 @@
       const title = document.getElementById('statusTitle');
       const text = document.getElementById('statusText');
 
-      if (statusAtual === 'pago' || statusAtual === 'sucesso' || statusAtual === 'approved') {
+      if (statusAtual === 'verificando') {
+        icon.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-purple"></i>';
+        title.textContent = 'Verificando pagamento...';
+        text.textContent = 'Estamos confirmando seu pedido com o servidor.';
+      } else if (statusAtual === 'desconhecido') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-question text-amber-400"></i>';
+        title.textContent = 'Não conseguimos confirmar agora';
+        text.textContent = 'Veja o status em "Meus pedidos" ou fale com a gente pelo WhatsApp.';
+      } else if (statusAtual === 'pago' || statusAtual === 'sucesso' || statusAtual === 'approved') {
         icon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
         title.textContent = 'Pagamento aprovado! 🎉';
         text.textContent = 'Recebemos seu pedido e já vamos começar a produção da sua peça. Você receberá atualizações por e-mail.';
@@ -1508,13 +1564,14 @@
       }
     }
 
-    render(status);
+    render('verificando');
 
-    if (pedidoId) {
+    if (!pedidoId) { render('desconhecido'); return; }
+    {
       fetch(`${BACKEND_URL}/api/pedidos/${pedidoId}`)
         .then((r) => (r.ok ? r.json() : null))
-        .then((pedido) => { if (pedido && pedido.status) render(pedido.status); })
-        .catch(() => {});
+        .then((pedido) => render(pedido && pedido.status ? pedido.status : 'desconhecido'))
+        .catch(() => render('desconhecido'));
     }
   })();
 
