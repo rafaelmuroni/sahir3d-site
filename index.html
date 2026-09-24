@@ -867,6 +867,11 @@
     </div>
 
     <form id="authForm" class="space-y-4">
+      <div id="authNomeContainer" class="hidden">
+        <label for="authNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
+        <input id="authNome" type="text" autocomplete="name" minlength="2"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
       <div>
         <label for="authEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
         <input id="authEmail" type="email" required autocomplete="email"
@@ -1256,6 +1261,11 @@
 
   function mudarAbaAuth(aba) {
     abaAuthAtual = aba;
+    const nomeBox = document.getElementById('authNomeContainer');
+    const nomeInput = document.getElementById('authNome');
+    nomeBox.classList.toggle('hidden', aba === 'login');
+    nomeInput.required = aba !== 'login';
+    if (aba === 'login') nomeInput.value = '';
     authError.classList.add('hidden');
     authInfo.classList.add('hidden');
     const tabLogin = document.getElementById('tabLogin');
@@ -1294,7 +1304,9 @@
         if (error) throw error;
         fecharAuthModal();
       } else {
-        const { error } = await supabaseClient.auth.signUp({ email, password: senha });
+        const nome = document.getElementById('authNome').value.trim().replace(/\s+/g, ' ');
+        if (nome.length < 2) throw new Error('Informe seu nome completo.');
+        const { error } = await supabaseClient.auth.signUp({ email, password: senha, options: { data: { nome } } });
         if (error) throw error;
         authInfo.textContent = 'Conta criada! Verifique seu e-mail para confirmar antes de entrar.';
         authInfo.classList.remove('hidden');
@@ -1408,7 +1420,8 @@
   function atualizarBotaoConta(session) {
     sessaoAtual = session;
     if (session) {
-      contaLabel.textContent = session.user.email.split('@')[0].toUpperCase();
+      const nomeConta = (session.user.user_metadata?.nome || '').trim().split(' ')[0];
+      contaLabel.textContent = (nomeConta || session.user.email.split('@')[0]).toUpperCase();
       document.getElementById('mobileContaLabel').textContent = 'Meus pedidos';
     } else {
       contaLabel.textContent = 'ENTRAR';
@@ -1445,6 +1458,8 @@
     }
     checkoutError.classList.add('hidden');
     if (sessaoAtual?.user?.email && !document.getElementById('checkoutEmail').value) document.getElementById('checkoutEmail').value = sessaoAtual.user.email;
+    const nomeMeta = sessaoAtual?.user?.user_metadata?.nome;
+    if (nomeMeta && !document.getElementById('checkoutNome').value) document.getElementById('checkoutNome').value = nomeMeta;
     checkoutModal.classList.remove('hidden');
     checkoutModal.classList.add('flex');
   }
