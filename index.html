@@ -9,6 +9,7 @@
   <meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em PLA Premium, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
   <meta name="theme-color" content="#09080D">
   <meta name="robots" content="index,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   
   <!-- Open Graph / Redes Sociais -->
   <meta property="og:type" content="website">
@@ -16,18 +17,23 @@
   <meta property="og:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
   <meta property="og:description" content="Colecionáveis geek impressos em 3D sob encomenda, com opções de acabamento e pintura manual.">
   <meta property="og:image" content="images/logo.png">
+  <meta property="og:image:alt" content="Sahir 3D">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
   <meta name="twitter:description" content="Colecionáveis geek impressos em 3D sob encomenda.">
   <meta name="twitter:image" content="images/logo.png">
+  <meta name="twitter:image:alt" content="Sahir 3D">
   
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- CSS Customizado (HUD, animações, etc) -->
+  <!-- CSS Customizado (HUD, animações, etc). Este arquivo precisa existir no repositório. -->
   <link rel="stylesheet" href="css/styles.css">
 
   <!-- TODO PRODUÇÃO: Remover CDN do Tailwind e usar o arquivo CSS compilado final -->
@@ -64,7 +70,7 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
   
-  <!-- Javascript Principal -->
+  <!-- Javascript Principal. Este arquivo precisa existir no repositório. -->
   <script src="js/main.js" defer></script>
 </head>
 
@@ -146,7 +152,6 @@
           <!-- ATUALIZADO: Adicionado poster e fallback color -->
           <model-viewer
             src="Mago-light.glb"
-            poster="images/mago-poster.png"
             alt="Prévia 3D demonstrativa do colecionável"
             camera-controls
             touch-action="pan-y"
@@ -159,6 +164,7 @@
             environment-image="neutral"
             loading="eager"
             style="--poster-color: transparent;">
+            <p slot="fallback" class="px-6 text-center font-mono text-xs text-muted">Seu navegador não conseguiu carregar o visualizador 3D.</p>
           </model-viewer>
           <div class="bust-scan pointer-events-none"></div>
           <span class="hud-bl"></span><span class="hud-br"></span>
@@ -407,7 +413,7 @@
       <!-- live preview / estimate -->
       <div class="hud bg-surface border border-line p-6 lg:sticky lg:top-24">
         <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5 relative overflow-hidden rounded-md border border-line">
-          <img id="previewImage" src="" alt="Preview do Personagem" class="hidden w-full h-full object-cover relative z-10" />
+          <img id="previewImage" alt="Prévia do personagem selecionado" class="hidden w-full h-full object-cover relative z-10" />
           <i id="previewIcon" class="fa-solid fa-cube text-7xl text-purple/80 transition-all duration-300 absolute z-0"></i>
           <div class="bust-scan opacity-60 z-20"></div>
         </div>
@@ -420,7 +426,7 @@
         <div class="border-t border-line pt-4">
           <p class="font-mono text-[10px] text-muted mb-1">MATERIAL: PLA PREMIUM</p>
           <p class="font-display font-bold text-3xl mb-4">R$ <span id="outPrice" aria-live="polite">0,00</span></p>
-          <button id="btnFinalizarPedido" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
+          <button type="button" id="btnFinalizarPedido" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
         </div>
       </div>
     </div>
@@ -432,7 +438,7 @@
   <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
     <div class="font-mono text-[11px] leading-tight">
       <span class="text-muted block">ESTIMATIVA</span>
-      <span class="font-display font-bold text-lg">R$ <span id="outPriceMobile">0,00</span></span>
+      <span class="font-display font-bold text-lg" aria-live="polite">R$ <span id="outPriceMobile">0,00</span></span>
     </div>
     <button type="button" id="btnMobileCheckout" class="btn-primary rounded-full px-5 py-2.5 font-semibold text-xs text-white shrink-0">Ir para pagamento</button>
   </div>
@@ -490,27 +496,27 @@
 
     <div class="grid md:grid-cols-2 gap-10 items-start">
       <div class="space-y-1" id="stepsList">
-        <button data-step="1" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(1)">
+        <button type="button" data-step="1" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(1)">
           <span class="font-mono text-xs text-purple w-8">01</span>
           <span class="font-display font-medium group-[.active]:text-purple">Modelagem</span>
         </button>
-        <button data-step="2" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(2)">
+        <button type="button" data-step="2" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(2)">
           <span class="font-mono text-xs text-purple w-8">02</span>
           <span class="font-display font-medium">Impressão</span>
         </button>
-        <button data-step="3" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(3)">
+        <button type="button" data-step="3" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(3)">
           <span class="font-mono text-xs text-purple w-8">03</span>
           <span class="font-display font-medium">Remoção de suportes</span>
         </button>
-        <button data-step="4" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(4)">
+        <button type="button" data-step="4" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(4)">
           <span class="font-mono text-xs text-purple w-8">04</span>
           <span class="font-display font-medium">Acabamento</span>
         </button>
-        <button data-step="5" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(5)">
+        <button type="button" data-step="5" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(5)">
           <span class="font-mono text-xs text-purple w-8">05</span>
           <span class="font-display font-medium">Pintura</span>
         </button>
-        <button data-step="6" class="step-btn w-full text-left flex items-center gap-4 py-4 group" onclick="setStep(6)">
+        <button type="button" data-step="6" class="step-btn w-full text-left flex items-center gap-4 py-4 group" onclick="setStep(6)">
           <span class="font-mono text-xs text-purple w-8">06</span>
           <span class="font-display font-medium">Sua estante</span>
         </button>
@@ -632,56 +638,56 @@
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Quanto tempo demora para produzir?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Entre 5 e 12 dias úteis, dependendo do tamanho e fila de produção da semana.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Vocês enviam para todo o Brasil?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Sim, enviamos para todo o território nacional com embalagem reforçada para peças frágeis.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Posso enviar meu próprio STL?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Pode sim. Selecione seu STL, OBJ ou 3MF na área de upload; o envio ao servidor pode ser integrado ao seu fluxo de atendimento e orçamento.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Vocês fazem pintura?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Sim, oferecemos acabamento sem pintura, pintura básica e pintura premium feita à mão.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Como é o material utilizado?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Trabalhamos com PLA Premium de alta qualidade, um polímero biodegradável extremamente resistente que garante ótimo acabamento para colecionáveis e Action Figures.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Posso escolher o tamanho?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Sim, de 10 a 30 cm no configurador. Tamanhos maiores sob consulta.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Vocês fazem modelos personalizados?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Sim — a partir de referências, arte conceitual ou de um arquivo 3D que você já tenha.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display font-medium">Como funciona o orçamento?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
         </summary>
         <p class="text-muted text-sm mt-3 leading-relaxed">Use o configurador para uma estimativa imediata ou fale com a gente pelo WhatsApp para um projeto sob medida.</p>
       </details>
@@ -730,20 +736,21 @@
     </div>
 
     <h3 id="authTitle" class="sr-only">Entrar ou criar conta</h3>
-    <form id="authForm" class="space-y-4">
+    <p id="authDescription" class="sr-only">Informe seus dados para entrar ou criar sua conta.</p>
+    <form id="authForm" class="space-y-4" aria-describedby="authDescription">
       <div id="authNomeContainer" class="hidden">
         <label for="authNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
-        <input id="authNome" type="text" autocomplete="name" minlength="2"
+        <input id="authNome" name="name" type="text" autocomplete="name" minlength="2"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div>
         <label for="authEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="authEmail" type="email" required autocomplete="email"
+        <input id="authEmail" name="email" type="email" required autocomplete="email"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div>
         <label for="authSenha" class="block font-mono text-[10px] text-muted mb-1.5">SENHA</label>
-        <input id="authSenha" type="password" required autocomplete="current-password"
+        <input id="authSenha" name="password" type="password" required autocomplete="current-password"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <p id="authError" class="hidden text-red-400 text-xs" aria-live="polite"></p>
@@ -755,18 +762,18 @@
 </div>
 
 <!-- ============ MODAL DE NOVA SENHA ============ -->
-<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="novaSenhaTitle">
+<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="novaSenhaTitle" aria-describedby="novaSenhaDescription">
   <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
     <div class="flex items-start justify-between gap-4 mb-1"><h3 id="novaSenhaTitle" class="font-display font-bold text-lg">Criar nova senha</h3><button type="button" onclick="fecharNovaSenha()" class="text-muted hover:text-ink transition" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></div>
-    <p class="text-muted text-xs mb-5">Escolha uma senha com pelo menos 8 caracteres.</p>
+    <p id="novaSenhaDescription" class="text-muted text-xs mb-5">Escolha uma senha com pelo menos 8 caracteres.</p>
     <form id="novaSenhaForm" class="space-y-4">
       <div>
         <label for="novaSenha" class="block font-mono text-[10px] text-muted mb-1.5">NOVA SENHA</label>
-        <input id="novaSenha" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+        <input id="novaSenha" name="new-password" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div>
         <label for="novaSenhaConf" class="block font-mono text-[10px] text-muted mb-1.5">CONFIRMAR SENHA</label>
-        <input id="novaSenhaConf" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+        <input id="novaSenhaConf" name="confirm-password" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <p id="novaSenhaErro" class="hidden text-red-400 text-xs" aria-live="polite"></p>
       <p id="novaSenhaInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
@@ -790,7 +797,7 @@
       </div>
     </div>
 
-    <div id="pedidosLista" class="space-y-3 p-6 overflow-y-auto flex-1">
+    <div id="pedidosLista" class="space-y-3 p-6 overflow-y-auto flex-1" aria-live="polite">
       <div class="animate-pulse space-y-3">
         <div class="h-16 bg-surface2 rounded-lg"></div>
         <div class="h-16 bg-surface2 rounded-lg"></div>
@@ -807,35 +814,35 @@
 </div>
 
 <!-- ============ MODAL DE CHECKOUT ============ -->
-<div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+<div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-describedby="checkoutDescription">
   <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
     <button type="button" onclick="fecharCheckoutModal()"
       class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
     </button>
     <h3 id="checkoutTitle" class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
-    <p class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
+    <p id="checkoutDescription" class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
     <form id="checkoutForm" class="space-y-4">
       <div>
         <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
-        <input id="checkoutNome" type="text" required autocomplete="name"
+        <input id="checkoutNome" name="name" type="text" required autocomplete="name"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div>
         <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="checkoutEmail" type="email" required autocomplete="email"
+        <input id="checkoutEmail" name="email" type="email" required autocomplete="email"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
-      <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" type="text" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite"></p></div>
-      <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" type="text" required inputmode="numeric" autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
-      <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-3 gap-3"><div class="col-span-2"><label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label><input id="checkoutCidade" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class=""><label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label><input id="checkoutUf" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
+      <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" name="tel" type="tel" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" name="postal-code" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite" role="status"></p></div>
+      <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" name="street" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" name="number" type="text" required autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" name="complement" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
+      <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" name="neighborhood" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-3 gap-3"><div class="col-span-2"><label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label><input id="checkoutCidade" name="city" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class=""><label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label><input id="checkoutUf" name="state" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
       <div id="freteBox" class="hidden space-y-2">
         <p class="font-mono text-[10px] text-muted">OPÇÕES DE ENTREGA (CORREIOS)</p>
         <div id="freteOpcoes" class="space-y-2"></div>
-        <p id="freteResumo" class="font-mono text-[11px] text-ink"></p>
+        <p id="freteResumo" class="font-mono text-[11px] text-ink" aria-live="polite"></p>
       </div>
       <label id="salvarPerfilBox" class="hidden flex items-start gap-2 font-mono text-[10px] text-muted leading-relaxed cursor-pointer">
         <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
@@ -847,5 +854,11 @@
   </div>
 </div>
 
+
+<noscript>
+  <div style="padding:1rem;background:#131019;color:#F1EEF7;text-align:center;font-family:system-ui,sans-serif;border-top:1px solid rgba(237,233,247,.12);">
+    Para usar o configurador, login, upload e visualizador 3D da Sahir 3D, ative o JavaScript no navegador.
+  </div>
+</noscript>
 </body>
 </html>
