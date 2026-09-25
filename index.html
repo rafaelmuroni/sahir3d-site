@@ -1,864 +1,1829 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sahir 3D | Colecionáveis geek impressos em 3D</title>
-  
-  <link rel="icon" type="image/png" href="images/favicon.png">
-  <meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em PLA Premium, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
-  <meta name="theme-color" content="#09080D">
-  <meta name="robots" content="index,follow">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  
-  <!-- Open Graph / Redes Sociais -->
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
-  <meta property="og:description" content="Colecionáveis geek impressos em 3D sob encomenda, com opções de acabamento e pintura manual.">
-  <meta property="og:image" content="images/logo.png">
-  <meta property="og:image:alt" content="Sahir 3D">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
-  <meta name="twitter:description" content="Colecionáveis geek impressos em 3D sob encomenda.">
-  <meta name="twitter:image" content="images/logo.png">
-  <meta name="twitter:image:alt" content="Sahir 3D">
-  
-  <!-- Fontes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <!-- CSS Customizado (HUD, animações, etc). Este arquivo precisa existir no repositório. -->
-  <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahir 3D | Colecionáveis geek impressos em 3D</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em PLA Premium, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
+<meta name="theme-color" content="#09080D">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
+<meta property="og:description" content="Colecionáveis geek impressos em 3D sob encomenda, com opções de acabamento e pintura manual.">
+<meta property="og:image" content="images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
+<meta name="twitter:description" content="Colecionáveis geek impressos em 3D sob encomenda.">
+<meta name="twitter:image" content="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#09080D',
+          surface: '#131019',
+          surface2: '#1B1724',
+          line: 'rgba(237,233,247,0.09)',
+          ink: '#F1EEF7',
+          muted: '#948EA6',
+          purple: '#8B5CF6',
+          purpledeep: '#4C1D95',
+          purplemid: '#6D28D9',
+          neon: '#39FFB0',
+          steel: '#4A4658'
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'ui-sans-serif', 'sans-serif'],
+          sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'sans-serif'],
+          mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root { color-scheme: dark; }
+  html { scroll-behavior: smooth; }
+  body { background:#09080D; }
 
-  <!-- TODO PRODUÇÃO: Remover CDN do Tailwind e usar o arquivo CSS compilado final -->
-  <!-- <link rel="stylesheet" href="css/tailwind-compiled.css"> -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg: '#09080D',
-            surface: '#131019',
-            surface2: '#1B1724',
-            line: 'rgba(237,233,247,0.09)',
-            ink: '#F1EEF7',
-            muted: '#948EA6',
-            purple: '#8B5CF6',
-            purpledeep: '#4C1D95',
-            purplemid: '#6D28D9',
-            neon: '#39FFB0',
-            steel: '#4A4658'
-          },
-          fontFamily: {
-            display: ['"Space Grotesk"', 'ui-sans-serif', 'sans-serif'],
-            sans: ['"IBM Plex Sans"', 'ui-sans-serif', 'sans-serif'],
-            mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
+  /* ---------- blueprint grid backdrop ---------- */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(139,92,246,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139,92,246,0.06) 1px, transparent 1px);
+    background-size: 44px 44px;
+    background-position: -1px -1px;
+  }
+  .grid-bg-fine {
+    background-image:
+      linear-gradient(rgba(237,233,247,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(237,233,247,0.045) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
 
-  <!-- Bibliotecas Externas (com defer para otimização de performance) -->
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
-  
-  <!-- Javascript Principal. Este arquivo precisa existir no repositório. -->
-  <script src="js/main.js" defer></script>
+  /* ---------- HUD corner brackets ---------- */
+  .hud {
+    position: relative;
+  }
+  .hud::before, .hud::after,
+  .hud .hud-br, .hud .hud-bl { content:""; position:absolute; width:14px; height:14px; border-color: rgba(139,92,246,0.55); pointer-events:none; }
+  .hud::before { top:-1px; left:-1px; border-top:1.5px solid; border-left:1.5px solid; }
+  .hud::after { top:-1px; right:-1px; border-top:1.5px solid; border-right:1.5px solid; }
+  .hud .hud-bl { bottom:-1px; left:-1px; border-bottom:1.5px solid; border-left:1.5px solid; }
+  .hud .hud-br { bottom:-1px; right:-1px; border-bottom:1.5px solid; border-right:1.5px solid; }
+
+  /* ---------- real 3D model viewer frame (hero) ---------- */
+  .model-frame {
+    background: radial-gradient(120% 90% at 30% 15%, #2A1F42 0%, #17111F 75%);
+    box-shadow: 0 0 90px -20px rgba(139,92,246,0.5);
+  }
+  model-viewer {
+    width: 100%; height: 100%;
+    --poster-color: transparent;
+    background-color: transparent;
+  }
+  model-viewer::part(default-progress-bar) { display: none; }
+  .bust-wrap { perspective: 1400px; }
+  .bust-scan {
+    position:absolute; left:0; right:0; height:38%;
+    background: linear-gradient(to bottom, transparent, rgba(57,255,176,0.35), transparent);
+    animation: scan-sweep 3.6s ease-in-out infinite;
+  }
+  @keyframes scan-sweep {
+    0% { top:-40%; opacity:0; }
+    10% { opacity:1; }
+    50% { top:100%; opacity:1; }
+    60% { opacity:0; }
+    100% { top:100%; opacity:0; }
+  }
+
+  /* ---------- category facet badges ---------- */
+  .facet-badge {
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    background: linear-gradient(155deg, #241C36, #14101D 65%);
+    border: 1px solid rgba(139,92,246,0.35);
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .cat-card:hover .facet-badge {
+    transform: scale(1.07) rotate(2deg);
+    box-shadow: 0 0 40px -6px rgba(139,92,246,0.6);
+    border-color: rgba(139,92,246,0.8);
+  }
+  .cat-card:hover .cat-img { transform: scale(1.08); }
+  .cat-card:hover .cat-scan { opacity:1; }
+
+  .scanline-overlay {
+    position:absolute; inset:0; opacity:0; transition: opacity .3s ease;
+    background: linear-gradient(to bottom, transparent 40%, rgba(57,255,176,0.16) 50%, transparent 60%);
+  }
+
+  /* ---------- product card hover data ---------- */
+  .prod-card .prod-data { opacity:1; }
+  @media (hover:hover) and (min-width: 768px) {
+    .prod-card .prod-data { opacity:0; transform: translateY(6px); transition: all .3s ease; }
+    .prod-card:hover .prod-data { opacity:1; transform: translateY(0); }
+  }
+  .prod-card:hover .prod-img { transform: scale(1.06) rotate(-1deg); }
+  .prod-card .prod-btn-label span { display:inline-block; transition: transform .25s ease; }
+
+  /* ---------- guard against accidental horizontal scroll on mobile ---------- */
+  body { overflow-x: clip; }
+
+  /* ---------- mobile sticky estimate bar (configurador) ---------- */
+  #mobileEstimateBar {
+    position: fixed; left:0; right:0; bottom:0; z-index:45;
+    transform: translateY(110%); transition: transform .35s ease;
+    background: rgba(19,16,25,0.96); backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(139,92,246,0.35);
+  }
+  #mobileEstimateBar.visible { transform: translateY(0); }
+
+  /* ---------- buttons ---------- */
+  .btn-primary {
+    background: linear-gradient(135deg, #9D6BFF, #6D28D9);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 8px 30px -10px rgba(139,92,246,0.7);
+  }
+  .btn-primary:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.14) inset, 0 10px 36px -8px rgba(139,92,246,0.9); }
+  .btn-outline { border:1px solid rgba(237,233,247,0.25); }
+  .btn-outline:hover { border-color: rgba(139,92,246,0.7); background: rgba(139,92,246,0.08); }
+
+  /* ---------- scrollbar ---------- */
+  ::-webkit-scrollbar { height:8px; width:8px; }
+  ::-webkit-scrollbar-thumb { background: #3A3546; border-radius:4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  /* ---------- carousel snap (mobile) ---------- */
+  .snap-row { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .snap-item { scroll-snap-align: start; }
+  .snap-row::-webkit-scrollbar { display:none; }
+  .snap-row { scrollbar-width:none; }
+
+  /* ---------- range sliders (before/after, configurador) ---------- */
+  input[type=range].compare-slider {
+    -webkit-appearance:none; appearance:none; width:100%; height:100%;
+    background:transparent; position:absolute; inset:0; margin:0; cursor:ew-resize; z-index:20;
+  }
+  input[type=range].compare-slider::-webkit-slider-thumb {
+    -webkit-appearance:none; width:48px; height:48px; border-radius:9999px;
+    background: #8B5CF6; border:3px solid #F1EEF7; cursor:ew-resize;
+    box-shadow: 0 0 0 6px rgba(139,92,246,0.18);
+    margin-top: 0;
+  }
+  input[type=range].compare-slider::-moz-range-thumb {
+    width:44px; height:44px; border-radius:9999px; background:#8B5CF6; border:3px solid #F1EEF7; cursor:ew-resize;
+  }
+  input[type=range].compare-slider::-webkit-slider-runnable-track { background:transparent; height:100%; }
+
+  /* ---------- accordion (FAQ) ---------- */
+  details.faq > summary { list-style:none; cursor:pointer; }
+  details.faq > summary::-webkit-details-marker { display:none; }
+  details.faq[open] .faq-chevron { transform: rotate(45deg); }
+  .faq-chevron { transition: transform .25s ease; }
+
+  /* ---------- gamification bar ---------- */
+  .prog-bar { background: repeating-linear-gradient(90deg, #8B5CF6 0 2px, #6D28D9 2px 4px); }
+
+  /* ---------- upload zone drag state ---------- */
+  #dropzone.drag-active { border-color:#8B5CF6; background: rgba(139,92,246,0.08); box-shadow: 0 0 60px -10px rgba(139,92,246,0.5); }
+
+  /* ---------- mobile sticky bar safety ---------- */
+  @media (max-width: 1023px) {
+    #configurador { padding-bottom: 9rem; }
+  }
+
+  /* ---------- modal / dialog polish ---------- */
+  [role="dialog"] { overscroll-behavior: contain; }
+  body.modal-open { overflow: hidden; }
+
+  /* ---------- placeholder social links ---------- */
+  .social-placeholder { opacity: .45; cursor: default; }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* ---------- focus visibility ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid #39FFB0; outline-offset: 2px;
+  }
+
+  .vert-text { writing-mode: vertical-rl; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  /* .hud (position:relative) não pode anular o sticky do painel no desktop */
+  @media (min-width:1024px) { .hud.lg\:sticky { position: sticky; } }
+</style>
 </head>
-
 <body class="bg-bg text-ink font-sans antialiased">
 
 <!-- ============ WHATSAPP FLOAT ============ -->
 <a href="https://wa.me/5547992624242" target="_blank" rel="noopener" id="whatsappFloat"
-   class="fixed z-50 bottom-5 right-5 md:bottom-7 md:right-7 flex items-center gap-2 bg-neon text-bg font-mono text-xs font-semibold px-4 py-3.5 rounded-full shadow-[0_10px_30px_-8px_rgba(57,255,176,0.6)] hover:brightness-110 transition-all duration-300"
-   aria-label="Falar com a gente no WhatsApp">
-  <i class="fa-brands fa-whatsapp text-lg" aria-hidden="true"></i>
-  <span class="hidden sm:inline tracking-wide">FALAR COM A GENTE</span>
+   class="fixed z-50 bottom-5 right-5 md:bottom-7 md:right-7 flex items-center gap-2 bg-neon text-bg font-mono text-xs font-semibold px-4 py-3.5 rounded-full shadow-[0_10px_30px_-8px_rgba(57,255,176,0.6)] hover:brightness-110 transition-all duration-300"
+   aria-label="Falar com a gente no WhatsApp">
+  <i class="fa-brands fa-whatsapp text-lg" aria-hidden="true"></i>
+  <span class="hidden sm:inline tracking-wide">FALAR COM A GENTE</span>
 </a>
 
 <!-- ============ HEADER ============ -->
 <header class="sticky top-0 z-40 bg-bg/85 backdrop-blur border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between gap-4">
-    <a href="#top" class="flex items-center gap-2 shrink-0">
-      <span class="w-9 h-9 rounded-lg bg-[#521CA3] flex items-center justify-center p-1.5 shrink-0"><img src="images/logo.png" alt="Sahir 3D" width="32" height="32" class="w-full h-full object-contain"></span>
-      <span class="font-display font-bold text-lg tracking-tight">SAHIR <span class="text-purple">3D</span></span>
-    </a>
+  <div class="max-w-7xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-2 shrink-0">
+      <span class="w-9 h-9 rounded-lg bg-[#521CA3] flex items-center justify-center p-1.5 shrink-0"><img src="images/logo.png" alt="Sahir 3D" width="32" height="32" class="w-full h-full object-contain"></span>
+      <span class="font-display font-bold text-lg tracking-tight">SAHIR <span class="text-purple">3D</span></span>
+    </a>
 
-    <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-ink/75">
-      <a href="#universos" class="hover:text-purple transition-colors">Universos</a>
-      <a href="#drops" class="hover:text-purple transition-colors">Drops da semana</a>
-      <a href="#configurador" class="hover:text-purple transition-colors">Monte a sua</a>
-      <a href="#processo" class="hover:text-purple transition-colors">Como funciona</a>
-      <a href="#estante" class="hover:text-purple transition-colors">Estante da comunidade</a>
-    </nav>
+    <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-ink/75">
+      <a href="#universos" class="hover:text-purple transition-colors">Universos</a>
+      <a href="#drops" class="hover:text-purple transition-colors">Drops da semana</a>
+      <a href="#configurador" class="hover:text-purple transition-colors">Monte a sua</a>
+      <a href="#processo" class="hover:text-purple transition-colors">Como funciona</a>
+      <a href="#estante" class="hover:text-purple transition-colors">Estante da comunidade</a>
+    </nav>
 
-    <div class="flex items-center gap-4 shrink-0">
-      <button id="btnConta" type="button" class="hidden md:flex items-center gap-2 text-ink/60 hover:text-purple transition-colors text-sm" aria-label="Entrar ou ver minha conta">
-        <i class="fa-solid fa-user text-lg"></i>
-        <span id="contaLabel" class="font-mono text-xs">ENTRAR</span>
-      </button>
-      <button type="button" id="menuToggle" class="lg:hidden" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
-        <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
-      </button>
-    </div>
-  </div>
-  <nav id="mobileMenu" class="hidden lg:hidden border-t border-line bg-bg px-5 py-4 flex flex-col gap-4 text-sm font-medium">
-    <a href="#universos" class="py-1">Universos</a>
-    <a href="#drops" class="py-1">Drops da semana</a>
-    <a href="#configurador" class="py-1">Monte a sua</a>
-    <a href="#processo" class="py-1">Como funciona</a>
-    <a href="#estante" class="py-1">Estante da comunidade</a>
-    <button type="button" id="mobileConta" class="py-1 text-left flex items-center gap-2 text-purple"><i class="fa-solid fa-user"></i><span id="mobileContaLabel">Entrar</span></button>
-  </nav>
+    <div class="flex items-center gap-4 shrink-0">
+      <button id="btnConta" type="button" class="hidden md:flex items-center gap-2 text-ink/60 hover:text-purple transition-colors text-sm" aria-label="Entrar ou ver minha conta">
+        <i class="fa-solid fa-user text-lg"></i>
+        <span id="contaLabel" class="font-mono text-xs">ENTRAR</span>
+      </button>
+      <button type="button" id="menuToggle" class="lg:hidden" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+        <i class="fa-solid fa-bars text-lg" id="menuIcon"></i>
+      </button>
+    </div>
+  </div>
+  <nav id="mobileMenu" class="hidden lg:hidden border-t border-line bg-bg px-5 py-4 flex flex-col gap-4 text-sm font-medium">
+    <a href="#universos" class="py-1">Universos</a>
+    <a href="#drops" class="py-1">Drops da semana</a>
+    <a href="#configurador" class="py-1">Monte a sua</a>
+    <a href="#processo" class="py-1">Como funciona</a>
+    <a href="#estante" class="py-1">Estante da comunidade</a>
+    <button type="button" id="mobileConta" class="py-1 text-left flex items-center gap-2 text-purple"><i class="fa-solid fa-user"></i><span id="mobileContaLabel">Entrar</span></button>
+  </nav>
 </header>
 
 <!-- ============ HERO ============ -->
 <section id="top" class="relative overflow-hidden grid-bg border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 py-8 md:py-24 grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 py-8 md:py-24 grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
 
-    <div class="relative z-10">
-      <div class="inline-flex items-center gap-2 font-mono text-[11px] text-purple/90 border border-purple/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-neon animate-pulse"></span>
-        OFICINA ABERTA — PEDIDOS DA SEMANA EM ANDAMENTO
-      </div>
+    <div class="relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] text-purple/90 border border-purple/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-neon animate-pulse"></span>
+        OFICINA ABERTA — PEDIDOS DA SEMANA EM ANDAMENTO
+      </div>
 
-      <h1 class="font-display font-bold leading-[0.98] text-5xl sm:text-6xl md:text-7xl tracking-tight">
-        SEU PERSONAGEM.<br>
-        <span class="text-purple">AGORA EM 3D.</span>
-      </h1>
+      <h1 class="font-display font-bold leading-[0.98] text-5xl sm:text-6xl md:text-7xl tracking-tight">
+        SEU PERSONAGEM.<br>
+        <span class="text-purple">AGORA EM 3D.</span>
+      </h1>
 
-      <p class="mt-6 text-lg text-muted max-w-md leading-relaxed">
-        Colecionáveis que saem da tela e vão para sua estante — modelados, impressos e pintados à mão, peça a peça.
-      </p>
+      <p class="mt-6 text-lg text-muted max-w-md leading-relaxed">
+        Colecionáveis que saem da tela e vão para sua estante — modelados, impressos e pintados à mão, peça a peça.
+      </p>
 
-      <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
-        <a href="#drops" class="btn-primary rounded-full px-7 py-3.5 font-semibold text-sm text-white text-center">Ver coleção</a>
-        <a href="#configurador" class="btn-outline rounded-full px-7 py-3.5 font-semibold text-sm text-center">Quero personalizar</a>
-      </div>
-    </div>
+      <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <a href="#drops" class="btn-primary rounded-full px-7 py-3.5 font-semibold text-sm text-white text-center">Ver coleção</a>
+        <a href="#configurador" class="btn-outline rounded-full px-7 py-3.5 font-semibold text-sm text-center">Quero personalizar</a>
+      </div>
+    </div>
 
-    <!-- interactive 3D model viewer -->
-    <div class="relative mt-4 lg:mt-0">
-      <div class="bust-wrap relative mx-auto max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] select-none">
-        <div class="hud model-frame aspect-[3/4] relative overflow-hidden">
-          <!-- ATUALIZADO: Adicionado poster e fallback color -->
-          <model-viewer
-            src="Mago-light.glb"
-            alt="Prévia 3D demonstrativa do colecionável"
-            camera-controls
-            touch-action="pan-y"
-            interaction-prompt="none"
-            auto-rotate
-            auto-rotate-delay="1500"
-            rotation-per-second="16deg"
-            shadow-intensity="1"
-            exposure="0.9"
-            environment-image="neutral"
-            loading="eager"
-            style="--poster-color: transparent;">
-            <p slot="fallback" class="px-6 text-center font-mono text-xs text-muted">Seu navegador não conseguiu carregar o visualizador 3D.</p>
-          </model-viewer>
-          <div class="bust-scan pointer-events-none"></div>
-          <span class="hud-bl"></span><span class="hud-br"></span>
-        </div>
-      </div>
+    <!-- interactive 3D model viewer -->
+    <div class="relative mt-4 lg:mt-0">
+      <div class="bust-wrap relative mx-auto max-w-[280px] sm:max-w-[340px] lg:max-w-[400px] select-none">
+        <div class="hud model-frame aspect-[3/4] relative overflow-hidden">
+          <model-viewer
+            src="Mago-light.glb"
+            alt="Prévia 3D demonstrativa do colecionável"
+            camera-controls
+            touch-action="pan-y"
+            interaction-prompt="none"
+            auto-rotate
+            auto-rotate-delay="1500"
+            rotation-per-second="16deg"
+            shadow-intensity="1"
+            exposure="0.9"
+            environment-image="neutral"
+            loading="eager">
+          </model-viewer>
+          <div class="bust-scan pointer-events-none"></div>
+          <span class="hud-bl"></span><span class="hud-br"></span>
+        </div>
+      </div>
 
-      <!-- HUD readouts -->
-      <div class="absolute -top-3 -left-3 sm:-left-8 font-mono text-[10px] leading-tight text-purple/80 bg-bg/80 border border-line px-2.5 py-1.5 backdrop-blur">
-        PROJETO #0427<br>
-        <span class="text-neon">STATUS: DISPONÍVEL</span>
-      </div>
-      <div class="absolute -bottom-3 -right-3 sm:-right-8 font-mono text-[10px] leading-tight text-purple/80 bg-bg/80 border border-line px-2.5 py-1.5 backdrop-blur text-right">
-        MODELO: DEMONSTRATIVO<br>INTERAÇÃO: 360°
-      </div>
-      <p class="text-center mt-5 font-mono text-[11px] text-muted flex items-center justify-center gap-2">
-        <i class="fa-solid fa-arrows-left-right"></i> arraste para girar
-      </p>
-    </div>
-  </div>
+      <!-- HUD readouts -->
+      <div class="absolute -top-3 -left-3 sm:-left-8 font-mono text-[10px] leading-tight text-purple/80 bg-bg/80 border border-line px-2.5 py-1.5 backdrop-blur">
+        PROJETO #0427<br>
+        <span class="text-neon">STATUS: DISPONÍVEL</span>
+      </div>
+      <div class="absolute -bottom-3 -right-3 sm:-right-8 font-mono text-[10px] leading-tight text-purple/80 bg-bg/80 border border-line px-2.5 py-1.5 backdrop-blur text-right">
+        MODELO: DEMONSTRATIVO<br>INTERAÇÃO: 360°
+      </div>
+      <p class="text-center mt-5 font-mono text-[11px] text-muted flex items-center justify-center gap-2">
+        <i class="fa-solid fa-arrows-left-right"></i> arraste para girar
+      </p>
+    </div>
+  </div>
 </section>
 
 <!-- ============ UNIVERSOS ============ -->
 <section id="universos" class="py-14 md:py-28 border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <div class="flex items-end justify-between gap-6 mb-10 md:mb-14">
-      <h2 class="font-display font-bold text-3xl md:text-4xl max-w-md">Qual é o seu universo?</h2>
-      <p class="hidden md:block text-muted text-sm max-w-xs font-mono">TOQUE OU PASSE O MOUSE PARA EXPLORAR CADA CATEGORIA</p>
-    </div>
-    <p class="md:hidden flex items-center gap-2 text-muted text-xs font-mono mb-5">
-      <i class="fa-solid fa-arrow-right-arrow-left"></i> DESLIZE PARA VER TODOS OS UNIVERSOS
-    </p>
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="flex items-end justify-between gap-6 mb-10 md:mb-14">
+      <h2 class="font-display font-bold text-3xl md:text-4xl max-w-md">Qual é o seu universo?</h2>
+      <p class="hidden md:block text-muted text-sm max-w-xs font-mono">TOQUE OU PASSE O MOUSE PARA EXPLORAR CADA CATEGORIA</p>
+    </div>
+    <p class="md:hidden flex items-center gap-2 text-muted text-xs font-mono mb-5">
+      <i class="fa-solid fa-arrow-right-arrow-left"></i> DESLIZE PARA VER TODOS OS UNIVERSOS
+    </p>
 
-    <div class="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-5 overflow-x-auto snap-row md:overflow-visible -mx-5 px-5 md:mx-0 md:px-0 pb-4 md:pb-0">
-      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
-        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
-          <div class="scanline-overlay cat-scan"></div>
-          <i class="fa-solid fa-gamepad cat-img text-4xl text-purple transition-transform duration-500"></i>
-        </div>
-        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">GAMES</p>
-      </a>
-      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
-        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
-          <div class="scanline-overlay cat-scan"></div>
-          <i class="fa-solid fa-mask cat-img text-4xl text-purple transition-transform duration-500"></i>
-        </div>
-        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">ANIME</p>
-      </a>
-      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
-        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
-          <div class="scanline-overlay cat-scan"></div>
-          <i class="fa-solid fa-dice-d20 cat-img text-4xl text-purple transition-transform duration-500"></i>
-        </div>
-        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">RPG</p>
-      </a>
-      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
-        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
-          <div class="scanline-overlay cat-scan"></div>
-          <i class="fa-solid fa-shield-halved cat-img text-4xl text-purple transition-transform duration-500"></i>
-        </div>
-        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">HERÓIS</p>
-      </a>
-      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
-        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
-          <div class="scanline-overlay cat-scan"></div>
-          <i class="fa-solid fa-rocket cat-img text-4xl text-purple transition-transform duration-500"></i>
-        </div>
-        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">SCI-FI</p>
-      </a>
-      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
-        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
-          <div class="scanline-overlay cat-scan"></div>
-          <i class="fa-solid fa-skull cat-img text-4xl text-purple transition-transform duration-500"></i>
-        </div>
-        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">TERROR</p>
-      </a>
-    </div>
-  </div>
+    <div class="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-5 overflow-x-auto snap-row md:overflow-visible -mx-5 px-5 md:mx-0 md:px-0 pb-4 md:pb-0">
+      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
+        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
+          <div class="scanline-overlay cat-scan"></div>
+          <i class="fa-solid fa-gamepad cat-img text-4xl text-purple transition-transform duration-500"></i>
+        </div>
+        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">GAMES</p>
+      </a>
+      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
+        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
+          <div class="scanline-overlay cat-scan"></div>
+          <i class="fa-solid fa-mask cat-img text-4xl text-purple transition-transform duration-500"></i>
+        </div>
+        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">ANIME</p>
+      </a>
+      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
+        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
+          <div class="scanline-overlay cat-scan"></div>
+          <i class="fa-solid fa-dice-d20 cat-img text-4xl text-purple transition-transform duration-500"></i>
+        </div>
+        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">RPG</p>
+      </a>
+      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
+        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
+          <div class="scanline-overlay cat-scan"></div>
+          <i class="fa-solid fa-shield-halved cat-img text-4xl text-purple transition-transform duration-500"></i>
+        </div>
+        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">HERÓIS</p>
+      </a>
+      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
+        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
+          <div class="scanline-overlay cat-scan"></div>
+          <i class="fa-solid fa-rocket cat-img text-4xl text-purple transition-transform duration-500"></i>
+        </div>
+        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">SCI-FI</p>
+      </a>
+      <a href="#drops" class="cat-card snap-item shrink-0 w-[150px] md:w-auto group">
+        <div class="facet-badge relative aspect-square flex items-center justify-center overflow-hidden">
+          <div class="scanline-overlay cat-scan"></div>
+          <i class="fa-solid fa-skull cat-img text-4xl text-purple transition-transform duration-500"></i>
+        </div>
+        <p class="mt-3 font-mono text-xs tracking-wide text-ink/80">TERROR</p>
+      </a>
+    </div>
+  </div>
 </section>
 
+<!-- TODO: revisar preços, pesos e etiquetas de cada produto antes da publicação. -->
 <!-- ============ DROPS DA SEMANA ============ -->
-<!-- ATUALIZADO: Imagens agora possuem width e height para prevenir Layout Shift -->
 <section id="drops" class="py-14 md:py-28 border-b border-line grid-bg-fine">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <div class="flex items-end justify-between gap-6 mb-10 md:mb-14">
-      <div>
-        <p class="font-mono text-xs text-purple mb-2">LOTE ATUAL · ESTOQUE LIMITADO</p>
-        <h2 class="font-display font-bold text-3xl md:text-4xl">Drops da semana</h2>
-      </div>
-      <span class="hidden md:inline-block font-mono text-xs text-muted/70">CATÁLOGO EM EXPANSÃO</span>
-    </div>
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="flex items-end justify-between gap-6 mb-10 md:mb-14">
+      <div>
+        <p class="font-mono text-xs text-purple mb-2">LOTE ATUAL · ESTOQUE LIMITADO</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl">Drops da semana</h2>
+      </div>
+      <span class="hidden md:inline-block font-mono text-xs text-muted/70">CATÁLOGO EM EXPANSÃO</span>
+    </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
-        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/deadpool.jpg" width="400" height="400" alt="Máscara Deadpool" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
-          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 18CM · PESO: 320G · PLA PREMIUM
-          </div>
-        </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">CAÇADOR — LINHA SOMBRA</p>
-          <h3 class="font-display font-semibold">Máscara Deadpool</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 189,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Deadpool">
-              <span>PERSONALIZAR ▸</span>
-            </button>
-          </div>
-        </div>
-      </article>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
+          <img src="images/deadpool.jpg" alt="Máscara Deadpool" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
+          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
+            ALTURA: 18CM · PESO: 320G · PLA PREMIUM
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="font-mono text-[10px] text-muted mb-1">CAÇADOR — LINHA SOMBRA</p>
+          <h3 class="font-display font-semibold">Máscara Deadpool</h3>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-display font-semibold text-lg">R$ 189,90</span>
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Deadpool">
+              <span>PERSONALIZAR ▸</span>
+            </button>
+          </div>
+        </div>
+      </article>
 
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
-        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/wyrm-de-obsidiana.jpg" width="400" height="400" alt="Wyrm de Obsidiana" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-purple text-white px-2 py-0.5 font-semibold">BEST SELLER</span>
-          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 24CM · PESO: 410G · PINTURA MANUAL
-          </div>
-        </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">CRIATURA — LINHA ANCESTRAL</p>
-          <h3 class="font-display font-semibold">Wyrm de Obsidiana</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 249,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
-              <span>PERSONALIZAR ▸</span>
-            </button>
-          </div>
-        </div>
-      </article>
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
+          <img src="images/wyrm-de-obsidiana.jpg" alt="Wyrm de Obsidiana" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <span class="absolute top-3 left-3 font-mono text-[10px] bg-purple text-white px-2 py-0.5 font-semibold">BEST SELLER</span>
+          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
+            ALTURA: 24CM · PESO: 410G · PINTURA MANUAL
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="font-mono text-[10px] text-muted mb-1">CRIATURA — LINHA ANCESTRAL</p>
+          <h3 class="font-display font-semibold">Wyrm de Obsidiana</h3>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-display font-semibold text-lg">R$ 249,90</span>
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
+              <span>PERSONALIZAR ▸</span>
+            </button>
+          </div>
+        </div>
+      </article>
 
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
-        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/mecha-vk-09.jpg" width="400" height="400" alt="Mecha VK-09" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-white/90 text-bg px-2 py-0.5 font-semibold">NOVO</span>
-          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 20CM · PESO: 380G · PLA REFORÇADO
-          </div>
-        </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">MECHA — LINHA VETOR</p>
-          <h3 class="font-display font-semibold">Mecha VK-09</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 219,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
-              <span>PERSONALIZAR ▸</span>
-            </button>
-          </div>
-        </div>
-      </article>
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
+          <img src="images/mecha-vk-09.jpg" alt="Mecha VK-09" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <span class="absolute top-3 left-3 font-mono text-[10px] bg-white/90 text-bg px-2 py-0.5 font-semibold">NOVO</span>
+          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
+            ALTURA: 20CM · PESO: 380G · PLA REFORÇADO
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="font-mono text-[10px] text-muted mb-1">MECHA — LINHA VETOR</p>
+          <h3 class="font-display font-semibold">Mecha VK-09</h3>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-display font-semibold text-lg">R$ 219,90</span>
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
+              <span>PERSONALIZAR ▸</span>
+            </button>
+          </div>
+        </div>
+      </article>
 
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
-        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/feiticeira-do-veu.jpg" width="400" height="400" alt="Feiticeira do Véu" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
-          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 16CM · PESO: 290G · PLA PREMIUM
-          </div>
-        </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">ARCANISTA — LINHA GRIMÓRIO</p>
-          <h3 class="font-display font-semibold">Feiticeira do Véu</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 174,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
-              <span>PERSONALIZAR ▸</span>
-            </button>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
+          <img src="images/feiticeira-do-veu.jpg" alt="Feiticeira do Véu" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
+          <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
+            ALTURA: 16CM · PESO: 290G · PLA PREMIUM
+          </div>
+        </div>
+        <div class="p-4">
+          <p class="font-mono text-[10px] text-muted mb-1">ARCANISTA — LINHA GRIMÓRIO</p>
+          <h3 class="font-display font-semibold">Feiticeira do Véu</h3>
+          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-display font-semibold text-lg">R$ 174,90</span>
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
+              <span>PERSONALIZAR ▸</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>
 
 <!-- ============ CONFIGURADOR ============ -->
 <section id="configurador" class="py-14 md:py-28 pb-32 lg:pb-28 border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <p class="font-mono text-xs text-purple mb-2">FERRAMENTA DE PROJETO</p>
-    <h2 class="font-display font-bold text-3xl md:text-4xl mb-12 max-w-lg">Monte seu colecionável</h2>
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <p class="font-mono text-xs text-purple mb-2">FERRAMENTA DE PROJETO</p>
+    <h2 class="font-display font-bold text-3xl md:text-4xl mb-12 max-w-lg">Monte seu colecionável</h2>
 
-    <div class="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-start">
-      <div class="space-y-8">
+    <div class="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-start">
+      <div class="space-y-8">
 
-        <div>
-          <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O UNIVERSO</p>
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="modelGroup">
-            <button type="button" data-model="Heróis" data-icon="fa-shield-halved" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgHerois" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgHerois)"/><circle cx="60" cy="55" r="30" fill="none" stroke="#8B5CF6" stroke-width="8" opacity="0.8"/><circle cx="60" cy="55" r="18" fill="none" stroke="#8B5CF6" stroke-width="4" opacity="0.5"/><polygon points="60,42 64,52 74,52 66,58 69,68 60,62 51,68 54,58 46,52 56,52" fill="#8B5CF6" opacity="0.9"/></svg>
-              <span class="font-mono text-[10px] pb-3 text-center">Marvel / DC</span>
-            </button>
+        <div>
+          <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O UNIVERSO</p>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="modelGroup">
+            <button type="button" data-model="Heróis" data-icon="fa-shield-halved" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgHerois" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgHerois)"/><circle cx="60" cy="55" r="30" fill="none" stroke="#8B5CF6" stroke-width="8" opacity="0.8"/><circle cx="60" cy="55" r="18" fill="none" stroke="#8B5CF6" stroke-width="4" opacity="0.5"/><polygon points="60,42 64,52 74,52 66,58 69,68 60,62 51,68 54,58 46,52 56,52" fill="#8B5CF6" opacity="0.9"/></svg>
+              <span class="font-mono text-[10px] pb-3 text-center">Marvel / DC</span>
+            </button>
 
-            <button type="button" data-model="Anime" data-icon="fa-user-ninja" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgAnime" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgAnime)"/><path d="M60 20 L68 48 L96 56 L68 64 L60 92 L52 64 L24 56 L52 48 Z" fill="#8B5CF6" opacity="0.85"/><circle cx="60" cy="56" r="10" fill="#120E1B"/><circle cx="60" cy="56" r="4" fill="#8B5CF6" opacity="0.6"/></svg>
-              <span class="font-mono text-[10px] pb-3 text-center">Anime</span>
-            </button>
+            <button type="button" data-model="Anime" data-icon="fa-user-ninja" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgAnime" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgAnime)"/><path d="M60 20 L68 48 L96 56 L68 64 L60 92 L52 64 L24 56 L52 48 Z" fill="#8B5CF6" opacity="0.85"/><circle cx="60" cy="56" r="10" fill="#120E1B"/><circle cx="60" cy="56" r="4" fill="#8B5CF6" opacity="0.6"/></svg>
+              <span class="font-mono text-[10px] pb-3 text-center">Anime</span>
+            </button>
 
-            <button type="button" data-model="Videogames" data-icon="fa-gamepad" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgGames" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgGames)"/><rect x="22" y="38" width="76" height="44" rx="22" fill="#8B5CF6" opacity="0.85"/><rect x="36" y="52" width="16" height="5" fill="#120E1B" rx="1"/><rect x="41.5" y="46.5" width="5" height="16" fill="#120E1B" rx="1"/><circle cx="78" cy="52" r="4.5" fill="#120E1B"/><circle cx="68" cy="60" r="4.5" fill="#120E1B"/></svg>
-              <span class="font-mono text-[10px] pb-3 text-center">Videogames</span>
-            </button>
+            <button type="button" data-model="Videogames" data-icon="fa-gamepad" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgGames" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgGames)"/><rect x="22" y="38" width="76" height="44" rx="22" fill="#8B5CF6" opacity="0.85"/><rect x="36" y="52" width="16" height="5" fill="#120E1B" rx="1"/><rect x="41.5" y="46.5" width="5" height="16" fill="#120E1B" rx="1"/><circle cx="78" cy="52" r="4.5" fill="#120E1B"/><circle cx="68" cy="60" r="4.5" fill="#120E1B"/></svg>
+              <span class="font-mono text-[10px] pb-3 text-center">Videogames</span>
+            </button>
 
-            <button type="button" data-model="Sci-Fi" data-icon="fa-jedi" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgScifi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgScifi)"/><line x1="32" y1="88" x2="84" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.9"/><line x1="88" y1="88" x2="36" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.6"/><line x1="22" y1="98" x2="34" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/><line x1="98" y1="98" x2="86" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/></svg>
-              <span class="font-mono text-[10px] pb-3 text-center">Sci-Fi</span>
-            </button>
+            <button type="button" data-model="Sci-Fi" data-icon="fa-jedi" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgScifi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgScifi)"/><line x1="32" y1="88" x2="84" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.9"/><line x1="88" y1="88" x2="36" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.6"/><line x1="22" y1="98" x2="34" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/><line x1="98" y1="98" x2="86" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/></svg>
+              <span class="font-mono text-[10px] pb-3 text-center">Sci-Fi</span>
+            </button>
 
-            <button type="button" data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
-              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgCubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgCubo)"/><path d="M60 28 L92 44 L92 76 L60 92 L28 76 L28 44 Z" fill="#8B5CF6" opacity="0.35" stroke="#8B5CF6" stroke-width="2"/><path d="M60 28 L60 60 M60 60 L92 44 M60 60 L28 44 M60 60 L60 92" stroke="#8B5CF6" stroke-width="2" opacity="0.8"/></svg>
-              <span class="font-mono text-[10px] pb-3 text-center">Seu STL</span>
-            </button>
-          </div>
-        </div>
+            <button type="button" data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+              <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgCubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgCubo)"/><path d="M60 28 L92 44 L92 76 L60 92 L28 76 L28 44 Z" fill="#8B5CF6" opacity="0.35" stroke="#8B5CF6" stroke-width="2"/><path d="M60 28 L60 60 M60 60 L92 44 M60 60 L28 44 M60 60 L60 92" stroke="#8B5CF6" stroke-width="2" opacity="0.8"/></svg>
+              <span class="font-mono text-[10px] pb-3 text-center">Seu STL</span>
+            </button>
+          </div>
+        </div>
 
-        <div id="step2Container" class="hidden animate-[fadeIn_0.3s_ease-out]">
-          <p class="font-mono text-xs text-muted mb-3">ETAPA 2 — ESCOLHA O PERSONAGEM</p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="characterGroup">
-            <!-- Botões injetados via JavaScript -->
-          </div>
-        </div>
+        <div id="step2Container" class="hidden animate-[fadeIn_0.3s_ease-out]">
+          <p class="font-mono text-xs text-muted mb-3">ETAPA 2 — ESCOLHA O PERSONAGEM</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="characterGroup">
+            <!-- Botões injetados via JavaScript -->
+          </div>
+        </div>
 
-        <div>
-          <p class="font-mono text-xs text-muted mb-3">ETAPA 3 — ESCOLHA O TAMANHO</p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="sizeGroup">
-            <button type="button" data-size="10 cm" data-base="89.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">10 cm</button>
-            <button type="button" data-size="15 cm" data-base="129.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">15 cm</button>
-            <button type="button" data-size="20 cm" data-base="189.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">20 cm</button>
-            <button type="button" data-size="30 cm" data-base="289.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">30 cm</button>
-          </div>
-        </div>
+        <div>
+          <p class="font-mono text-xs text-muted mb-3">ETAPA 3 — ESCOLHA O TAMANHO</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="sizeGroup">
+            <button type="button" data-size="10 cm" data-base="89.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">10 cm</button>
+            <button type="button" data-size="15 cm" data-base="129.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">15 cm</button>
+            <button type="button" data-size="20 cm" data-base="189.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">20 cm</button>
+            <button type="button" data-size="30 cm" data-base="289.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">30 cm</button>
+          </div>
+        </div>
 
-        <div>
-          <p class="font-mono text-xs text-muted mb-3">ETAPA 4 — ESCOLHA O ACABAMENTO</p>
-          <div class="grid grid-cols-3 gap-3" id="finishGroup">
-            <button type="button" data-finish="Sem pintura" data-add="0" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Sem pintura</button>
-            <button type="button" data-finish="Pintura básica" data-add="40" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Básica</button>
-            <button type="button" data-finish="Pintura premium" data-add="110" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Premium</button>
-          </div>
-        </div>
-      </div>
+        <div>
+          <p class="font-mono text-xs text-muted mb-3">ETAPA 4 — ESCOLHA O ACABAMENTO</p>
+          <div class="grid grid-cols-3 gap-3" id="finishGroup">
+            <button type="button" data-finish="Sem pintura" data-add="0" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Sem pintura</button>
+            <button type="button" data-finish="Pintura básica" data-add="40" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Básica</button>
+            <button type="button" data-finish="Pintura premium" data-add="110" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Premium</button>
+          </div>
+        </div>
+      </div>
 
-      <!-- live preview / estimate -->
-      <div class="hud bg-surface border border-line p-6 lg:sticky lg:top-24">
-        <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5 relative overflow-hidden rounded-md border border-line">
-          <img id="previewImage" alt="Prévia do personagem selecionado" class="hidden w-full h-full object-cover relative z-10" />
-          <i id="previewIcon" class="fa-solid fa-cube text-7xl text-purple/80 transition-all duration-300 absolute z-0"></i>
-          <div class="bust-scan opacity-60 z-20"></div>
-        </div>
-        <dl class="space-y-2 font-mono text-xs text-muted mb-5">
-          <div class="flex justify-between"><dt>UNIVERSO</dt><dd id="outModel" class="text-ink">—</dd></div>
-          <div class="flex justify-between"><dt>PERSONAGEM</dt><dd id="outCharacter" class="text-ink text-right">—</dd></div>
-          <div class="flex justify-between"><dt>TAMANHO</dt><dd id="outSize" class="text-ink">—</dd></div>
-          <div class="flex justify-between"><dt>ACABAMENTO</dt><dd id="outFinish" class="text-ink">—</dd></div>
-        </dl>
-        <div class="border-t border-line pt-4">
-          <p class="font-mono text-[10px] text-muted mb-1">MATERIAL: PLA PREMIUM</p>
-          <p class="font-display font-bold text-3xl mb-4">R$ <span id="outPrice" aria-live="polite">0,00</span></p>
-          <button type="button" id="btnFinalizarPedido" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
-        </div>
-      </div>
-    </div>
-  </div>
+      <!-- live preview / estimate -->
+      <div class="hud bg-surface border border-line p-6 lg:sticky lg:top-24">
+        <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5 relative overflow-hidden rounded-md border border-line">
+          <img id="previewImage" src="" alt="Preview do Personagem" class="hidden w-full h-full object-cover relative z-10" />
+          <i id="previewIcon" class="fa-solid fa-cube text-7xl text-purple/80 transition-all duration-300 absolute z-0"></i>
+          <div class="bust-scan opacity-60 z-20"></div>
+        </div>
+        <dl class="space-y-2 font-mono text-xs text-muted mb-5">
+          <div class="flex justify-between"><dt>UNIVERSO</dt><dd id="outModel" class="text-ink">—</dd></div>
+          <div class="flex justify-between"><dt>PERSONAGEM</dt><dd id="outCharacter" class="text-ink text-right">—</dd></div>
+          <div class="flex justify-between"><dt>TAMANHO</dt><dd id="outSize" class="text-ink">—</dd></div>
+          <div class="flex justify-between"><dt>ACABAMENTO</dt><dd id="outFinish" class="text-ink">—</dd></div>
+        </dl>
+        <div class="border-t border-line pt-4">
+          <p class="font-mono text-[10px] text-muted mb-1">MATERIAL: PLA PREMIUM</p>
+          <p class="font-display font-bold text-3xl mb-4">R$ <span id="outPrice" aria-live="polite">0,00</span></p>
+          <button id="btnFinalizarPedido" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- mobile-only sticky estimate bar, shown while the configurador is in view -->
 <div id="mobileEstimateBar" class="lg:hidden">
-  <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
-    <div class="font-mono text-[11px] leading-tight">
-      <span class="text-muted block">ESTIMATIVA</span>
-      <span class="font-display font-bold text-lg" aria-live="polite">R$ <span id="outPriceMobile">0,00</span></span>
-    </div>
-    <button type="button" id="btnMobileCheckout" class="btn-primary rounded-full px-5 py-2.5 font-semibold text-xs text-white shrink-0">Ir para pagamento</button>
-  </div>
+  <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
+    <div class="font-mono text-[11px] leading-tight">
+      <span class="text-muted block">ESTIMATIVA</span>
+      <span class="font-display font-bold text-lg">R$ <span id="outPriceMobile">0,00</span></span>
+    </div>
+    <button type="button" id="btnMobileCheckout" class="btn-primary rounded-full px-5 py-2.5 font-semibold text-xs text-white shrink-0">Ir para pagamento</button>
+  </div>
 </div>
 
+<!-- TODO: o upload ainda não envia o arquivo a lugar nenhum (ex.: Supabase Storage ou WhatsApp) -->
 <!-- ============ UPLOAD MODELO 3D ============ -->
 <section class="py-14 md:py-28 border-b border-line grid-bg">
-  <div class="max-w-4xl mx-auto px-5 md:px-8 text-center">
-    <h2 class="font-display font-bold text-3xl md:text-4xl">Tem um modelo 3D?</h2>
-    <p class="font-display font-bold text-3xl md:text-4xl text-purple mb-6">Mande para a gente.</p>
-    <p class="text-muted max-w-md mx-auto mb-10">Envie seu modelo — nossa equipe analisa o arquivo e retorna com uma estimativa de impressão.</p>
+  <div class="max-w-4xl mx-auto px-5 md:px-8 text-center">
+    <h2 class="font-display font-bold text-3xl md:text-4xl">Tem um modelo 3D?</h2>
+    <p class="font-display font-bold text-3xl md:text-4xl text-purple mb-6">Mande para a gente.</p>
+    <p class="text-muted max-w-md mx-auto mb-10">Envie seu modelo — nossa equipe analisa o arquivo e retorna com uma estimativa de impressão.</p>
 
-    <div id="dropzone" class="hud border-2 border-dashed border-line rounded-2xl py-14 px-6 transition-all">
-      <i class="fa-solid fa-cloud-arrow-up text-4xl text-purple mb-4"></i>
-      <p class="font-mono text-sm mb-1" id="dzLabel" aria-live="polite">Selecione ou arraste seu arquivo aqui</p>
-      <p class="font-mono text-[11px] text-muted mb-6">STL · OBJ · 3MF</p>
-      <input type="file" id="fileInput" accept=".stl,.obj,.3mf" class="hidden" aria-label="Selecionar arquivo 3D">
-      <button type="button" onclick="document.getElementById('fileInput').click()" class="btn-primary rounded-full px-7 py-3 font-semibold text-sm text-white">Selecionar meu modelo</button>
-    </div>
-  </div>
+    <div id="dropzone" class="hud border-2 border-dashed border-line rounded-2xl py-14 px-6 transition-all">
+      <i class="fa-solid fa-cloud-arrow-up text-4xl text-purple mb-4"></i>
+      <p class="font-mono text-sm mb-1" id="dzLabel" aria-live="polite">Selecione ou arraste seu arquivo aqui</p>
+      <p class="font-mono text-[11px] text-muted mb-6">STL · OBJ · 3MF</p>
+      <input type="file" id="fileInput" accept=".stl,.obj,.3mf" class="hidden" aria-label="Selecionar arquivo 3D">
+      <button type="button" onclick="document.getElementById('fileInput').click()" class="btn-primary rounded-full px-7 py-3 font-semibold text-sm text-white">Selecionar meu modelo</button>
+    </div>
+  </div>
 </section>
 
 <!-- ============ DO ARQUIVO PARA A ESTANTE ============ -->
 <section class="py-14 md:py-28 border-b border-line">
-  <div class="max-w-5xl mx-auto px-5 md:px-8">
-    <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-3">Do arquivo → para a estante</h2>
-    <p class="text-muted text-center mb-12">Arraste o controle para comparar</p>
+  <div class="max-w-5xl mx-auto px-5 md:px-8">
+    <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-3">Do arquivo → para a estante</h2>
+    <p class="text-muted text-center mb-12">Arraste o controle para comparar</p>
 
-    <div class="relative aspect-video hud overflow-hidden select-none" id="compareWrap">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#171227] to-[#0C0910] flex items-center justify-center">
-        <div class="text-center">
-          <i class="fa-solid fa-diagram-project text-6xl text-purple/70 mb-3"></i>
-          <p class="font-mono text-xs text-muted">MODELO 3D DIGITAL</p>
-        </div>
-      </div>
-      <div class="absolute inset-0 overflow-hidden" id="afterLayer" style="width:50%;">
-        <div class="h-full flex items-center justify-center bg-gradient-to-br from-[#3B2A63] to-[#1A1224]" style="width:200%; max-width:none;">
-          <div class="text-center" style="width:50%;">
-            <i class="fa-solid fa-trophy text-6xl text-neon mb-3"></i>
-            <p class="font-mono text-xs text-ink">PEÇA FÍSICA FINALIZADA</p>
-          </div>
-        </div>
-      </div>
-      <div class="absolute top-0 bottom-0 w-0.5 bg-ink/80 pointer-events-none" id="compareHandleLine" style="left:50%;"></div>
-      <input type="range" min="0" max="100" value="50" class="compare-slider" id="compareRange" aria-label="Comparar antes e depois">
-    </div>
-  </div>
+    <div class="relative aspect-video hud overflow-hidden select-none" id="compareWrap">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#171227] to-[#0C0910] flex items-center justify-center">
+        <div class="text-center">
+          <i class="fa-solid fa-diagram-project text-6xl text-purple/70 mb-3"></i>
+          <p class="font-mono text-xs text-muted">MODELO 3D DIGITAL</p>
+        </div>
+      </div>
+      <div class="absolute inset-0 overflow-hidden" id="afterLayer" style="width:50%;">
+        <div class="h-full flex items-center justify-center bg-gradient-to-br from-[#3B2A63] to-[#1A1224]" style="width:200%; max-width:none;">
+          <div class="text-center" style="width:50%;">
+            <i class="fa-solid fa-trophy text-6xl text-neon mb-3"></i>
+            <p class="font-mono text-xs text-ink">PEÇA FÍSICA FINALIZADA</p>
+          </div>
+        </div>
+      </div>
+      <div class="absolute top-0 bottom-0 w-0.5 bg-ink/80 pointer-events-none" id="compareHandleLine" style="left:50%;"></div>
+      <input type="range" min="0" max="100" value="50" class="compare-slider" id="compareRange" aria-label="Comparar antes e depois">
+    </div>
+  </div>
 </section>
 
 <!-- ============ PROCESSO DE FABRICAÇÃO ============ -->
 <section id="processo" class="py-14 md:py-28 border-b border-line grid-bg-fine">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <p class="font-mono text-xs text-purple mb-2">DO CAD À ESTANTE</p>
-    <h2 class="font-display font-bold text-3xl md:text-4xl mb-12">Por trás da impressão</h2>
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <p class="font-mono text-xs text-purple mb-2">DO CAD À ESTANTE</p>
+    <h2 class="font-display font-bold text-3xl md:text-4xl mb-12">Por trás da impressão</h2>
 
-    <div class="grid md:grid-cols-2 gap-10 items-start">
-      <div class="space-y-1" id="stepsList">
-        <button type="button" data-step="1" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(1)">
-          <span class="font-mono text-xs text-purple w-8">01</span>
-          <span class="font-display font-medium group-[.active]:text-purple">Modelagem</span>
-        </button>
-        <button type="button" data-step="2" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(2)">
-          <span class="font-mono text-xs text-purple w-8">02</span>
-          <span class="font-display font-medium">Impressão</span>
-        </button>
-        <button type="button" data-step="3" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(3)">
-          <span class="font-mono text-xs text-purple w-8">03</span>
-          <span class="font-display font-medium">Remoção de suportes</span>
-        </button>
-        <button type="button" data-step="4" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(4)">
-          <span class="font-mono text-xs text-purple w-8">04</span>
-          <span class="font-display font-medium">Acabamento</span>
-        </button>
-        <button type="button" data-step="5" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(5)">
-          <span class="font-mono text-xs text-purple w-8">05</span>
-          <span class="font-display font-medium">Pintura</span>
-        </button>
-        <button type="button" data-step="6" class="step-btn w-full text-left flex items-center gap-4 py-4 group" onclick="setStep(6)">
-          <span class="font-mono text-xs text-purple w-8">06</span>
-          <span class="font-display font-medium">Sua estante</span>
-        </button>
-      </div>
+    <div class="grid md:grid-cols-2 gap-10 items-start">
+      <div class="space-y-1" id="stepsList">
+        <button data-step="1" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(1)">
+          <span class="font-mono text-xs text-purple w-8">01</span>
+          <span class="font-display font-medium group-[.active]:text-purple">Modelagem</span>
+        </button>
+        <button data-step="2" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(2)">
+          <span class="font-mono text-xs text-purple w-8">02</span>
+          <span class="font-display font-medium">Impressão</span>
+        </button>
+        <button data-step="3" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(3)">
+          <span class="font-mono text-xs text-purple w-8">03</span>
+          <span class="font-display font-medium">Remoção de suportes</span>
+        </button>
+        <button data-step="4" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(4)">
+          <span class="font-mono text-xs text-purple w-8">04</span>
+          <span class="font-display font-medium">Acabamento</span>
+        </button>
+        <button data-step="5" class="step-btn w-full text-left flex items-center gap-4 py-4 border-b border-line group" onclick="setStep(5)">
+          <span class="font-mono text-xs text-purple w-8">05</span>
+          <span class="font-display font-medium">Pintura</span>
+        </button>
+        <button data-step="6" class="step-btn w-full text-left flex items-center gap-4 py-4 group" onclick="setStep(6)">
+          <span class="font-mono text-xs text-purple w-8">06</span>
+          <span class="font-display font-medium">Sua estante</span>
+        </button>
+      </div>
 
-      <div class="hud bg-surface border border-line p-8 aspect-[4/3] flex flex-col justify-between">
-        <i id="stepIcon" class="fa-solid fa-pen-ruler text-5xl text-purple"></i>
-        <div>
-          <p class="font-mono text-xs text-muted mb-2" id="stepTag">ETAPA 01</p>
-          <h3 class="font-display font-semibold text-xl mb-2" id="stepTitle">Modelagem</h3>
-          <p class="text-muted text-sm leading-relaxed" id="stepDesc">Seu personagem é esculpido digitalmente, poligono a poligono, até chegar na pose e nos detalhes certos.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+      <div class="hud bg-surface border border-line p-8 aspect-[4/3] flex flex-col justify-between">
+        <i id="stepIcon" class="fa-solid fa-pen-ruler text-5xl text-purple"></i>
+        <div>
+          <p class="font-mono text-xs text-muted mb-2" id="stepTag">ETAPA 01</p>
+          <h3 class="font-display font-semibold text-xl mb-2" id="stepTitle">Modelagem</h3>
+          <p class="text-muted text-sm leading-relaxed" id="stepDesc">Seu personagem é esculpido digitalmente, poligono a poligono, até chegar na pose e nos detalhes certos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ ESTANTE DA COMUNIDADE ============ -->
 <section id="estante" class="py-14 md:py-28 border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <h2 class="font-display font-bold text-3xl md:text-4xl mb-2">Galeria de projetos</h2>
-    <p class="text-muted mb-12">Exemplos de estilos, tamanhos e acabamentos para inspirar seu próximo projeto.</p>
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <h2 class="font-display font-bold text-3xl md:text-4xl mb-2">Galeria de projetos</h2>
+    <p class="text-muted mb-12">Exemplos de estilos, tamanhos e acabamentos para inspirar seu próximo projeto.</p>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="galleryGrid">
-      <!-- items injected via JavaScript -->
-    </div>
-  </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="galleryGrid">
+      <!-- items injected identical structure, 8 items -->
+    </div>
+  </div>
 </section>
 
 <!-- gallery modal -->
 <div id="galleryModal" class="hidden fixed inset-0 z-50 bg-bg/90 backdrop-blur items-center justify-center px-5" role="dialog" aria-modal="true" aria-labelledby="modalName">
-  <div class="hud bg-surface border border-line max-w-md w-full p-6 relative">
-    <button type="button" onclick="closeModal()" class="absolute top-4 right-4 text-muted hover:text-purple" aria-label="Fechar"><i class="fa-solid fa-xmark text-lg"></i></button>
-    <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5">
-      <i id="modalIcon" class="fa-solid fa-cube text-6xl text-purple"></i>
-    </div>
-    <h3 id="modalName" class="font-display font-semibold text-xl mb-3"></h3>
-    <dl class="grid grid-cols-2 gap-y-2 font-mono text-xs text-muted">
-      <dt>Material</dt><dd id="modalMaterial" class="text-ink text-right"></dd>
-      <dt>Tamanho</dt><dd id="modalSize" class="text-ink text-right"></dd>
-      <dt>Acabamento</dt><dd id="modalFinish" class="text-ink text-right"></dd>
-    </dl>
-  </div>
+  <div class="hud bg-surface border border-line max-w-md w-full p-6 relative">
+    <button type="button" onclick="closeModal()" class="absolute top-4 right-4 text-muted hover:text-purple" aria-label="Fechar"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5">
+      <i id="modalIcon" class="fa-solid fa-cube text-6xl text-purple"></i>
+    </div>
+    <h3 id="modalName" class="font-display font-semibold text-xl mb-3"></h3>
+    <dl class="grid grid-cols-2 gap-y-2 font-mono text-xs text-muted">
+      <dt>Material</dt><dd id="modalMaterial" class="text-ink text-right"></dd>
+      <dt>Tamanho</dt><dd id="modalSize" class="text-ink text-right"></dd>
+      <dt>Acabamento</dt><dd id="modalFinish" class="text-ink text-right"></dd>
+    </dl>
+  </div>
 </div>
 
 <!-- ============ GAMIFICAÇÃO ============ -->
 <section class="py-14 md:py-28 border-b border-line grid-bg-fine">
-  <div class="max-w-3xl mx-auto px-5 md:px-8">
-    <div class="hud bg-surface border border-line p-8">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <p class="font-mono text-xs text-muted">SUA COLEÇÃO</p>
-          <h3 class="font-display font-bold text-2xl">Nível 07 — Colecionador</h3>
-        </div>
-        <i class="fa-solid fa-medal text-3xl text-purple"></i>
-      </div>
+  <div class="max-w-3xl mx-auto px-5 md:px-8">
+    <div class="hud bg-surface border border-line p-8">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <p class="font-mono text-xs text-muted">SUA COLEÇÃO</p>
+          <h3 class="font-display font-bold text-2xl">Nível 07 — Colecionador</h3>
+        </div>
+        <i class="fa-solid fa-medal text-3xl text-purple"></i>
+      </div>
 
-      <div class="h-2.5 w-full bg-steel/40 rounded-full overflow-hidden mb-2">
-        <div class="prog-bar h-full rounded-full" style="width:64%"></div>
-      </div>
-      <p class="font-mono text-[11px] text-muted mb-8">Exemplo visual — será ligado ao seu histórico de pedidos.</p>
+      <div class="h-2.5 w-full bg-steel/40 rounded-full overflow-hidden mb-2">
+        <div class="prog-bar h-full rounded-full" style="width:64%"></div>
+      </div>
+      <p class="font-mono text-[11px] text-muted mb-8">Exemplo visual — será ligado ao seu histórico de pedidos.</p>
 
-      <div class="grid grid-cols-2 gap-6 mb-8">
-        <div>
-          <p class="font-display font-bold text-3xl">06</p>
-          <p class="font-mono text-[11px] text-muted">peças adquiridas</p>
-        </div>
-        <div>
-          <p class="font-display font-bold text-3xl">04</p>
-          <p class="font-mono text-[11px] text-muted">universos desbloqueados</p>
-        </div>
-      </div>
+      <div class="grid grid-cols-2 gap-6 mb-8">
+        <div>
+          <p class="font-display font-bold text-3xl">06</p>
+          <p class="font-mono text-[11px] text-muted">peças adquiridas</p>
+        </div>
+        <div>
+          <p class="font-display font-bold text-3xl">04</p>
+          <p class="font-mono text-[11px] text-muted">universos desbloqueados</p>
+        </div>
+      </div>
 
-      <div class="border-t border-line pt-5">
-        <p class="font-mono text-[11px] text-purple mb-1">EXEMPLO DE CONQUISTA</p>
-        <p class="font-display font-medium">"Caçador de relíquias" — adquira 10 peças para desbloquear.</p>
-      </div>
-    </div>
-  </div>
+      <div class="border-t border-line pt-5">
+        <p class="font-mono text-[11px] text-purple mb-1">EXEMPLO DE CONQUISTA</p>
+        <p class="font-display font-medium">"Caçador de relíquias" — adquira 10 peças para desbloquear.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ DIFERENCIAIS ============ -->
 <section class="py-14 md:py-28 border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <div class="flex items-end justify-between gap-6 mb-12 flex-wrap">
-      <div>
-        <p class="font-mono text-xs text-purple mb-2">POR QUE A SAHIR 3D?</p>
-        <h2 class="font-display font-bold text-3xl md:text-4xl max-w-md">Feito para quem quer uma peça diferente.</h2>
-      </div>
-      <a href="#processo" class="font-mono text-xs text-muted hover:text-purple border-b border-transparent hover:border-purple transition">VER O PROCESSO</a>
-    </div>
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="flex items-end justify-between gap-6 mb-12 flex-wrap">
+      <div>
+        <p class="font-mono text-xs text-purple mb-2">POR QUE A SAHIR 3D?</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl max-w-md">Feito para quem quer uma peça diferente.</h2>
+      </div>
+      <a href="#processo" class="font-mono text-xs text-muted hover:text-purple border-b border-transparent hover:border-purple transition">VER O PROCESSO</a>
+    </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="hud bg-surface border border-line p-6">
-        <i class="fa-solid fa-paintbrush text-2xl text-purple mb-4" aria-hidden="true"></i>
-        <h3 class="font-display font-semibold text-lg mb-2">Acabamento manual</h3>
-        <p class="text-muted text-sm leading-relaxed">Escolha entre peça sem pintura, acabamento básico ou pintura premium para adaptar o resultado ao seu projeto.</p>
-      </div>
-      <div class="hud bg-surface border border-line p-6">
-        <i class="fa-solid fa-cube text-2xl text-purple mb-4" aria-hidden="true"></i>
-        <h3 class="font-display font-semibold text-lg mb-2">Seu próprio modelo</h3>
-        <p class="text-muted text-sm leading-relaxed">Você pode enviar um STL, OBJ ou 3MF para análise e receber uma estimativa de impressão.</p>
-      </div>
-      <div class="hud bg-surface border border-line p-6">
-        <i class="fa-solid fa-truck-fast text-2xl text-purple mb-4" aria-hidden="true"></i>
-        <h3 class="font-display font-semibold text-lg mb-2">Pedido sob demanda</h3>
-        <p class="text-muted text-sm leading-relaxed">A peça é produzida conforme o pedido, com cálculo de entrega e acompanhamento do processo.</p>
-      </div>
-    </div>
-  </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="hud bg-surface border border-line p-6">
+        <i class="fa-solid fa-paintbrush text-2xl text-purple mb-4" aria-hidden="true"></i>
+        <h3 class="font-display font-semibold text-lg mb-2">Acabamento manual</h3>
+        <p class="text-muted text-sm leading-relaxed">Escolha entre peça sem pintura, acabamento básico ou pintura premium para adaptar o resultado ao seu projeto.</p>
+      </div>
+      <div class="hud bg-surface border border-line p-6">
+        <i class="fa-solid fa-cube text-2xl text-purple mb-4" aria-hidden="true"></i>
+        <h3 class="font-display font-semibold text-lg mb-2">Seu próprio modelo</h3>
+        <p class="text-muted text-sm leading-relaxed">Você pode enviar um STL, OBJ ou 3MF para análise e receber uma estimativa de impressão.</p>
+      </div>
+      <div class="hud bg-surface border border-line p-6">
+        <i class="fa-solid fa-truck-fast text-2xl text-purple mb-4" aria-hidden="true"></i>
+        <h3 class="font-display font-semibold text-lg mb-2">Pedido sob demanda</h3>
+        <p class="text-muted text-sm leading-relaxed">A peça é produzida conforme o pedido, com cálculo de entrega e acompanhamento do processo.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ FAQ ============ -->
 <section class="py-14 md:py-28 border-b border-line grid-bg-fine">
-  <div class="max-w-3xl mx-auto px-5 md:px-8">
-    <h2 class="font-display font-bold text-3xl md:text-4xl mb-10">Perguntas frequentes</h2>
+  <div class="max-w-3xl mx-auto px-5 md:px-8">
+    <h2 class="font-display font-bold text-3xl md:text-4xl mb-10">Perguntas frequentes</h2>
 
-    <div class="divide-y divide-line border-t border-b border-line">
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Quanto tempo demora para produzir?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Entre 5 e 12 dias úteis, dependendo do tamanho e fila de produção da semana.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Vocês enviam para todo o Brasil?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Sim, enviamos para todo o território nacional com embalagem reforçada para peças frágeis.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Posso enviar meu próprio STL?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Pode sim. Selecione seu STL, OBJ ou 3MF na área de upload; o envio ao servidor pode ser integrado ao seu fluxo de atendimento e orçamento.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Vocês fazem pintura?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Sim, oferecemos acabamento sem pintura, pintura básica e pintura premium feita à mão.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Como é o material utilizado?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Trabalhamos com PLA Premium de alta qualidade, um polímero biodegradável extremamente resistente que garante ótimo acabamento para colecionáveis e Action Figures.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Posso escolher o tamanho?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Sim, de 10 a 30 cm no configurador. Tamanhos maiores sob consulta.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Vocês fazem modelos personalizados?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Sim — a partir de referências, arte conceitual ou de um arquivo 3D que você já tenha.</p>
-      </details>
-      <details class="faq py-5 group">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display font-medium">Como funciona o orçamento?</span>
-          <i class="fa-solid fa-plus faq-chevron text-purple" aria-hidden="true"></i>
-        </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Use o configurador para uma estimativa imediata ou fale com a gente pelo WhatsApp para um projeto sob medida.</p>
-      </details>
-    </div>
-  </div>
+    <div class="divide-y divide-line border-t border-b border-line">
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Quanto tempo demora para produzir?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Entre 5 e 12 dias úteis, dependendo do tamanho e fila de produção da semana.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Vocês enviam para todo o Brasil?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Sim, enviamos para todo o território nacional com embalagem reforçada para peças frágeis.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Posso enviar meu próprio STL?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Pode sim. Selecione seu STL, OBJ ou 3MF na área de upload; o envio ao servidor pode ser integrado ao seu fluxo de atendimento e orçamento.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Vocês fazem pintura?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Sim, oferecemos acabamento sem pintura, pintura básica e pintura premium feita à mão.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Como é o material utilizado?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Trabalhamos com PLA Premium de alta qualidade, um polímero biodegradável extremamente resistente que garante ótimo acabamento para colecionáveis e Action Figures.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Posso escolher o tamanho?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Sim, de 10 a 30 cm no configurador. Tamanhos maiores sob consulta.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Vocês fazem modelos personalizados?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Sim — a partir de referências, arte conceitual ou de um arquivo 3D que você já tenha.</p>
+      </details>
+      <details class="faq py-5 group">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display font-medium">Como funciona o orçamento?</span>
+          <i class="fa-solid fa-plus faq-chevron text-purple"></i>
+        </summary>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Use o configurador para uma estimativa imediata ou fale com a gente pelo WhatsApp para um projeto sob medida.</p>
+      </details>
+    </div>
+  </div>
 </section>
 
 <!-- ============ CTA FINAL ============ -->
 <section class="py-16 md:py-32 border-b border-line relative overflow-hidden grid-bg">
-  <div class="max-w-3xl mx-auto px-5 md:px-8 text-center relative z-10">
-    <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">Pronto para sua próxima missão?</h2>
-    <p class="text-muted mb-10 max-w-md mx-auto">Escolha sua peça, envie seu modelo ou crie algo completamente seu.</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="#drops" class="btn-primary rounded-full px-8 py-4 font-semibold text-sm text-white">Explorar coleção</a>
-      <a href="#configurador" class="btn-outline rounded-full px-8 py-4 font-semibold text-sm">Começar meu projeto</a>
-    </div>
-  </div>
+  <div class="max-w-3xl mx-auto px-5 md:px-8 text-center relative z-10">
+    <h2 class="font-display font-bold text-4xl md:text-5xl mb-4">Pronto para sua próxima missão?</h2>
+    <p class="text-muted mb-10 max-w-md mx-auto">Escolha sua peça, envie seu modelo ou crie algo completamente seu.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#drops" class="btn-primary rounded-full px-8 py-4 font-semibold text-sm text-white">Explorar coleção</a>
+      <a href="#configurador" class="btn-outline rounded-full px-8 py-4 font-semibold text-sm">Começar meu projeto</a>
+    </div>
+  </div>
 </section>
 
+<!-- TODO publicação: CNPJ, contato, política de privacidade (LGPD), termos, trocas/arrependimento e links oficiais de redes sociais. -->
 <!-- ============ FOOTER ============ -->
 <footer class="py-12">
-  <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-    <div class="flex items-center gap-2">
-      <span class="w-8 h-8 rounded-lg bg-[#521CA3] flex items-center justify-center p-1.5 shrink-0"><img src="images/logo.png" alt="Sahir 3D" width="32" height="32" class="w-full h-full object-contain"></span>
-      <span class="font-display font-bold">Sahir <span class="text-purple">3D</span></span>
-    </div>
-    <p class="text-sm text-muted font-mono">© <span id="currentYear">2026</span> · impresso sob demanda, peça a peça</p>
-    <div class="flex items-center gap-4 text-ink/70">
-      <span class="social-placeholder" title="Instagram em breve" aria-label="Instagram em breve"><i class="fa-brands fa-instagram text-lg" aria-hidden="true"></i></span>
-      <span class="social-placeholder" title="TikTok em breve" aria-label="TikTok em breve"><i class="fa-brands fa-tiktok text-lg" aria-hidden="true"></i></span>
-      <a href="https://wa.me/5547992624242" target="_blank" rel="noopener noreferrer" class="hover:text-purple transition-colors" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-lg" aria-hidden="true"></i></a>
-    </div>
-  </div>
+  <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-2">
+      <span class="w-8 h-8 rounded-lg bg-[#521CA3] flex items-center justify-center p-1.5 shrink-0"><img src="images/logo.png" alt="Sahir 3D" width="32" height="32" class="w-full h-full object-contain"></span>
+      <span class="font-display font-bold">Sahir <span class="text-purple">3D</span></span>
+    </div>
+    <p class="text-sm text-muted font-mono">© <span id="currentYear">2026</span> · impresso sob demanda, peça a peça</p>
+    <div class="flex items-center gap-4 text-ink/70">
+      <span class="social-placeholder" title="Instagram em breve" aria-label="Instagram em breve"><i class="fa-brands fa-instagram text-lg" aria-hidden="true"></i></span>
+      <span class="social-placeholder" title="TikTok em breve" aria-label="TikTok em breve"><i class="fa-brands fa-tiktok text-lg" aria-hidden="true"></i></span>
+      <a href="https://wa.me/5547992624242" target="_blank" rel="noopener noreferrer" class="hover:text-purple transition-colors" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-lg" aria-hidden="true"></i></a>
+    </div>
+  </div>
 </footer>
 
 <!-- ============ MODAL DE LOGIN / CADASTRO ============ -->
 <div id="authModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
-    <button type="button" onclick="fecharAuthModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
-      <i class="fa-solid fa-xmark text-lg"></i>
-    </button>
+  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
+    <button type="button" onclick="fecharAuthModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
 
-    <div class="flex gap-2 mb-5 font-mono text-xs">
-      <button type="button" id="tabLogin" onclick="mudarAbaAuth('login')" class="flex-1 py-2 rounded-full border border-purple bg-purple text-white transition">ENTRAR</button>
-      <button type="button" id="tabCadastro" onclick="mudarAbaAuth('cadastro')" class="flex-1 py-2 rounded-full border border-line text-muted transition">CRIAR CONTA</button>
-    </div>
+    <div class="flex gap-2 mb-5 font-mono text-xs">
+      <button type="button" id="tabLogin" onclick="mudarAbaAuth('login')" class="flex-1 py-2 rounded-full border border-purple bg-purple text-white transition">ENTRAR</button>
+      <button type="button" id="tabCadastro" onclick="mudarAbaAuth('cadastro')" class="flex-1 py-2 rounded-full border border-line text-muted transition">CRIAR CONTA</button>
+    </div>
 
-    <h3 id="authTitle" class="sr-only">Entrar ou criar conta</h3>
-    <p id="authDescription" class="sr-only">Informe seus dados para entrar ou criar sua conta.</p>
-    <form id="authForm" class="space-y-4" aria-describedby="authDescription">
-      <div id="authNomeContainer" class="hidden">
-        <label for="authNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
-        <input id="authNome" name="name" type="text" autocomplete="name" minlength="2"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div>
-        <label for="authEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="authEmail" name="email" type="email" required autocomplete="email"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div>
-        <label for="authSenha" class="block font-mono text-[10px] text-muted mb-1.5">SENHA</label>
-        <input id="authSenha" name="password" type="password" required autocomplete="current-password"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <p id="authError" class="hidden text-red-400 text-xs" aria-live="polite"></p>
-      <p id="authInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
-      <button type="submit" id="authSubmitBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Entrar</button>
-    </form>
-    <button type="button" id="authEsqueci" class="mt-4 w-full text-center font-mono text-[11px] text-muted hover:text-purple transition">Esqueci minha senha</button>
-  </div>
+    <h3 id="authTitle" class="sr-only">Entrar ou criar conta</h3>
+    <form id="authForm" class="space-y-4">
+      <div id="authNomeContainer" class="hidden">
+        <label for="authNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
+        <input id="authNome" type="text" autocomplete="name" minlength="2"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div>
+        <label for="authEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
+        <input id="authEmail" type="email" required autocomplete="email"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div>
+        <label for="authSenha" class="block font-mono text-[10px] text-muted mb-1.5">SENHA</label>
+        <input id="authSenha" type="password" required autocomplete="current-password"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <p id="authError" class="hidden text-red-400 text-xs" aria-live="polite"></p>
+      <p id="authInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
+      <button type="submit" id="authSubmitBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Entrar</button>
+    </form>
+    <button type="button" id="authEsqueci" class="mt-4 w-full text-center font-mono text-[11px] text-muted hover:text-purple transition">Esqueci minha senha</button>
+  </div>
 </div>
 
-<!-- ============ MODAL DE NOVA SENHA ============ -->
-<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="novaSenhaTitle" aria-describedby="novaSenhaDescription">
-  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
-    <div class="flex items-start justify-between gap-4 mb-1"><h3 id="novaSenhaTitle" class="font-display font-bold text-lg">Criar nova senha</h3><button type="button" onclick="fecharNovaSenha()" class="text-muted hover:text-ink transition" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></div>
-    <p id="novaSenhaDescription" class="text-muted text-xs mb-5">Escolha uma senha com pelo menos 8 caracteres.</p>
-    <form id="novaSenhaForm" class="space-y-4">
-      <div>
-        <label for="novaSenha" class="block font-mono text-[10px] text-muted mb-1.5">NOVA SENHA</label>
-        <input id="novaSenha" name="new-password" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div>
-        <label for="novaSenhaConf" class="block font-mono text-[10px] text-muted mb-1.5">CONFIRMAR SENHA</label>
-        <input id="novaSenhaConf" name="confirm-password" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <p id="novaSenhaErro" class="hidden text-red-400 text-xs" aria-live="polite"></p>
-      <p id="novaSenhaInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
-      <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Salvar nova senha</button>
-    </form>
-  </div>
+<!-- ============ MODAL DE NOVA SENHA (link de redefinição) ============ -->
+<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="novaSenhaTitle">
+  <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
+    <div class="flex items-start justify-between gap-4 mb-1"><h3 id="novaSenhaTitle" class="font-display font-bold text-lg">Criar nova senha</h3><button type="button" onclick="fecharNovaSenha()" class="text-muted hover:text-ink transition" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></div>
+    <p class="text-muted text-xs mb-5">Escolha uma senha com pelo menos 8 caracteres.</p>
+    <form id="novaSenhaForm" class="space-y-4">
+      <div>
+        <label for="novaSenha" class="block font-mono text-[10px] text-muted mb-1.5">NOVA SENHA</label>
+        <input id="novaSenha" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div>
+        <label for="novaSenhaConf" class="block font-mono text-[10px] text-muted mb-1.5">CONFIRMAR SENHA</label>
+        <input id="novaSenhaConf" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <p id="novaSenhaErro" class="hidden text-red-400 text-xs" aria-live="polite"></p>
+      <p id="novaSenhaInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
+      <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Salvar nova senha</button>
+    </form>
+  </div>
 </div>
 
 <!-- ============ MODAL DE MEUS PEDIDOS ============ -->
 <div id="pedidosModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="pedidosTitle">
-  <div class="hud bg-surface border border-line w-full max-w-md relative max-h-[85vh] flex flex-col overflow-hidden">
-    <button type="button" onclick="fecharPedidosModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition z-10" aria-label="Fechar">
-      <i class="fa-solid fa-xmark text-lg"></i>
-    </button>
+  <div class="hud bg-surface border border-line w-full max-w-md relative max-h-[85vh] flex flex-col overflow-hidden">
+    <button type="button" onclick="fecharPedidosModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition z-10" aria-label="Fechar">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
 
-    <div class="flex items-center gap-3 p-6 pb-5 border-b border-line bg-gradient-to-br from-[#2A1F42] to-[#120E1B]">
-      <div id="pedidosAvatar" class="w-11 h-11 rounded-full bg-purple/20 border border-purple/50 flex items-center justify-center font-display font-bold text-purple text-lg shrink-0">?</div>
-      <div class="min-w-0">
-        <h3 id="pedidosTitle" class="font-display font-bold text-lg leading-tight">Meus pedidos</h3>
-        <p id="pedidosContaEmail" class="text-muted text-xs truncate"></p>
-      </div>
-    </div>
+    <div class="flex items-center gap-3 p-6 pb-5 border-b border-line bg-gradient-to-br from-[#2A1F42] to-[#120E1B]">
+      <div id="pedidosAvatar" class="w-11 h-11 rounded-full bg-purple/20 border border-purple/50 flex items-center justify-center font-display font-bold text-purple text-lg shrink-0">?</div>
+      <div class="min-w-0">
+        <h3 id="pedidosTitle" class="font-display font-bold text-lg leading-tight">Meus pedidos</h3>
+        <p id="pedidosContaEmail" class="text-muted text-xs truncate"></p>
+      </div>
+    </div>
 
-    <div id="pedidosLista" class="space-y-3 p-6 overflow-y-auto flex-1" aria-live="polite">
-      <div class="animate-pulse space-y-3">
-        <div class="h-16 bg-surface2 rounded-lg"></div>
-        <div class="h-16 bg-surface2 rounded-lg"></div>
-      </div>
-    </div>
+    <div id="pedidosLista" class="space-y-3 p-6 overflow-y-auto flex-1">
+      <div class="animate-pulse space-y-3">
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+      </div>
+    </div>
 
-    <div class="p-6 pt-4 border-t border-line space-y-2">
-      <button type="button" id="btnApagarPerfil" class="w-full text-center font-mono text-[11px] text-muted hover:text-red-400 transition py-1">Apagar meus dados salvos</button>
-      <button type="button" onclick="sair()" class="w-full btn-outline rounded-full py-2.5 font-semibold text-xs flex items-center justify-center gap-2">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da conta
-      </button>
-    </div>
-  </div>
+    <div class="p-6 pt-4 border-t border-line space-y-2">
+      <button type="button" id="btnApagarPerfil" class="w-full text-center font-mono text-[11px] text-muted hover:text-red-400 transition py-1">Apagar meus dados salvos</button>
+      <button type="button" onclick="sair()" class="w-full btn-outline rounded-full py-2.5 font-semibold text-xs flex items-center justify-center gap-2">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da conta
+      </button>
+    </div>
+  </div>
 </div>
 
-<!-- ============ MODAL DE CHECKOUT ============ -->
-<div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-describedby="checkoutDescription">
-  <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
-    <button type="button" onclick="fecharCheckoutModal()"
-      class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
-      <i class="fa-solid fa-xmark text-lg"></i>
-    </button>
-    <h3 id="checkoutTitle" class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
-    <p id="checkoutDescription" class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
-    <form id="checkoutForm" class="space-y-4">
-      <div>
-        <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
-        <input id="checkoutNome" name="name" type="text" required autocomplete="name"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div>
-        <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="checkoutEmail" name="email" type="email" required autocomplete="email"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" name="tel" type="tel" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" name="postal-code" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite" role="status"></p></div>
-      <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" name="street" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" name="number" type="text" required autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" name="complement" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
-      <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" name="neighborhood" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-3 gap-3"><div class="col-span-2"><label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label><input id="checkoutCidade" name="city" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class=""><label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label><input id="checkoutUf" name="state" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
-      <div id="freteBox" class="hidden space-y-2">
-        <p class="font-mono text-[10px] text-muted">OPÇÕES DE ENTREGA (CORREIOS)</p>
-        <div id="freteOpcoes" class="space-y-2"></div>
-        <p id="freteResumo" class="font-mono text-[11px] text-ink" aria-live="polite"></p>
-      </div>
-      <label id="salvarPerfilBox" class="hidden flex items-start gap-2 font-mono text-[10px] text-muted leading-relaxed cursor-pointer">
-        <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
-        <span>Salvar nome, telefone e endereço na minha conta para os próximos pedidos. Você pode apagar depois em "Meus pedidos".</span>
-      </label>
-      <p id="checkoutError" class="hidden text-red-400 text-xs" aria-live="assertive"></p>
-      <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Ir para pagamento</button>
-    </form>
-  </div>
+<!-- ============ MODAL DE CHECKOUT (nome/e-mail antes de ir pro pagamento) ============ -->
+<div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+  <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+    <button type="button" onclick="fecharCheckoutModal()"
+      class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+    <h3 id="checkoutTitle" class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
+    <p class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
+    <form id="checkoutForm" class="space-y-4">
+      <div>
+        <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
+        <input id="checkoutNome" type="text" required autocomplete="name"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div>
+        <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
+        <input id="checkoutEmail" type="email" required autocomplete="email"
+          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+      </div>
+      <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" type="text" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite"></p></div>
+      <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" type="text" required inputmode="numeric" autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
+      <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
+      <div class="grid grid-cols-3 gap-3"><div class="col-span-2"><label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label><input id="checkoutCidade" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class=""><label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label><input id="checkoutUf" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
+      <div id="freteBox" class="hidden space-y-2">
+        <p class="font-mono text-[10px] text-muted">OPÇÕES DE ENTREGA (CORREIOS)</p>
+        <div id="freteOpcoes" class="space-y-2"></div>
+        <p id="freteResumo" class="font-mono text-[11px] text-ink"></p>
+      </div>
+      <label id="salvarPerfilBox" class="hidden flex items-start gap-2 font-mono text-[10px] text-muted leading-relaxed cursor-pointer">
+        <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
+        <span>Salvar nome, telefone e endereço na minha conta para os próximos pedidos. Você pode apagar depois em "Meus pedidos".</span>
+      </label>
+      <p id="checkoutError" class="hidden text-red-400 text-xs" aria-live="assertive"></p>
+      <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Ir para pagamento</button>
+    </form>
+  </div>
 </div>
 
+<script>
+  const yearEl = document.getElementById('currentYear'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) document.querySelectorAll('model-viewer').forEach(m => m.removeAttribute('auto-rotate'));
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-<noscript>
-  <div style="padding:1rem;background:#131019;color:#F1EEF7;text-align:center;font-family:system-ui,sans-serif;border-top:1px solid rgba(237,233,247,.12);">
-    Para usar o configurador, login, upload e visualizador 3D da Sahir 3D, ative o JavaScript no navegador.
-  </div>
-</noscript>
+  /* ---------- mobile menu ---------- */
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuIcon = document.getElementById('menuIcon');
+  menuToggle.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.toggle('hidden');
+    menuToggle.setAttribute('aria-expanded', String(!isHidden));
+    menuIcon.className = isHidden ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuIcon.className = 'fa-solid fa-bars text-lg';
+  }));
+
+  /* ---------- drops: abre o configurador já com a peça escolhida ---------- */
+  function personalizarDrop(btn) {
+    const { model, char, size } = btn.dataset;
+    const clicar = (sel) => document.querySelector(sel)?.click();
+    if (model) clicar(`#modelGroup [data-model="${model}"]`);
+    if (model && char) clicar(`#characterGroup [data-char="${char}"]`);
+    if (size) clicar(`#sizeGroup [data-size="${size}"]`);
+    document.getElementById('configurador')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ---------- configurador ---------- */
+  const state = { model: null, modelIcon: 'fa-cube', character: null, characterImg: null, size: null, base: 0, finish: null, add: 0 };
+
+  const PERSONAGENS_POR_UNIVERSO = {
+    'Heróis': [
+      { nome: 'Homem-Aranha', img: 'images/aranha.jpg' },
+      { nome: 'Wolverine', img: 'images/wolverine.jpg' },
+      { nome: 'Batman', img: 'images/batman.jpg' },
+      { nome: 'Homem de Ferro', img: 'images/ironman.jpg' },
+      { nome: 'Deadpool', img: 'images/deadpool.jpg' }
+    ],
+    'Anime': [
+      { nome: 'Goku', img: 'images/goku.jpg' },
+      { nome: 'Naruto', img: 'images/naruto.jpg' },
+      { nome: 'Zoro', img: 'images/zoro.jpg' },
+      { nome: 'Luffy', img: 'images/luffy.jpg' }
+    ],
+    'Videogames': [
+      { nome: 'Kratos', img: 'images/kratos.jpg' },
+      { nome: 'Master Chief', img: 'images/chief.jpg' },
+      { nome: 'Mario', img: 'images/mario.jpg' },
+      { nome: 'Link', img: 'images/link.jpg' }
+    ],
+    'Sci-Fi': [
+      { nome: 'Darth Vader', img: 'images/vader.jpg' },
+      { nome: 'Xenomorfo', img: 'images/alien.jpg' },
+      { nome: 'Mandaloriano', img: 'images/mando.jpg' }
+    ]
+  };
+
+  function selectGroup(groupId, btnClass, cb) {
+    document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(btn => {
+      btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') || 'false');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(b => { b.classList.remove('border-purple','bg-surface2'); b.setAttribute('aria-pressed','false'); });
+        btn.classList.add('border-purple','bg-surface2');
+        btn.setAttribute('aria-pressed','true');
+        cb(btn);
+        updateEstimate();
+      });
+    });
+  }
+
+  selectGroup('modelGroup', 'model-btn', (btn) => {
+    state.model = btn.dataset.model; 
+    state.modelIcon = btn.dataset.icon;
+    state.character = null;
+    state.characterImg = null;
+
+    const step2 = document.getElementById('step2Container');
+    const charGroup = document.getElementById('characterGroup');
+
+    if (state.model === 'Personalizado') {
+      step2.classList.add('hidden');
+      state.character = 'Arquivo Próprio';
+    } else {
+      step2.classList.remove('hidden');
+      
+      charGroup.innerHTML = PERSONAGENS_POR_UNIVERSO[state.model].map(c => `
+        <button type="button" data-char="${c.nome}" data-img="${c.img}" class="char-btn hud bg-surface border border-line hover:border-purple/60 py-3 px-2 font-mono text-xs font-medium text-center transition">
+          ${c.nome}
+        </button>
+      `).join('');
+
+      selectGroup('characterGroup', 'char-btn', (charBtn) => {
+        state.character = charBtn.dataset.char;
+        state.characterImg = charBtn.dataset.img;
+        updateEstimate();
+      });
+    }
+    updateEstimate();
+  });
+
+  selectGroup('sizeGroup', 'size-btn', (btn) => {
+    state.size = btn.dataset.size; state.base = parseFloat(btn.dataset.base);
+  });
+  selectGroup('finishGroup', 'fin-btn', (btn) => {
+    state.finish = btn.dataset.finish; state.add = parseFloat(btn.dataset.add);
+  });
+
+  function updateEstimate() {
+    document.getElementById('outModel').textContent = state.model || '—';
+    document.getElementById('outCharacter').textContent = state.character || '—';
+    document.getElementById('outSize').textContent = state.size || '—';
+    document.getElementById('outFinish').textContent = state.finish || '—';
+    
+    const icon = document.getElementById('previewIcon');
+    const img = document.getElementById('previewImage');
+
+    if (state.characterImg && state.model !== 'Personalizado') {
+      img.src = state.characterImg;
+      img.classList.remove('hidden');
+      icon.classList.add('hidden');
+    } else {
+      img.classList.add('hidden');
+      img.removeAttribute('src');
+      icon.classList.remove('hidden');
+      icon.className = 'fa-solid ' + state.modelIcon + ' text-7xl text-purple/80 transition-all duration-300 z-0';
+    }
+
+    const ehSTL = state.model === 'Personalizado';
+    ['btnFinalizarPedido','btnMobileCheckout'].forEach(id => { const b = document.getElementById(id); if (b) b.textContent = ehSTL ? 'Pedir orçamento no WhatsApp' : 'Ir para pagamento'; });
+    if (state.base) {
+      const price = state.base + (state.add || 0);
+      const formatted = price.toFixed(2).replace('.', ',');
+      document.getElementById('outPrice').textContent = formatted;
+      document.getElementById('outPriceMobile').textContent = formatted;
+    } else {
+      document.getElementById('outPrice').textContent = '0,00';
+      document.getElementById('outPriceMobile').textContent = '0,00';
+    }
+  }
+
+  /* ---------- mobile sticky estimate bar: show while configurador is in view ---------- */
+  const estimateBar = document.getElementById('mobileEstimateBar');
+  const whatsappFloat = document.getElementById('whatsappFloat');
+  const configuradorSection = document.getElementById('configurador');
+  if ('IntersectionObserver' in window) {
+    const configObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        estimateBar.classList.toggle('visible', entry.isIntersecting);
+        if (window.innerWidth < 1024) {
+          whatsappFloat.style.transform = entry.isIntersecting ? 'translateY(-64px)' : 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.15 });
+    configObserver.observe(configuradorSection);
+  }
+
+  /* ---------- upload drag & drop ---------- */
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const dzLabel = document.getElementById('dzLabel');
+  ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, (e) => {
+    e.preventDefault(); dropzone.classList.add('drag-active');
+  }));
+  ['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, (e) => {
+    e.preventDefault(); dropzone.classList.remove('drag-active');
+  }));
+  function aceitarArquivo(file) {
+    if (!file) return;
+    if (!/\.(stl|obj|3mf)$/i.test(file.name)) { dzLabel.textContent = 'Formato inválido. Envie STL, OBJ ou 3MF.'; return; }
+    if (file.size > 100 * 1024 * 1024) { dzLabel.textContent = 'Arquivo acima de 100 MB. Fale com a gente pelo WhatsApp.'; return; }
+    dzLabel.textContent = 'Arquivo selecionado: ' + file.name;
+    // TODO: enviar o arquivo (Supabase Storage / backend)
+  }
+  dropzone.addEventListener('drop', (e) => aceitarArquivo(e.dataTransfer.files[0]));
+  fileInput.addEventListener('change', () => aceitarArquivo(fileInput.files[0]));
+
+  /* ---------- telefone / UF masks ---------- */
+  const telefoneInput = document.getElementById('checkoutTel');
+  const ufInput = document.getElementById('checkoutUf');
+  telefoneInput?.addEventListener('input', () => {
+    const d = telefoneInput.value.replace(/\D/g, '').slice(0, 11);
+    let f = d;
+    if (d.length <= 2) f = d;
+    else if (d.length <= 6) f = `(${d.slice(0,2)}) ${d.slice(2)}`;
+    else if (d.length <= 10) f = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+    else f = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+    telefoneInput.value = f;
+  });
+  ufInput?.addEventListener('input', () => { ufInput.value = ufInput.value.replace(/[^a-z]/gi, '').slice(0,2).toUpperCase(); });
+
+  /* ---------- before/after slider ---------- */
+  const compareRange = document.getElementById('compareRange');
+  const afterLayer = document.getElementById('afterLayer');
+  const handleLine = document.getElementById('compareHandleLine');
+  compareRange.addEventListener('input', () => {
+    const v = compareRange.value;
+    afterLayer.style.width = v + '%';
+    handleLine.style.left = v + '%';
+  });
+
+  /* ---------- fabrication steps ---------- */
+  const stepData = {
+    1: { icon:'fa-pen-ruler', title:'Modelagem', desc:'Seu personagem é esculpido digitalmente, polígono a polígono, até chegar na pose e nos detalhes certos.' },
+    2: { icon:'fa-print', title:'Impressão', desc:'O arquivo vai para a impressora certa — PLA Premium — camada por camada, com o suporte ideal para cada peça.' },
+    3: { icon:'fa-hand-sparkles', title:'Remoção de suportes', desc:'As estruturas de apoio são removidas com cuidado, uma a uma, sem marcar a superfície da peça.' },
+    4: { icon:'fa-fill-drip', title:'Acabamento', desc:'Lixamos, selamos e corrigimos qualquer imperfeição até a superfície ficar pronta para pintura.' },
+    5: { icon:'fa-paintbrush', title:'Pintura', desc:'Cores, camadas e sombreamento aplicados à mão, camada por camada, para dar vida ao personagem.' },
+    6: { icon:'fa-house', title:'Sua estante', desc:'Embalagem reforçada, conferência final e a peça segue para o seu endereço, pronta para exibir.' },
+  };
+  function setStep(n) {
+    document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.step-btn[data-step="'+n+'"]').classList.add('active');
+    document.querySelectorAll('.step-btn span:last-child').forEach(s => s.classList.remove('text-purple'));
+    document.querySelector('.step-btn[data-step="'+n+'"] span:last-child').classList.add('text-purple');
+    const d = stepData[n];
+    document.getElementById('stepIcon').className = 'fa-solid ' + d.icon + ' text-5xl text-purple';
+    document.getElementById('stepTag').textContent = 'ETAPA 0' + n;
+    document.getElementById('stepTitle').textContent = d.title;
+    document.getElementById('stepDesc').textContent = d.desc;
+  }
+  setStep(1);
+
+  /* ---------- community gallery ---------- */
+  const galleryItems = [
+    { icon:'fa-person-rifle', name:'Sentinela Noturna', material:'PLA Premium', size:'18 cm', finish:'Pintura premium' },
+    { icon:'fa-dragon', name:'Wyrm de Obsidiana', material:'PLA Premium', size:'24 cm', finish:'Pintura manual' },
+    { icon:'fa-robot', name:'Mecha VK-09', material:'PLA Premium', size:'20 cm', finish:'Pintura básica' },
+    { icon:'fa-hat-wizard', name:'Feiticeira do Véu', material:'PLA Premium', size:'16 cm', finish:'Pintura premium' },
+    { icon:'fa-shield-halved', name:'Guardião de Aço', material:'PLA Premium', size:'22 cm', finish:'Pintura básica' },
+    { icon:'fa-skull', name:'Arauto da Névoa', material:'PLA Premium', size:'15 cm', finish:'Sem pintura' },
+    { icon:'fa-dice-d20', name:'Mestre das Runas', material:'PLA Premium', size:'19 cm', finish:'Pintura premium' },
+    { icon:'fa-rocket', name:'Frota Vanguarda', material:'PLA Premium', size:'25 cm', finish:'Pintura básica' },
+  ];
+  const galleryGrid = document.getElementById('galleryGrid');
+  galleryItems.forEach((item, i) => {
+    const el = document.createElement('button');
+    el.className = 'hud bg-surface border border-line aspect-square flex items-center justify-center group overflow-hidden relative';
+    el.type = 'button';
+    el.setAttribute('aria-label', `Ver detalhes de ${item.name}`);
+    el.innerHTML = `<i aria-hidden="true" class="fa-solid ${item.icon} text-3xl text-purple/80 group-hover:scale-110 transition-transform"></i>`;
+    el.addEventListener('click', () => openModal(item));
+    galleryGrid.appendChild(el);
+  });
+
+  const modal = document.getElementById('galleryModal');
+  function openModal(item) {
+    document.getElementById('modalIcon').className = 'fa-solid ' + item.icon + ' text-6xl text-purple';
+    document.getElementById('modalName').textContent = item.name;
+    document.getElementById('modalMaterial').textContent = item.material;
+    document.getElementById('modalSize').textContent = item.size;
+    document.getElementById('modalFinish').textContent = item.finish;
+    modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.classList.add('modal-open');
+  }
+  function closeModal() {
+    modal.classList.add('hidden'); modal.classList.remove('flex'); if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
+  }
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); fecharAuthModal(); fecharNovaSenha(); fecharPedidosModal(); fecharCheckoutModal(); } });
+
+  /* ---------- checkout: envia o pedido pro backend e redireciona pro Mercado Pago ---------- */
+
+  const BACKEND_URL = 'https://sahir3d-backend.onrender.com';
+  const SUPABASE_URL = 'https://cyvawlljkgoirhzkitcm.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5dmF3bGxqa2dvaXJoemtpdGNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NTM0NzUsImV4cCI6MjEwNTUyOTQ3NX0.FHk-tNY_tQwKNdE5GfWsQ1X-5jrm0BoRMEvOqFb-8Xg';
+
+  let supabaseClient;
+  try {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (err) {
+    console.error('Supabase indisponível', err);
+    const indisponivel = async () => ({ error: new Error('Serviço de login indisponível no momento.') });
+    supabaseClient = { auth: { getSession: async () => ({ data: { session: null } }), onAuthStateChange: () => ({}), signInWithPassword: indisponivel, signUp: indisponivel, signOut: async () => {} } };
+  }
+  function traduzErro(msg) {
+    const m = String(msg || '');
+    if (/invalid login credentials/i.test(m)) return 'E-mail ou senha incorretos.';
+    if (/email not confirmed/i.test(m)) return 'Confirme seu e-mail antes de entrar.';
+    if (/already registered/i.test(m)) return 'Este e-mail já tem cadastro.';
+    if (/password should be at least/i.test(m)) return 'A senha é curta demais. Use pelo menos 8 caracteres.';
+    if (/same as the old|different from the old/i.test(m)) return 'A nova senha deve ser diferente da atual.';
+    if (/rate limit/i.test(m)) return 'Muitas tentativas. Aguarde um pouco.';
+    return m || 'Não foi possível concluir. Tente novamente.';
+  }
+
+  const btnConta = document.getElementById('btnConta');
+  const contaLabel = document.getElementById('contaLabel');
+  const authModal = document.getElementById('authModal');
+  const authForm = document.getElementById('authForm');
+  const authError = document.getElementById('authError');
+  const authInfo = document.getElementById('authInfo');
+  const pedidosModal = document.getElementById('pedidosModal');
+  let abaAuthAtual = 'login';
+  let sessaoAtual = null;
+
+  function abrirAuthModal() {
+    authError.classList.add('hidden');
+    authInfo.classList.add('hidden');
+    authModal.classList.remove('hidden');
+    authModal.classList.add('flex');
+    document.body.classList.add('modal-open');
+  }
+  function fecharAuthModal() {
+    authModal.classList.add('hidden');
+    authModal.classList.remove('flex');
+    if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
+  }
+  authModal.addEventListener('click', (e) => { if (e.target === authModal) fecharAuthModal(); });
+
+  function mudarAbaAuth(aba) {
+    abaAuthAtual = aba;
+    const nomeBox = document.getElementById('authNomeContainer');
+    const nomeInput = document.getElementById('authNome');
+    nomeBox.classList.toggle('hidden', aba === 'login');
+    nomeInput.required = aba !== 'login';
+    document.getElementById('authSenha').minLength = aba === 'login' ? 0 : 8;
+    document.getElementById('authEsqueci').classList.toggle('hidden', aba !== 'login');
+    if (aba === 'login') nomeInput.value = '';
+    authError.classList.add('hidden');
+    authInfo.classList.add('hidden');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabCadastro = document.getElementById('tabCadastro');
+    const submitBtn = document.getElementById('authSubmitBtn');
+    if (aba === 'login') {
+      tabLogin.classList.add('border-purple', 'bg-purple', 'text-white');
+      tabLogin.classList.remove('border-line', 'text-muted');
+      tabCadastro.classList.remove('border-purple', 'bg-purple', 'text-white');
+      tabCadastro.classList.add('border-line', 'text-muted');
+      submitBtn.textContent = 'Entrar';
+      document.getElementById('authSenha').autocomplete = 'current-password';
+    } else {
+      document.getElementById('authSenha').autocomplete = 'new-password';
+      tabCadastro.classList.add('border-purple', 'bg-purple', 'text-white');
+      tabCadastro.classList.remove('border-line', 'text-muted');
+      tabLogin.classList.remove('border-purple', 'bg-purple', 'text-white');
+      tabLogin.classList.add('border-line', 'text-muted');
+      submitBtn.textContent = 'Criar conta';
+    }
+  }
+
+  authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    authError.classList.add('hidden');
+    authInfo.classList.add('hidden');
+
+    const email = document.getElementById('authEmail').value.trim();
+    const senha = document.getElementById('authSenha').value;
+    const submitBtn = document.getElementById('authSubmitBtn');
+    submitBtn.disabled = true;
+
+    try {
+      if (abaAuthAtual === 'login') {
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password: senha });
+        if (error) throw error;
+        fecharAuthModal();
+      } else {
+        const nome = document.getElementById('authNome').value.trim().replace(/\s+/g, ' ');
+        if (nome.length < 2) throw new Error('Informe seu nome completo.');
+        const { error } = await supabaseClient.auth.signUp({ email, password: senha, options: { data: { nome } } });
+        if (error) throw error;
+        authInfo.textContent = 'Conta criada! Verifique seu e-mail para confirmar antes de entrar.';
+        authInfo.classList.remove('hidden');
+      }
+    } catch (erro) {
+      authError.textContent = traduzErro(erro.message);
+      authError.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  function fecharPedidosModal() {
+    pedidosModal.classList.add('hidden');
+    pedidosModal.classList.remove('flex');
+    if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
+  }
+  pedidosModal.addEventListener('click', (e) => { if (e.target === pedidosModal) fecharPedidosModal(); });
+
+  const ICONE_POR_MODELO = {
+    'Heróis': 'fa-shield-halved',
+    'Anime': 'fa-user-ninja',
+    'Videogames': 'fa-gamepad',
+    'Sci-Fi': 'fa-jedi',
+    'Personalizado': 'fa-cube',
+  };
+
+  const STATUS_INFO = {
+    pago: { cor: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30', icone: 'fa-circle-check', label: 'Pago' },
+    pendente: { cor: 'text-amber-400 bg-amber-400/10 border-amber-400/30', icone: 'fa-clock', label: 'Em análise' },
+    recusado: { cor: 'text-red-400 bg-red-400/10 border-red-400/30', icone: 'fa-circle-xmark', label: 'Recusado' },
+    cancelado: { cor: 'text-red-400 bg-red-400/10 border-red-400/30', icone: 'fa-ban', label: 'Cancelado' },
+    reembolsado: { cor: 'text-muted bg-surface2 border-line', icone: 'fa-rotate-left', label: 'Reembolsado' },
+  };
+
+  function formatarData(isoString) {
+    if (!isoString) return '';
+    const data = new Date(isoString);
+    return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  async function abrirPedidosModal() {
+    pedidosModal.classList.remove('hidden');
+    pedidosModal.classList.add('flex');
+    document.body.classList.add('modal-open');
+
+    const email = sessaoAtual?.user?.email || '';
+    document.getElementById('pedidosContaEmail').textContent = email;
+    document.getElementById('pedidosAvatar').textContent = email.charAt(0).toUpperCase() || '?';
+
+    const lista = document.getElementById('pedidosLista');
+    lista.innerHTML = `
+      <div class="animate-pulse space-y-3">
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+        <div class="h-16 bg-surface2 rounded-lg"></div>
+      </div>`;
+
+    try {
+      const resp = await fetch(`${BACKEND_URL}/api/pedidos/meus`, {
+        headers: { Authorization: `Bearer ${sessaoAtual.access_token}` },
+      });
+      if (!resp.ok) throw new Error('Falha ao carregar pedidos');
+      const pedidos = await resp.json();
+
+      if (!pedidos.length) {
+        lista.innerHTML = `
+          <div class="text-center py-8">
+            <i class="fa-solid fa-box-open text-4xl text-muted/50 mb-3"></i>
+            <p class="text-muted text-sm mb-4">Você ainda não fez nenhum pedido.</p>
+            <a href="#configurador" onclick="fecharPedidosModal()" class="btn-primary rounded-full px-6 py-2.5 font-semibold text-xs text-white inline-block">Montar minha primeira peça</a>
+          </div>`;
+        return;
+      }
+
+      lista.innerHTML = pedidos.map((p) => {
+        const icone = ICONE_POR_MODELO[p.modelo] || 'fa-cube';
+        const status = STATUS_INFO[p.status] || { cor: 'text-muted bg-surface2 border-line', icone: 'fa-circle-question', label: esc(p.status) };
+        const precoFormatado = Number(p.preco).toFixed(2).replace('.', ',');
+        const tituloPedido = esc(p.modelo && p.personagem ? `${p.modelo} - ${p.personagem}` : (p.modelo || 'Peça Personalizada'));
+
+        return `
+          <div class="border border-line rounded-lg p-4 hover:border-purple/40 transition">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center shrink-0">
+                <i class="fa-solid ${icone} text-purple/80"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2 mb-1">
+                  <span class="font-display font-semibold text-sm text-ink truncate">${tituloPedido}</span>
+                  <span class="shrink-0 inline-flex items-center gap-1 border rounded-full px-2 py-0.5 font-mono text-[9px] font-bold ${status.cor}">
+                    <i class="fa-solid ${status.icone}"></i> ${status.label.toUpperCase()}
+                  </span>
+                </div>
+                <div class="font-mono text-[10px] text-muted mb-1.5">PLA Premium · ${esc(p.tamanho)} · ${esc(p.acabamento || 'Sem pintura')}</div>
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[10px] text-muted">${esc(formatarData(p.criado_em))}</span>
+                  <span class="font-display font-bold text-sm">R$ ${precoFormatado}</span>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    } catch (erro) {
+      lista.innerHTML = '<p class="text-red-400 text-sm text-center py-6">Não foi possível carregar seus pedidos. Tente novamente.</p>';
+    }
+  }
+
+  async function sair() {
+    await supabaseClient.auth.signOut();
+    fecharPedidosModal();
+  }
+
+  function atualizarBotaoConta(session) {
+    sessaoAtual = session;
+    carregarPerfil();
+    if (session) {
+      const nomeConta = (session.user.user_metadata?.nome || '').trim().split(' ')[0];
+      contaLabel.textContent = (nomeConta || session.user.email.split('@')[0]).toUpperCase();
+      document.getElementById('mobileContaLabel').textContent = 'Meus pedidos';
+    } else {
+      contaLabel.textContent = 'ENTRAR';
+      document.getElementById('mobileContaLabel').textContent = 'Entrar';
+    }
+  }
+
+  document.getElementById('mobileConta')?.addEventListener('click', () => { btnConta.click(); mobileMenu.classList.add('hidden'); menuToggle.setAttribute('aria-expanded','false'); menuIcon.className = 'fa-solid fa-bars text-lg'; });
+  btnConta.addEventListener('click', () => {
+    if (sessaoAtual) {
+      abrirPedidosModal();
+    } else {
+      abrirAuthModal();
+    }
+  });
+
+/* ---------- perfil salvo (tabela public.perfis, protegida por RLS) ---------- */
+  let perfilAtual = null;
+  async function carregarPerfil() {
+    perfilAtual = null;
+    if (!sessaoAtual) return;
+    try {
+      const { data } = await supabaseClient.from('perfis').select('*').eq('id', sessaoAtual.user.id).maybeSingle();
+      perfilAtual = data || null;
+    } catch (e) { perfilAtual = null; }
+  }
+  async function salvarPerfil(d) {
+    const { error } = await supabaseClient.from('perfis').upsert({ id: sessaoAtual.user.id, ...d, updated_at: new Date().toISOString() });
+    if (error) throw error;
+    perfilAtual = { id: sessaoAtual.user.id, ...d };
+  }
+  function preencherCheckoutComPerfil() {
+    const p = perfilAtual;
+    if (!p) return;
+    const set = (id, v) => { const el = document.getElementById(id); if (el && v && !el.value) el.value = v; };
+    const cep = String(p.cep || '').replace(/\D/g, '');
+    set('checkoutNome', p.nome); set('checkoutTel', p.telefone);
+    set('checkoutCep', cep.length === 8 ? cep.slice(0, 5) + '-' + cep.slice(5) : cep);
+    set('checkoutRua', p.rua); set('checkoutNumero', p.numero); set('checkoutCompl', p.complemento);
+    set('checkoutBairro', p.bairro); set('checkoutCidade', p.cidade); set('checkoutUf', p.uf);
+    if (cep.length === 8) buscarFrete(cep);
+  }
+  document.getElementById('btnApagarPerfil')?.addEventListener('click', async () => {
+    if (!sessaoAtual || !confirm('Apagar nome, telefone e endereço salvos? Seus pedidos continuam no histórico.')) return;
+    try {
+      const { error } = await supabaseClient.from('perfis').delete().eq('id', sessaoAtual.user.id);
+      if (error) throw error;
+      perfilAtual = null;
+      alert('Dados apagados.');
+    } catch (e) { alert('Não foi possível apagar agora. Tente novamente.'); }
+  });
+
+  /* ---------- esqueci minha senha / nova senha ---------- */
+  document.getElementById('authEsqueci').addEventListener('click', async () => {
+    authError.classList.add('hidden'); authInfo.classList.add('hidden');
+    const email = document.getElementById('authEmail').value.trim();
+    if (!email) { authError.textContent = 'Digite seu e-mail acima e clique novamente.'; authError.classList.remove('hidden'); return; }
+    try {
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+      if (error) throw error;
+      authInfo.textContent = 'Se este e-mail tiver cadastro, enviamos um link para redefinir a senha.';
+      authInfo.classList.remove('hidden');
+    } catch (erro) {
+      authError.textContent = traduzErro(erro.message);
+      authError.classList.remove('hidden');
+    }
+  });
+  const novaSenhaModal = document.getElementById('novaSenhaModal');
+  function abrirNovaSenha() { fecharAuthModal(); novaSenhaModal.classList.remove('hidden'); novaSenhaModal.classList.add('flex'); document.body.classList.add('modal-open'); }
+  function fecharNovaSenha() { novaSenhaModal.classList.add('hidden'); novaSenhaModal.classList.remove('flex'); if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open'); }
+  novaSenhaModal.addEventListener('click', (e) => { if (e.target === novaSenhaModal) fecharNovaSenha(); });
+  document.getElementById('novaSenhaForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const erroEl = document.getElementById('novaSenhaErro'), infoEl = document.getElementById('novaSenhaInfo');
+    erroEl.classList.add('hidden'); infoEl.classList.add('hidden');
+    const nova = document.getElementById('novaSenha').value, conf = document.getElementById('novaSenhaConf').value;
+    if (nova !== conf) { erroEl.textContent = 'As senhas não coincidem.'; erroEl.classList.remove('hidden'); return; }
+    try {
+      const { error } = await supabaseClient.auth.updateUser({ password: nova });
+      if (error) throw error;
+      infoEl.textContent = 'Senha atualizada! Você já está logado.';
+      infoEl.classList.remove('hidden');
+      setTimeout(fecharNovaSenha, 1500);
+    } catch (erro) { erroEl.textContent = traduzErro(erro.message); erroEl.classList.remove('hidden'); }
+  });
+
+  supabaseClient.auth.getSession().then(({ data }) => atualizarBotaoConta(data.session));
+  supabaseClient.auth.onAuthStateChange((evento, session) => {
+    atualizarBotaoConta(session);
+    if (evento === 'PASSWORD_RECOVERY') abrirNovaSenha();
+  });
+
+  const checkoutModal = document.getElementById('checkoutModal');
+  const checkoutForm = document.getElementById('checkoutForm');
+  const checkoutError = document.getElementById('checkoutError');
+  const btnFinalizarPedido = document.getElementById('btnFinalizarPedido');
+
+  function abrirCheckoutModal() {
+    if (state.model === 'Personalizado') {
+      const msg = `Olá! Quero um orçamento para um modelo próprio (STL).${state.size ? ' Tamanho: ' + state.size + '.' : ''}${state.finish ? ' Acabamento: ' + state.finish + '.' : ''}`;
+      window.open('https://wa.me/5547992624242?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      return;
+    }
+    if (!state.model || (state.model !== 'Personalizado' && !state.character) || !state.size) {
+      alert('Escolha o universo, o personagem e o tamanho antes de continuar.');
+      return;
+    }
+    checkoutError.classList.add('hidden');
+    if (sessaoAtual?.user?.email && !document.getElementById('checkoutEmail').value) document.getElementById('checkoutEmail').value = sessaoAtual.user.email;
+    const nomeMeta = sessaoAtual?.user?.user_metadata?.nome;
+    if (nomeMeta && !document.getElementById('checkoutNome').value) document.getElementById('checkoutNome').value = nomeMeta;
+    preencherCheckoutComPerfil();
+    document.getElementById('salvarPerfilBox').classList.toggle('hidden', !sessaoAtual);
+    checkoutModal.classList.remove('hidden');
+    checkoutModal.classList.add('flex');
+    document.body.classList.add('modal-open');
+  }
+
+  function fecharCheckoutModal() {
+    checkoutModal.classList.add('hidden');
+    checkoutModal.classList.remove('flex');
+    if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
+  }
+
+  if (btnFinalizarPedido) {
+    btnFinalizarPedido.addEventListener('click', abrirCheckoutModal);
+  }
+  document.getElementById('btnMobileCheckout')?.addEventListener('click', abrirCheckoutModal);
+
+
+  /* ---------- CEP: máscara + preenchimento automático (ViaCEP) ---------- */
+  const cepInput = document.getElementById('checkoutCep');
+  const cepStatus = document.getElementById('cepStatus');
+  /* ---------- frete (Correios via backend) ---------- */
+  let freteOpcoes = [], freteSel = null, freteReq = 0;
+  const freteBox = document.getElementById('freteBox');
+  const freteLista = document.getElementById('freteOpcoes');
+  const brl = (n) => Number(n).toFixed(2).replace('.', ',');
+  function atualizarResumoFrete() {
+    const el = document.getElementById('freteResumo');
+    if (!freteSel) { el.textContent = ''; return; }
+    const peca = parseFloat((document.getElementById('outPrice').textContent || '0').replace(',', '.')) || 0;
+    el.textContent = `Peça R$ ${brl(peca)} + frete R$ ${brl(freteSel.valor)} = R$ ${brl(peca + freteSel.valor)}`;
+  }
+  async function buscarFrete(cep) {
+    const id = ++freteReq;
+    freteSel = null; freteOpcoes = [];
+    freteBox.classList.remove('hidden');
+    freteLista.innerHTML = '<p class="font-mono text-[11px] text-muted">Calculando frete... (pode levar alguns segundos)</p>';
+    atualizarResumoFrete();
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 30000);
+    try {
+      const r = await fetch(`${BACKEND_URL}/api/frete?cep=${cep}&tamanho=${encodeURIComponent(state.size || '')}`, { signal: ctrl.signal });
+      if (!r.ok) throw new Error('frete');
+      const { opcoes } = await r.json();
+      if (id !== freteReq) return;
+      if (!opcoes || !opcoes.length) throw new Error('vazio');
+      freteOpcoes = opcoes;
+      freteLista.innerHTML = opcoes.map((o, i) => `
+        <label class="flex items-center justify-between gap-3 border border-line rounded-lg px-3 py-2 cursor-pointer hover:border-purple/60 text-sm">
+          <span class="flex items-center gap-2"><input type="radio" name="freteSel" value="${i}" class="accent-[#8B5CF6]"> <b class="font-display">${esc(o.nome)}</b> <span class="font-mono text-[10px] text-muted">${esc(o.prazoDias)} dias úteis</span></span>
+          <span class="font-display font-semibold">R$ ${brl(o.valor)}</span>
+        </label>`).join('');
+      freteLista.querySelectorAll('input').forEach(inp => inp.addEventListener('change', () => { freteSel = freteOpcoes[+inp.value]; atualizarResumoFrete(); }));
+    } catch (e) {
+      if (id !== freteReq) return;
+      freteLista.innerHTML = '<p class="font-mono text-[11px] text-amber-400">Não foi possível calcular o frete agora. Você pode continuar: confirmamos o frete com você antes da produção.</p>';
+    } finally { clearTimeout(t); }
+  }
+  cepInput.addEventListener('input', async () => {
+    let d = cepInput.value.replace(/\D/g, '').slice(0, 8);
+    cepInput.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
+    if (d.length < 8) { cepStatus.textContent = ''; return; }
+    cepStatus.textContent = 'Buscando...';
+    buscarFrete(d);
+    try {
+      const r = await fetch(`https://viacep.com.br/ws/${d}/json/`);
+      const j = await r.json();
+      if (j.erro) { cepStatus.textContent = 'CEP não encontrado'; return; }
+      document.getElementById('checkoutRua').value = j.logradouro || '';
+      document.getElementById('checkoutBairro').value = j.bairro || '';
+      document.getElementById('checkoutCidade').value = j.localidade || '';
+      document.getElementById('checkoutUf').value = j.uf || '';
+      cepStatus.textContent = 'Endereço encontrado';
+      document.getElementById('checkoutNumero').focus();
+    } catch { cepStatus.textContent = 'Preencha manualmente'; }
+  });
+  // TODO backend: aceitar cliente.telefone e entrega{}, e calcular/confirmar o frete (Melhor Envio, Correios ou tabela por região)
+  checkoutModal.addEventListener('click', (e) => { if (e.target === checkoutModal) fecharCheckoutModal(); });
+
+  checkoutForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    checkoutError.classList.add('hidden');
+
+    const nome = document.getElementById('checkoutNome').value.trim();
+    const email = document.getElementById('checkoutEmail').value.trim();
+    if (!nome || !email) return;
+
+    if (freteOpcoes.length && !freteSel) {
+      checkoutError.textContent = 'Escolha uma opção de entrega.';
+      checkoutError.classList.remove('hidden');
+      return;
+    }
+    const submitBtn = checkoutForm.querySelector('button[type="submit"]');
+    const submitBtnOriginalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Gerando pagamento...';
+
+    if (sessaoAtual && document.getElementById('chkSalvarPerfil')?.checked) {
+      try {
+        await salvarPerfil({
+          nome, telefone: document.getElementById('checkoutTel').value.trim(),
+          cep: document.getElementById('checkoutCep').value.replace(/\D/g, ''),
+          rua: document.getElementById('checkoutRua').value.trim(),
+          numero: document.getElementById('checkoutNumero').value.trim(),
+          complemento: document.getElementById('checkoutCompl').value.trim(),
+          bairro: document.getElementById('checkoutBairro').value.trim(),
+          cidade: document.getElementById('checkoutCidade').value.trim(),
+          uf: document.getElementById('checkoutUf').value.trim().toUpperCase(),
+        });
+      } catch (e) { console.warn('Perfil não salvo', e); }
+    }
+    const controller = new AbortController();
+    const avisoTimer = setTimeout(() => { submitBtn.textContent = 'Acordando o servidor...'; }, 6000);
+    const abortTimer = setTimeout(() => controller.abort(), 60000);
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (sessaoAtual?.access_token) {
+        headers['Authorization'] = `Bearer ${sessaoAtual.access_token}`;
+      }
+
+      const resp = await fetch(`${BACKEND_URL}/api/pedidos`, {
+        method: 'POST',
+        signal: controller.signal,
+        headers,
+        body: JSON.stringify({
+          modelo: state.model,
+          personagem: state.character,
+          tamanho: state.size,
+          acabamento: state.finish || 'Sem pintura',
+          cliente: { nome, email, telefone: document.getElementById('checkoutTel').value.trim() },
+          frete: freteSel ? { servico: freteSel.servico } : null,
+          entrega: {
+            cep: document.getElementById('checkoutCep').value.replace(/\D/g, ''),
+            rua: document.getElementById('checkoutRua').value.trim(),
+            numero: document.getElementById('checkoutNumero').value.trim(),
+            complemento: document.getElementById('checkoutCompl').value.trim(),
+            bairro: document.getElementById('checkoutBairro').value.trim(),
+            cidade: document.getElementById('checkoutCidade').value.trim(),
+            uf: document.getElementById('checkoutUf').value.trim().toUpperCase(),
+          },
+        }),
+      });
+
+      if (!resp.ok) {
+        const corpo = await resp.text().catch(() => '');
+        console.error('[checkout] /api/pedidos respondeu', resp.status, corpo);
+        const err = new Error('Falha ao criar pedido');
+        err.status = resp.status; err.corpo = corpo;
+        throw err;
+      }
+
+      const { linkPagamento } = await resp.json();
+      window.location.href = linkPagamento; 
+    } catch (erro) {
+      console.error('[checkout] erro', erro);
+      let detalhe = '';
+      if (erro.status) {
+        try { const j = JSON.parse(erro.corpo); detalhe = j.erro || j.error || j.message || ''; } catch {}
+        detalhe = ` (erro ${erro.status}${detalhe ? ': ' + String(detalhe).slice(0, 120) : ''})`;
+      } else if (erro.name === 'TypeError') {
+        detalhe = ' (sem resposta do servidor: rede, CORS ou servidor fora do ar)';
+      }
+      checkoutError.textContent = erro.name === 'AbortError' ? 'O servidor demorou para responder. Tente novamente ou fale pelo WhatsApp.' : 'Não foi possível iniciar o pagamento. Tente novamente em instantes.' + detalhe;
+      checkoutError.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtnOriginalText;
+    } finally {
+      clearTimeout(avisoTimer); clearTimeout(abortTimer);
+    }
+  });
+
+  /* ---------- tela de retorno (depois que o cliente volta do Mercado Pago) ---------- */
+  (function mostrarRetornoPagamento() {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+    const pedidoId = params.get('pedido');
+    if (!status) return; 
+
+    const banner = document.createElement('div');
+    banner.id = 'statusBanner';
+    banner.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4';
+    banner.innerHTML = `
+      <div class="hud bg-surface border border-line p-7 w-full max-w-sm text-center">
+        <div id="statusIcon" class="text-5xl mb-4"></div>
+        <h3 id="statusTitle" class="font-display font-bold text-xl mb-2"></h3>
+        <p id="statusText" class="text-muted text-sm mb-6 leading-relaxed"></p>
+        <button id="statusCloseBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Continuar navegando</button>
+      </div>`;
+    document.body.appendChild(banner);
+    document.getElementById('statusCloseBtn').addEventListener('click', () => banner.remove());
+
+    function render(statusAtual) {
+      const icon = document.getElementById('statusIcon');
+      const title = document.getElementById('statusTitle');
+      const text = document.getElementById('statusText');
+
+      if (statusAtual === 'verificando') {
+        icon.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-purple"></i>';
+        title.textContent = 'Verificando pagamento...';
+        text.textContent = 'Estamos confirmando seu pedido com o servidor.';
+      } else if (statusAtual === 'desconhecido') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-question text-amber-400"></i>';
+        title.textContent = 'Não conseguimos confirmar agora';
+        text.textContent = 'Veja o status em "Meus pedidos" ou fale com a gente pelo WhatsApp.';
+      } else if (statusAtual === 'pago' || statusAtual === 'sucesso' || statusAtual === 'approved') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
+        title.textContent = 'Pagamento aprovado! 🎉';
+        text.textContent = 'Recebemos seu pedido e já vamos começar a produção da sua peça. Você receberá atualizações por e-mail.';
+      } else if (statusAtual === 'pendente' || statusAtual === 'in_process') {
+        icon.innerHTML = '<i class="fa-solid fa-clock text-amber-400"></i>';
+        title.textContent = 'Pagamento em análise';
+        text.textContent = 'Estamos aguardando a confirmação do Mercado Pago. Assim que for aprovado, iniciamos a produção da sua peça — isso pode levar algumas horas.';
+      } else {
+        icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
+        title.textContent = 'Pagamento não concluído';
+        text.textContent = 'Algo impediu a finalização do pagamento. Você pode voltar ao configurador e tentar novamente, ou falar com a gente pelo WhatsApp.';
+      }
+    }
+
+    render('verificando');
+
+    if (!pedidoId) { render('desconhecido'); return; }
+    {
+      fetch(`${BACKEND_URL}/api/pedidos/${pedidoId}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((pedido) => render(pedido && pedido.status ? pedido.status : 'desconhecido'))
+        .catch(() => render('desconhecido'));
+    }
+  })();
+
+</script>
 </body>
 </html>
