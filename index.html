@@ -6,6 +6,17 @@
 <title>Sahir 3D | Colecionáveis geek impressos em 3D</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <meta name="description" content="Bustos, action figures e dioramas geek impressos em 3D sob encomenda, em PLA Premium, com acabamento e pintura feitos à mão. Monte sua peça, envie seu STL ou peça um orçamento.">
+<meta name="theme-color" content="#09080D">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
+<meta property="og:description" content="Colecionáveis geek impressos em 3D sob encomenda, com opções de acabamento e pintura manual.">
+<meta property="og:image" content="images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sahir 3D | Colecionáveis geek impressos em 3D">
+<meta name="twitter:description" content="Colecionáveis geek impressos em 3D sob encomenda.">
+<meta name="twitter:image" content="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -184,6 +195,18 @@
   /* ---------- upload zone drag state ---------- */
   #dropzone.drag-active { border-color:#8B5CF6; background: rgba(139,92,246,0.08); box-shadow: 0 0 60px -10px rgba(139,92,246,0.5); }
 
+  /* ---------- mobile sticky bar safety ---------- */
+  @media (max-width: 1023px) {
+    #configurador { padding-bottom: 9rem; }
+  }
+
+  /* ---------- modal / dialog polish ---------- */
+  [role="dialog"] { overscroll-behavior: contain; }
+  body.modal-open { overflow: hidden; }
+
+  /* ---------- placeholder social links ---------- */
+  .social-placeholder { opacity: .45; cursor: default; }
+
   /* ---------- reduced motion ---------- */
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
@@ -227,10 +250,6 @@
     </nav>
 
     <div class="flex items-center gap-4 shrink-0">
-      <button class="hidden md:flex items-center gap-2 text-ink/60 hover:text-purple transition-colors text-sm" aria-label="Buscar peça ou código">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span class="font-mono text-xs">BUSCAR CÓDIGO</span>
-      </button>
       <button id="btnConta" type="button" class="hidden md:flex items-center gap-2 text-ink/60 hover:text-purple transition-colors text-sm" aria-label="Entrar ou ver minha conta">
         <i class="fa-solid fa-user text-lg"></i>
         <span id="contaLabel" class="font-mono text-xs">ENTRAR</span>
@@ -281,7 +300,7 @@
         <div class="hud model-frame aspect-[3/4] relative overflow-hidden">
           <model-viewer
             src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
-            alt="Prévia do colecionável em 3D"
+            alt="Prévia 3D demonstrativa do colecionável"
             camera-controls
             touch-action="pan-y"
             interaction-prompt="none"
@@ -304,7 +323,7 @@
         <span class="text-neon">STATUS: DISPONÍVEL</span>
       </div>
       <div class="absolute -bottom-3 -right-3 sm:-right-8 font-mono text-[10px] leading-tight text-purple/80 bg-bg/80 border border-line px-2.5 py-1.5 backdrop-blur text-right">
-        MATERIAL: PLA PREMIUM<br>ESCALA: 1/6
+        MODELO: DEMONSTRATIVO<br>INTERAÇÃO: 360°
       </div>
       <p class="text-center mt-5 font-mono text-[11px] text-muted flex items-center justify-center gap-2">
         <i class="fa-solid fa-arrows-left-right"></i> arraste para girar
@@ -371,7 +390,7 @@
   </div>
 </section>
 
-<!-- TODO: nomes dos arquivos de imagem/subtítulos são de produtos antigos; preço do Kratos 20cm (219,90) difere do configurador (189,90); Harry Potter Crochê x PLA -->
+<!-- TODO: revisar preços, pesos e etiquetas de cada produto antes da publicação. -->
 <!-- ============ DROPS DA SEMANA ============ -->
 <section id="drops" class="py-14 md:py-28 border-b border-line grid-bg-fine">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
@@ -380,7 +399,7 @@
         <p class="font-mono text-xs text-purple mb-2">LOTE ATUAL · ESTOQUE LIMITADO</p>
         <h2 class="font-display font-bold text-3xl md:text-4xl">Drops da semana</h2>
       </div>
-      <a href="#" class="hidden md:inline-block font-mono text-xs text-muted hover:text-purple border-b border-transparent hover:border-purple transition">VER CATÁLOGO COMPLETO</a>
+      <span class="hidden md:inline-block font-mono text-xs text-muted/70">CATÁLOGO EM EXPANSÃO</span>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -398,7 +417,7 @@
           <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 189,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Deadpool">
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Deadpool">
               <span>PERSONALIZAR ▸</span>
             </button>
           </div>
@@ -407,19 +426,19 @@
 
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/wyrm-de-obsidiana.jpg" alt="Boneco Harry Potter (Crochê)" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/wyrm-de-obsidiana.jpg" alt="Wyrm de Obsidiana" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-purple text-white px-2 py-0.5 font-semibold">BEST SELLER</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 24CM · PESO: 410G · PINTURA MANUAL
           </div>
         </div>
         <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">GUARDIÃO — LINHA ANCESTRAL</p>
-          <h3 class="font-display font-semibold">Boneco Harry Potter (Crochê)</h3>
+          <p class="font-mono text-[10px] text-muted mb-1">CRIATURA — LINHA ANCESTRAL</p>
+          <h3 class="font-display font-semibold">Wyrm de Obsidiana</h3>
           <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 249,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
               <span>PERSONALIZAR ▸</span>
             </button>
           </div>
@@ -428,19 +447,19 @@
 
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/mecha-vk-09.jpg" alt="Busto Kratos 20cm" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/mecha-vk-09.jpg" alt="Mecha VK-09" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-white/90 text-bg px-2 py-0.5 font-semibold">NOVO</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 20CM · PESO: 380G · PLA REFORÇADO
           </div>
         </div>
         <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">UNIDADE — LINHA VETOR</p>
-          <h3 class="font-display font-semibold">Busto Kratos 20cm</h3>
+          <p class="font-mono text-[10px] text-muted mb-1">MECHA — LINHA VETOR</p>
+          <h3 class="font-display font-semibold">Mecha VK-09</h3>
           <div role="img" class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 219,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Videogames" data-char="Kratos" data-size="20 cm">
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
               <span>PERSONALIZAR ▸</span>
             </button>
           </div>
@@ -449,7 +468,7 @@
 
       <article class="prod-card hud bg-surface border border-line overflow-hidden group">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/feiticeira-do-veu.jpg" alt="Suporte Headset Homem-Aranha" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/feiticeira-do-veu.jpg" alt="Feiticeira do Véu" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             ALTURA: 16CM · PESO: 290G · PLA PREMIUM
@@ -457,11 +476,11 @@
         </div>
         <div class="p-4">
           <p class="font-mono text-[10px] text-muted mb-1">ARCANISTA — LINHA GRIMÓRIO</p>
-          <h3 class="font-display font-semibold">Suporte Headset Homem-Aranha</h3>
+          <h3 class="font-display font-semibold">Feiticeira do Véu</h3>
           <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
           <div class="flex items-center justify-between mt-3">
             <span class="font-display font-semibold text-lg">R$ 174,90</span>
-            <button class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Homem-Aranha">
+            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
               <span>PERSONALIZAR ▸</span>
             </button>
           </div>
@@ -472,7 +491,7 @@
 </section>
 
 <!-- ============ CONFIGURADOR ============ -->
-<section id="configurador" class="py-14 md:py-28 border-b border-line">
+<section id="configurador" class="py-14 md:py-28 pb-32 lg:pb-28 border-b border-line">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <p class="font-mono text-xs text-purple mb-2">FERRAMENTA DE PROJETO</p>
     <h2 class="font-display font-bold text-3xl md:text-4xl mb-12 max-w-lg">Monte seu colecionável</h2>
@@ -483,27 +502,27 @@
         <div>
           <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O UNIVERSO</p>
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="modelGroup">
-            <button data-model="Heróis" data-icon="fa-shield-halved" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+            <button type="button" data-model="Heróis" data-icon="fa-shield-halved" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
               <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgHerois" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgHerois)"/><circle cx="60" cy="55" r="30" fill="none" stroke="#8B5CF6" stroke-width="8" opacity="0.8"/><circle cx="60" cy="55" r="18" fill="none" stroke="#8B5CF6" stroke-width="4" opacity="0.5"/><polygon points="60,42 64,52 74,52 66,58 69,68 60,62 51,68 54,58 46,52 56,52" fill="#8B5CF6" opacity="0.9"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Marvel / DC</span>
             </button>
 
-            <button data-model="Anime" data-icon="fa-user-ninja" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+            <button type="button" data-model="Anime" data-icon="fa-user-ninja" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
               <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgAnime" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgAnime)"/><path d="M60 20 L68 48 L96 56 L68 64 L60 92 L52 64 L24 56 L52 48 Z" fill="#8B5CF6" opacity="0.85"/><circle cx="60" cy="56" r="10" fill="#120E1B"/><circle cx="60" cy="56" r="4" fill="#8B5CF6" opacity="0.6"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Anime</span>
             </button>
 
-            <button data-model="Videogames" data-icon="fa-gamepad" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+            <button type="button" data-model="Videogames" data-icon="fa-gamepad" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
               <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgGames" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgGames)"/><rect x="22" y="38" width="76" height="44" rx="22" fill="#8B5CF6" opacity="0.85"/><rect x="36" y="52" width="16" height="5" fill="#120E1B" rx="1"/><rect x="41.5" y="46.5" width="5" height="16" fill="#120E1B" rx="1"/><circle cx="78" cy="52" r="4.5" fill="#120E1B"/><circle cx="68" cy="60" r="4.5" fill="#120E1B"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Videogames</span>
             </button>
 
-            <button data-model="Sci-Fi" data-icon="fa-jedi" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+            <button type="button" data-model="Sci-Fi" data-icon="fa-jedi" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
               <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgScifi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgScifi)"/><line x1="32" y1="88" x2="84" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.9"/><line x1="88" y1="88" x2="36" y2="36" stroke="#8B5CF6" stroke-width="6" stroke-linecap="round" opacity="0.6"/><line x1="22" y1="98" x2="34" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/><line x1="98" y1="98" x2="86" y2="86" stroke="#120E1B" stroke-width="12" stroke-linecap="round"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Sci-Fi</span>
             </button>
 
-            <button data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
+            <button type="button" data-model="Personalizado" data-icon="fa-cube" class="model-btn hud bg-surface border border-line hover:border-purple/60 overflow-hidden flex flex-col items-center gap-2 transition">
               <svg viewBox="0 0 120 120" class="w-full aspect-square"><defs><linearGradient id="bgCubo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A1F42"/><stop offset="100%" stop-color="#120E1B"/></linearGradient></defs><rect width="120" height="120" fill="url(#bgCubo)"/><path d="M60 28 L92 44 L92 76 L60 92 L28 76 L28 44 Z" fill="#8B5CF6" opacity="0.35" stroke="#8B5CF6" stroke-width="2"/><path d="M60 28 L60 60 M60 60 L92 44 M60 60 L28 44 M60 60 L60 92" stroke="#8B5CF6" stroke-width="2" opacity="0.8"/></svg>
               <span class="font-mono text-[10px] pb-3 text-center">Seu STL</span>
             </button>
@@ -520,19 +539,19 @@
         <div>
           <p class="font-mono text-xs text-muted mb-3">ETAPA 3 — ESCOLHA O TAMANHO</p>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="sizeGroup">
-            <button data-size="10 cm" data-base="89.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">10 cm</button>
-            <button data-size="15 cm" data-base="129.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">15 cm</button>
-            <button data-size="20 cm" data-base="189.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">20 cm</button>
-            <button data-size="30 cm" data-base="289.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">30 cm</button>
+            <button type="button" data-size="10 cm" data-base="89.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">10 cm</button>
+            <button type="button" data-size="15 cm" data-base="129.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">15 cm</button>
+            <button type="button" data-size="20 cm" data-base="189.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">20 cm</button>
+            <button type="button" data-size="30 cm" data-base="289.9" class="size-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">30 cm</button>
           </div>
         </div>
 
         <div>
           <p class="font-mono text-xs text-muted mb-3">ETAPA 4 — ESCOLHA O ACABAMENTO</p>
           <div class="grid grid-cols-3 gap-3" id="finishGroup">
-            <button data-finish="Sem pintura" data-add="0" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Sem pintura</button>
-            <button data-finish="Pintura básica" data-add="40" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Básica</button>
-            <button data-finish="Pintura premium" data-add="110" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Premium</button>
+            <button type="button" data-finish="Sem pintura" data-add="0" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Sem pintura</button>
+            <button type="button" data-finish="Pintura básica" data-add="40" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Básica</button>
+            <button type="button" data-finish="Pintura premium" data-add="110" class="fin-btn hud bg-surface border border-line hover:border-purple/60 py-3 font-mono text-xs transition">Premium</button>
           </div>
         </div>
       </div>
@@ -551,8 +570,8 @@
           <div class="flex justify-between"><dt>ACABAMENTO</dt><dd id="outFinish" class="text-ink">—</dd></div>
         </dl>
         <div class="border-t border-line pt-4">
-          <p class="font-mono text-[10px] text-muted mb-1">MATERIAL: PLA EXCLUSIVO</p>
-          <p class="font-display font-bold text-3xl mb-4">R$ <span id="outPrice">0,00</span></p>
+          <p class="font-mono text-[10px] text-muted mb-1">MATERIAL: PLA PREMIUM</p>
+          <p class="font-display font-bold text-3xl mb-4">R$ <span id="outPrice" aria-live="polite">0,00</span></p>
           <button id="btnFinalizarPedido" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
         </div>
       </div>
@@ -581,10 +600,10 @@
 
     <div id="dropzone" class="hud border-2 border-dashed border-line rounded-2xl py-14 px-6 transition-all">
       <i class="fa-solid fa-cloud-arrow-up text-4xl text-purple mb-4"></i>
-      <p class="font-mono text-sm mb-1" id="dzLabel">Arraste seu arquivo aqui</p>
+      <p class="font-mono text-sm mb-1" id="dzLabel" aria-live="polite">Selecione ou arraste seu arquivo aqui</p>
       <p class="font-mono text-[11px] text-muted mb-6">STL · OBJ · 3MF</p>
-      <input type="file" id="fileInput" accept=".stl,.obj,.3mf" class="hidden">
-      <button onclick="document.getElementById('fileInput').click()" class="btn-primary rounded-full px-7 py-3 font-semibold text-sm text-white">Enviar meu modelo</button>
+      <input type="file" id="fileInput" accept=".stl,.obj,.3mf" class="hidden" aria-label="Selecionar arquivo 3D">
+      <button type="button" onclick="document.getElementById('fileInput').click()" class="btn-primary rounded-full px-7 py-3 font-semibold text-sm text-white">Selecionar meu modelo</button>
     </div>
   </div>
 </section>
@@ -665,8 +684,8 @@
 <!-- ============ ESTANTE DA COMUNIDADE ============ -->
 <section id="estante" class="py-14 md:py-28 border-b border-line">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <h2 class="font-display font-bold text-3xl md:text-4xl mb-2">A estante da comunidade</h2>
-    <p class="text-muted mb-12">Peças reais, nas estantes de clientes reais.</p>
+    <h2 class="font-display font-bold text-3xl md:text-4xl mb-2">Galeria de projetos</h2>
+    <p class="text-muted mb-12">Exemplos de estilos, tamanhos e acabamentos para inspirar seu próximo projeto.</p>
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="galleryGrid">
       <!-- items injected identical structure, 8 items -->
@@ -675,9 +694,9 @@
 </section>
 
 <!-- gallery modal -->
-<div id="galleryModal" class="hidden fixed inset-0 z-50 bg-bg/90 backdrop-blur items-center justify-center px-5" role="dialog" aria-modal="true">
+<div id="galleryModal" class="hidden fixed inset-0 z-50 bg-bg/90 backdrop-blur items-center justify-center px-5" role="dialog" aria-modal="true" aria-labelledby="modalName">
   <div class="hud bg-surface border border-line max-w-md w-full p-6 relative">
-    <button onclick="closeModal()" class="absolute top-4 right-4 text-muted hover:text-purple" aria-label="Fechar"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <button type="button" onclick="closeModal()" class="absolute top-4 right-4 text-muted hover:text-purple" aria-label="Fechar"><i class="fa-solid fa-xmark text-lg"></i></button>
     <div class="aspect-square bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center mb-5">
       <i id="modalIcon" class="fa-solid fa-cube text-6xl text-purple"></i>
     </div>
@@ -705,7 +724,7 @@
       <div class="h-2.5 w-full bg-steel/40 rounded-full overflow-hidden mb-2">
         <div class="prog-bar h-full rounded-full" style="width:64%"></div>
       </div>
-      <p class="font-mono text-[11px] text-muted mb-8">64% até o próximo nível</p>
+      <p class="font-mono text-[11px] text-muted mb-8">Exemplo visual — será ligado ao seu histórico de pedidos.</p>
 
       <div class="grid grid-cols-2 gap-6 mb-8">
         <div>
@@ -719,40 +738,42 @@
       </div>
 
       <div class="border-t border-line pt-5">
-        <p class="font-mono text-[11px] text-purple mb-1">PRÓXIMA CONQUISTA</p>
+        <p class="font-mono text-[11px] text-purple mb-1">EXEMPLO DE CONQUISTA</p>
         <p class="font-display font-medium">"Caçador de relíquias" — adquira 10 peças para desbloquear.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TODO: confirme que números e depoimentos são reais (CDC: publicidade enganosa) -->
-<!-- ============ PROVA SOCIAL ============ -->
+<!-- ============ DIFERENCIAIS ============ -->
 <section class="py-14 md:py-28 border-b border-line">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <div class="flex items-end justify-between gap-6 mb-12 flex-wrap">
-      <h2 class="font-display font-bold text-3xl md:text-4xl max-w-md">Não acredite só na gente.</h2>
-      <a href="#estante" class="font-mono text-xs text-muted hover:text-purple border-b border-transparent hover:border-purple transition">VER GALERIA DOS CLIENTES</a>
+      <div>
+        <p class="font-mono text-xs text-purple mb-2">POR QUE A SAHIR 3D?</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl max-w-md">Feito para quem quer uma peça diferente.</h2>
+      </div>
+      <a href="#processo" class="font-mono text-xs text-muted hover:text-purple border-b border-transparent hover:border-purple transition">VER O PROCESSO</a>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6 mb-12">
+    <div class="grid md:grid-cols-3 gap-6">
       <div class="hud bg-surface border border-line p-6">
-        <div class="text-purple text-sm mb-3">★★★★★</div>
-        <p class="text-ink/90 mb-4">A pintura ficou muito melhor do que eu esperava. Parece saída direto do jogo.</p>
-        <p class="font-mono text-xs text-muted">— Rafael M.</p>
+        <i class="fa-solid fa-paintbrush text-2xl text-purple mb-4" aria-hidden="true"></i>
+        <h3 class="font-display font-semibold text-lg mb-2">Acabamento manual</h3>
+        <p class="text-muted text-sm leading-relaxed">Escolha entre peça sem pintura, acabamento básico ou pintura premium para adaptar o resultado ao seu projeto.</p>
       </div>
       <div class="hud bg-surface border border-line p-6">
-        <div class="text-purple text-sm mb-3">★★★★★</div>
-        <p class="text-ink/90 mb-4">Mandei meu próprio STL e o acabamento em PLA ficou impecável, todos os detalhes.</p>
-        <p class="font-mono text-xs text-muted">— Camila T.</p>
+        <i class="fa-solid fa-cube text-2xl text-purple mb-4" aria-hidden="true"></i>
+        <h3 class="font-display font-semibold text-lg mb-2">Seu próprio modelo</h3>
+        <p class="text-muted text-sm leading-relaxed">Você pode enviar um STL, OBJ ou 3MF para análise e receber uma estimativa de impressão.</p>
       </div>
       <div class="hud bg-surface border border-line p-6">
-        <div class="text-purple text-sm mb-3">★★★★★</div>
-        <p class="text-ink/90 mb-4">Chegou embalado com muito cuidado e no prazo combinado. Já virou vício comprar aqui.</p>
-        <p class="font-mono text-xs text-muted">— Diego A.</p>
+        <i class="fa-solid fa-truck-fast text-2xl text-purple mb-4" aria-hidden="true"></i>
+        <h3 class="font-display font-semibold text-lg mb-2">Pedido sob demanda</h3>
+        <p class="text-muted text-sm leading-relaxed">A peça é produzida conforme o pedido, com cálculo de entrega e acompanhamento do processo.</p>
       </div>
     </div>
-    </div>
+  </div>
 </section>
 
 <!-- ============ FAQ ============ -->
@@ -780,7 +801,7 @@
           <span class="font-display font-medium">Posso enviar meu próprio STL?</span>
           <i class="fa-solid fa-plus faq-chevron text-purple"></i>
         </summary>
-        <p class="text-muted text-sm mt-3 leading-relaxed">Pode sim. Use a área de upload nesta página — nossa equipe analisa o arquivo e retorna com uma estimativa.</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Pode sim. Selecione seu STL, OBJ ou 3MF na área de upload; o envio ao servidor pode ser integrado ao seu fluxo de atendimento e orçamento.</p>
       </details>
       <details class="faq py-5 group">
         <summary class="flex items-center justify-between gap-4">
@@ -833,7 +854,7 @@
   </div>
 </section>
 
-<!-- TODO: CNPJ, contato, política de privacidade (LGPD), termos, trocas/arrependimento; links reais de Instagram/TikTok -->
+<!-- TODO publicação: CNPJ, contato, política de privacidade (LGPD), termos, trocas/arrependimento e links oficiais de redes sociais. -->
 <!-- ============ FOOTER ============ -->
 <footer class="py-12">
   <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -841,17 +862,17 @@
       <span class="w-8 h-8 rounded-lg bg-[#521CA3] flex items-center justify-center p-1.5 shrink-0"><img src="images/logo.png" alt="Sahir 3D" width="32" height="32" class="w-full h-full object-contain"></span>
       <span class="font-display font-bold">Sahir <span class="text-purple">3D</span></span>
     </div>
-    <p class="text-sm text-muted font-mono">© 2026 · impresso sob demanda, peça a peça</p>
-    <div class="flex gap-4 text-ink/70">
-      <a href="#" class="hover:text-purple transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
-      <a href="#" class="hover:text-purple transition-colors" aria-label="TikTok"><i class="fa-brands fa-tiktok text-lg"></i></a>
-      <a href="https://wa.me/5547992624242" class="hover:text-purple transition-colors" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+    <p class="text-sm text-muted font-mono">© <span id="currentYear">2026</span> · impresso sob demanda, peça a peça</p>
+    <div class="flex items-center gap-4 text-ink/70">
+      <span class="social-placeholder" title="Instagram em breve" aria-label="Instagram em breve"><i class="fa-brands fa-instagram text-lg" aria-hidden="true"></i></span>
+      <span class="social-placeholder" title="TikTok em breve" aria-label="TikTok em breve"><i class="fa-brands fa-tiktok text-lg" aria-hidden="true"></i></span>
+      <a href="https://wa.me/5547992624242" target="_blank" rel="noopener noreferrer" class="hover:text-purple transition-colors" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-lg" aria-hidden="true"></i></a>
     </div>
   </div>
 </footer>
 
 <!-- ============ MODAL DE LOGIN / CADASTRO ============ -->
-<div id="authModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+<div id="authModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
     <button type="button" onclick="fecharAuthModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
@@ -862,6 +883,7 @@
       <button type="button" id="tabCadastro" onclick="mudarAbaAuth('cadastro')" class="flex-1 py-2 rounded-full border border-line text-muted transition">CRIAR CONTA</button>
     </div>
 
+    <h3 id="authTitle" class="sr-only">Entrar ou criar conta</h3>
     <form id="authForm" class="space-y-4">
       <div id="authNomeContainer" class="hidden">
         <label for="authNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
@@ -878,8 +900,8 @@
         <input id="authSenha" type="password" required autocomplete="current-password"
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
-      <p id="authError" class="hidden text-red-400 text-xs"></p>
-      <p id="authInfo" class="hidden text-emerald-400 text-xs"></p>
+      <p id="authError" class="hidden text-red-400 text-xs" aria-live="polite"></p>
+      <p id="authInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
       <button type="submit" id="authSubmitBtn" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Entrar</button>
     </form>
     <button type="button" id="authEsqueci" class="mt-4 w-full text-center font-mono text-[11px] text-muted hover:text-purple transition">Esqueci minha senha</button>
@@ -887,9 +909,9 @@
 </div>
 
 <!-- ============ MODAL DE NOVA SENHA (link de redefinição) ============ -->
-<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+<div id="novaSenhaModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="novaSenhaTitle">
   <div class="hud bg-surface border border-line p-6 w-full max-w-sm relative">
-    <h3 class="font-display font-bold text-lg mb-1">Criar nova senha</h3>
+    <div class="flex items-start justify-between gap-4 mb-1"><h3 id="novaSenhaTitle" class="font-display font-bold text-lg">Criar nova senha</h3><button type="button" onclick="fecharNovaSenha()" class="text-muted hover:text-ink transition" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button></div>
     <p class="text-muted text-xs mb-5">Escolha uma senha com pelo menos 8 caracteres.</p>
     <form id="novaSenhaForm" class="space-y-4">
       <div>
@@ -900,15 +922,15 @@
         <label for="novaSenhaConf" class="block font-mono text-[10px] text-muted mb-1.5">CONFIRMAR SENHA</label>
         <input id="novaSenhaConf" type="password" required minlength="8" autocomplete="new-password" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
-      <p id="novaSenhaErro" class="hidden text-red-400 text-xs"></p>
-      <p id="novaSenhaInfo" class="hidden text-emerald-400 text-xs"></p>
+      <p id="novaSenhaErro" class="hidden text-red-400 text-xs" aria-live="polite"></p>
+      <p id="novaSenhaInfo" class="hidden text-emerald-400 text-xs" aria-live="polite"></p>
       <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Salvar nova senha</button>
     </form>
   </div>
 </div>
 
 <!-- ============ MODAL DE MEUS PEDIDOS ============ -->
-<div id="pedidosModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+<div id="pedidosModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="pedidosTitle">
   <div class="hud bg-surface border border-line w-full max-w-md relative max-h-[85vh] flex flex-col overflow-hidden">
     <button type="button" onclick="fecharPedidosModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition z-10" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
@@ -917,7 +939,7 @@
     <div class="flex items-center gap-3 p-6 pb-5 border-b border-line bg-gradient-to-br from-[#2A1F42] to-[#120E1B]">
       <div id="pedidosAvatar" class="w-11 h-11 rounded-full bg-purple/20 border border-purple/50 flex items-center justify-center font-display font-bold text-purple text-lg shrink-0">?</div>
       <div class="min-w-0">
-        <h3 class="font-display font-bold text-lg leading-tight">Meus pedidos</h3>
+        <h3 id="pedidosTitle" class="font-display font-bold text-lg leading-tight">Meus pedidos</h3>
         <p id="pedidosContaEmail" class="text-muted text-xs truncate"></p>
       </div>
     </div>
@@ -939,13 +961,13 @@
 </div>
 
 <!-- ============ MODAL DE CHECKOUT (nome/e-mail antes de ir pro pagamento) ============ -->
-<div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+<div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
   <div class="hud bg-surface border border-line p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
-    <button type="button" onclick="document.getElementById('checkoutModal').classList.add('hidden'); document.getElementById('checkoutModal').classList.remove('flex');"
+    <button type="button" onclick="fecharCheckoutModal()"
       class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
     </button>
-    <h3 class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
+    <h3 id="checkoutTitle" class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
     <p class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
     <form id="checkoutForm" class="space-y-4">
       <div>
@@ -959,7 +981,7 @@
           class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
       </div>
       <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" type="text" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3"></p></div>
+      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite"></p></div>
       <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
       <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" type="text" required inputmode="numeric" autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
       <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
@@ -973,13 +995,14 @@
         <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
         <span>Salvar nome, telefone e endereço na minha conta para os próximos pedidos. Você pode apagar depois em "Meus pedidos".</span>
       </label>
-      <p id="checkoutError" class="hidden text-red-400 text-xs"></p>
+      <p id="checkoutError" class="hidden text-red-400 text-xs" aria-live="assertive"></p>
       <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Ir para pagamento</button>
     </form>
   </div>
 </div>
 
 <script>
+  const yearEl = document.getElementById('currentYear'); if (yearEl) yearEl.textContent = new Date().getFullYear();
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) document.querySelectorAll('model-viewer').forEach(m => m.removeAttribute('auto-rotate'));
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1041,6 +1064,7 @@
 
   function selectGroup(groupId, btnClass, cb) {
     document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(btn => {
+      btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') || 'false');
       btn.addEventListener('click', () => {
         document.querySelectorAll('#' + groupId + ' .' + btnClass).forEach(b => { b.classList.remove('border-purple','bg-surface2'); b.setAttribute('aria-pressed','false'); });
         btn.classList.add('border-purple','bg-surface2');
@@ -1067,7 +1091,7 @@
       step2.classList.remove('hidden');
       
       charGroup.innerHTML = PERSONAGENS_POR_UNIVERSO[state.model].map(c => `
-        <button data-char="${c.nome}" data-img="${c.img}" class="char-btn hud bg-surface border border-line hover:border-purple/60 py-3 px-2 font-mono text-xs font-medium text-center transition">
+        <button type="button" data-char="${c.nome}" data-img="${c.img}" class="char-btn hud bg-surface border border-line hover:border-purple/60 py-3 px-2 font-mono text-xs font-medium text-center transition">
           ${c.nome}
         </button>
       `).join('');
@@ -1157,6 +1181,20 @@
   dropzone.addEventListener('drop', (e) => aceitarArquivo(e.dataTransfer.files[0]));
   fileInput.addEventListener('change', () => aceitarArquivo(fileInput.files[0]));
 
+  /* ---------- telefone / UF masks ---------- */
+  const telefoneInput = document.getElementById('checkoutTel');
+  const ufInput = document.getElementById('checkoutUf');
+  telefoneInput?.addEventListener('input', () => {
+    const d = telefoneInput.value.replace(/\D/g, '').slice(0, 11);
+    let f = d;
+    if (d.length <= 2) f = d;
+    else if (d.length <= 6) f = `(${d.slice(0,2)}) ${d.slice(2)}`;
+    else if (d.length <= 10) f = `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+    else f = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+    telefoneInput.value = f;
+  });
+  ufInput?.addEventListener('input', () => { ufInput.value = ufInput.value.replace(/[^a-z]/gi, '').slice(0,2).toUpperCase(); });
+
   /* ---------- before/after slider ---------- */
   const compareRange = document.getElementById('compareRange');
   const afterLayer = document.getElementById('afterLayer');
@@ -1204,7 +1242,9 @@
   galleryItems.forEach((item, i) => {
     const el = document.createElement('button');
     el.className = 'hud bg-surface border border-line aspect-square flex items-center justify-center group overflow-hidden relative';
-    el.innerHTML = `<i class="fa-solid ${item.icon} text-3xl text-purple/80 group-hover:scale-110 transition-transform"></i>`;
+    el.type = 'button';
+    el.setAttribute('aria-label', `Ver detalhes de ${item.name}`);
+    el.innerHTML = `<i aria-hidden="true" class="fa-solid ${item.icon} text-3xl text-purple/80 group-hover:scale-110 transition-transform"></i>`;
     el.addEventListener('click', () => openModal(item));
     galleryGrid.appendChild(el);
   });
@@ -1216,13 +1256,13 @@
     document.getElementById('modalMaterial').textContent = item.material;
     document.getElementById('modalSize').textContent = item.size;
     document.getElementById('modalFinish').textContent = item.finish;
-    modal.classList.remove('hidden'); modal.classList.add('flex');
+    modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.classList.add('modal-open');
   }
   function closeModal() {
-    modal.classList.add('hidden'); modal.classList.remove('flex');
+    modal.classList.add('hidden'); modal.classList.remove('flex'); if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
   }
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); fecharAuthModal(); fecharPedidosModal(); fecharCheckoutModal(); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); fecharAuthModal(); fecharNovaSenha(); fecharPedidosModal(); fecharCheckoutModal(); } });
 
   /* ---------- checkout: envia o pedido pro backend e redireciona pro Mercado Pago ---------- */
 
@@ -1264,10 +1304,12 @@
     authInfo.classList.add('hidden');
     authModal.classList.remove('hidden');
     authModal.classList.add('flex');
+    document.body.classList.add('modal-open');
   }
   function fecharAuthModal() {
     authModal.classList.add('hidden');
     authModal.classList.remove('flex');
+    if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
   }
   authModal.addEventListener('click', (e) => { if (e.target === authModal) fecharAuthModal(); });
 
@@ -1336,6 +1378,7 @@
   function fecharPedidosModal() {
     pedidosModal.classList.add('hidden');
     pedidosModal.classList.remove('flex');
+    if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
   }
   pedidosModal.addEventListener('click', (e) => { if (e.target === pedidosModal) fecharPedidosModal(); });
 
@@ -1364,6 +1407,7 @@
   async function abrirPedidosModal() {
     pedidosModal.classList.remove('hidden');
     pedidosModal.classList.add('flex');
+    document.body.classList.add('modal-open');
 
     const email = sessaoAtual?.user?.email || '';
     document.getElementById('pedidosContaEmail').textContent = email;
@@ -1505,8 +1549,9 @@
     }
   });
   const novaSenhaModal = document.getElementById('novaSenhaModal');
-  function abrirNovaSenha() { fecharAuthModal(); novaSenhaModal.classList.remove('hidden'); novaSenhaModal.classList.add('flex'); }
-  function fecharNovaSenha() { novaSenhaModal.classList.add('hidden'); novaSenhaModal.classList.remove('flex'); }
+  function abrirNovaSenha() { fecharAuthModal(); novaSenhaModal.classList.remove('hidden'); novaSenhaModal.classList.add('flex'); document.body.classList.add('modal-open'); }
+  function fecharNovaSenha() { novaSenhaModal.classList.add('hidden'); novaSenhaModal.classList.remove('flex'); if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open'); }
+  novaSenhaModal.addEventListener('click', (e) => { if (e.target === novaSenhaModal) fecharNovaSenha(); });
   document.getElementById('novaSenhaForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const erroEl = document.getElementById('novaSenhaErro'), infoEl = document.getElementById('novaSenhaInfo');
@@ -1551,11 +1596,13 @@
     document.getElementById('salvarPerfilBox').classList.toggle('hidden', !sessaoAtual);
     checkoutModal.classList.remove('hidden');
     checkoutModal.classList.add('flex');
+    document.body.classList.add('modal-open');
   }
 
   function fecharCheckoutModal() {
     checkoutModal.classList.add('hidden');
     checkoutModal.classList.remove('flex');
+    if (!document.querySelector('#authModal:not(.hidden), #novaSenhaModal:not(.hidden), #pedidosModal:not(.hidden), #checkoutModal:not(.hidden), #galleryModal:not(.hidden)')) document.body.classList.remove('modal-open');
   }
 
   if (btnFinalizarPedido) {
