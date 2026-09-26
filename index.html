@@ -360,11 +360,27 @@
   }
 
   #checkoutModal > .checkout-dialog {
-    width:min(620px,calc(100vw - 32px));
-    max-width:620px;
+    width:min(980px,calc(100vw - 32px));
+    max-width:980px;
     max-height:calc(100vh - 32px);
     border-radius:20px;
   }
+  .checkout-grid { display:block; }
+  @media (min-width:1024px) {
+    .checkout-grid { display:grid; grid-template-columns:1.35fr 1fr; gap:40px; align-items:start; }
+    .checkout-summary { position:sticky; top:0; }
+  }
+  .checkout-section-title {
+    font:600 10px/1 "IBM Plex Mono",monospace;
+    letter-spacing:.04em;
+    color:#8B5CF6;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .checkout-section-title .line { flex:1; height:1px; background:rgba(139,92,246,.25); }
+  .checkout-section + .checkout-section { margin-top:28px; padding-top:28px; border-top:1px solid rgba(237,233,247,.09); }
 
   @media (min-width:1280px) {
     .hero-grid { min-height:700px; }
@@ -1185,43 +1201,129 @@
 
 <!-- ============ MODAL DE CHECKOUT (nome/e-mail antes de ir pro pagamento) ============ -->
 <div id="checkoutModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
-  <div class="hud checkout-dialog bg-surface border border-line p-6 md:p-7 w-full relative overflow-y-auto">
+  <div class="hud checkout-dialog bg-surface border border-line p-6 md:p-8 w-full relative overflow-y-auto">
     <button type="button" onclick="fecharCheckoutModal()"
-      class="absolute top-4 right-4 text-muted hover:text-ink transition" aria-label="Fechar">
+      class="absolute top-5 right-5 text-muted hover:text-ink transition z-10" aria-label="Fechar">
       <i class="fa-solid fa-xmark text-lg"></i>
     </button>
-    <h3 id="checkoutTitle" class="font-display font-bold text-lg mb-1">Finalizar pedido</h3>
-    <p class="text-muted text-xs mb-5">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
-    <form id="checkoutForm" class="space-y-4">
-      <div>
-        <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
-        <input id="checkoutNome" type="text" required autocomplete="name"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div>
-        <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
-        <input id="checkoutEmail" type="email" required autocomplete="email"
-          class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
-      </div>
-      <div class=""><label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label><input id="checkoutTel" type="text" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-2 gap-3"><div class=""><label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label><input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite"></p></div>
-      <div class=""><label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label><input id="checkoutRua" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-3 gap-3"><div class=""><label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label><input id="checkoutNumero" type="text" required inputmode="numeric" autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class="col-span-2"><label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label><input id="checkoutCompl" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
-      <div class=""><label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label><input id="checkoutBairro" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div>
-      <div class="grid grid-cols-3 gap-3"><div class="col-span-2"><label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label><input id="checkoutCidade" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div><div class=""><label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label><input id="checkoutUf" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" /></div></div>
-      <div id="freteBox" class="hidden space-y-2">
-        <p class="font-mono text-[10px] text-muted">OPÇÕES DE ENTREGA (CORREIOS)</p>
-        <div id="freteOpcoes" class="space-y-2"></div>
-        <div class="hud bg-surface2 border border-purple/30 rounded-lg px-4 py-3 mt-1">
-          <p id="freteResumo" class="font-display font-semibold text-sm text-ink"></p>
+    <h3 id="checkoutTitle" class="font-display font-bold text-2xl mb-1 pr-8">Finalizar pedido</h3>
+    <p class="text-muted text-xs mb-8">Precisamos dos seus dados e do endereço de entrega para gerar o link de pagamento.</p>
+
+    <form id="checkoutForm" class="checkout-grid">
+      <!-- ================= COLUNA DE CAMPOS ================= -->
+      <div class="min-w-0">
+
+        <div class="checkout-section">
+          <p class="checkout-section-title"><i class="fa-solid fa-user"></i> SEUS DADOS <span class="line"></span></p>
+          <div class="space-y-4">
+            <div>
+              <label for="checkoutNome" class="block font-mono text-[10px] text-muted mb-1.5">NOME COMPLETO</label>
+              <input id="checkoutNome" type="text" required autocomplete="name"
+                class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="checkoutEmail" class="block font-mono text-[10px] text-muted mb-1.5">E-MAIL</label>
+                <input id="checkoutEmail" type="email" required autocomplete="email"
+                  class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+              <div>
+                <label for="checkoutTel" class="block font-mono text-[10px] text-muted mb-1.5">TELEFONE / WHATSAPP</label>
+                <input id="checkoutTel" type="text" required inputmode="tel" autocomplete="tel" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-section">
+          <p class="checkout-section-title"><i class="fa-solid fa-location-dot"></i> ENDEREÇO DE ENTREGA <span class="line"></span></p>
+          <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4 items-start">
+              <div>
+                <label for="checkoutCep" class="block font-mono text-[10px] text-muted mb-1.5">CEP</label>
+                <input id="checkoutCep" type="text" required inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+              <p id="cepStatus" class="font-mono text-[10px] text-muted self-end pb-3" aria-live="polite"></p>
+            </div>
+            <div>
+              <label for="checkoutRua" class="block font-mono text-[10px] text-muted mb-1.5">RUA / AVENIDA</label>
+              <input id="checkoutRua" type="text" required autocomplete="address-line1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <label for="checkoutNumero" class="block font-mono text-[10px] text-muted mb-1.5">NÚMERO</label>
+                <input id="checkoutNumero" type="text" required inputmode="numeric" autocomplete="off" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+              <div class="col-span-2">
+                <label for="checkoutCompl" class="block font-mono text-[10px] text-muted mb-1.5">COMPLEMENTO (OPCIONAL)</label>
+                <input id="checkoutCompl" type="text" autocomplete="address-line2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+            </div>
+            <div>
+              <label for="checkoutBairro" class="block font-mono text-[10px] text-muted mb-1.5">BAIRRO</label>
+              <input id="checkoutBairro" type="text" required autocomplete="address-level3" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="col-span-2">
+                <label for="checkoutCidade" class="block font-mono text-[10px] text-muted mb-1.5">CIDADE</label>
+                <input id="checkoutCidade" type="text" required autocomplete="address-level2" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+              <div>
+                <label for="checkoutUf" class="block font-mono text-[10px] text-muted mb-1.5">UF</label>
+                <input id="checkoutUf" type="text" required maxlength="2" autocomplete="address-level1" class="w-full bg-surface2 border border-line focus:border-purple/60 outline-none rounded-lg px-3.5 py-2.5 text-sm text-ink transition" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-section">
+          <p class="checkout-section-title"><i class="fa-solid fa-truck-fast"></i> ENTREGA <span class="line"></span></p>
+          <div id="freteBox" class="hidden">
+            <p class="font-mono text-[10px] text-muted mb-2">OPÇÕES DE ENTREGA (CORREIOS)</p>
+            <div id="freteOpcoes" class="space-y-2"></div>
+          </div>
+          <p id="freteVazioAviso" class="font-mono text-[11px] text-muted">Informe o CEP acima para ver os prazos e valores de entrega.</p>
+
+          <label id="salvarPerfilBox" class="hidden flex items-start gap-2 font-mono text-[10px] text-muted leading-relaxed cursor-pointer mt-5">
+            <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
+            <span>Salvar nome, telefone e endereço na minha conta para os próximos pedidos. Você pode apagar depois em "Meus pedidos".</span>
+          </label>
         </div>
       </div>
-      <label id="salvarPerfilBox" class="hidden flex items-start gap-2 font-mono text-[10px] text-muted leading-relaxed cursor-pointer">
-        <input type="checkbox" id="chkSalvarPerfil" checked class="mt-0.5 accent-[#8B5CF6]">
-        <span>Salvar nome, telefone e endereço na minha conta para os próximos pedidos. Você pode apagar depois em "Meus pedidos".</span>
-      </label>
-      <p id="checkoutError" class="hidden text-red-400 text-xs" aria-live="assertive"></p>
-      <button type="submit" class="w-full btn-primary rounded-full py-3 font-semibold text-sm text-white">Ir para pagamento</button>
+
+      <!-- ================= RESUMO DO PEDIDO ================= -->
+      <div class="checkout-summary mt-8 lg:mt-0">
+        <div class="hud bg-surface2 border border-line rounded-2xl p-5">
+          <p class="checkout-section-title mb-4"><i class="fa-solid fa-receipt"></i> RESUMO DO PEDIDO</p>
+
+          <div class="flex items-center gap-3 pb-4 border-b border-line">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#2A1F42] to-[#120E1B] border border-line flex items-center justify-center overflow-hidden shrink-0 relative">
+              <img id="checkoutResumoImg" src="" alt="" class="hidden w-full h-full object-cover" />
+              <i id="checkoutResumoIcon" class="fa-solid fa-cube text-2xl text-purple/80"></i>
+            </div>
+            <div class="min-w-0">
+              <p id="checkoutResumoPersonagem" class="font-display font-semibold text-sm truncate">—</p>
+              <p class="font-mono text-[10px] text-muted mt-1 truncate"><span id="checkoutResumoUniverso">—</span> · <span id="checkoutResumoTamanho">—</span> · <span id="checkoutResumoAcabamento">—</span></p>
+            </div>
+          </div>
+
+          <dl class="space-y-2.5 font-mono text-xs text-muted py-4 border-b border-line">
+            <div class="flex justify-between"><dt>Peça</dt><dd class="text-ink">R$ <span id="checkoutResumoPreco">0,00</span></dd></div>
+            <div class="flex justify-between"><dt>Frete</dt><dd id="checkoutResumoFreteLinha" class="text-ink">a calcular</dd></div>
+          </dl>
+
+          <div class="flex items-center justify-between py-4">
+            <span class="font-mono text-[11px] text-muted">TOTAL</span>
+            <span class="font-display font-bold text-3xl" id="checkoutResumoTotal">R$ 0,00</span>
+          </div>
+
+          <p id="checkoutError" class="hidden text-red-400 text-xs mb-3" aria-live="assertive"></p>
+          <button type="submit" class="w-full btn-primary rounded-full py-3.5 font-semibold text-sm text-white">Ir para pagamento</button>
+          <p class="flex items-center justify-center gap-2 font-mono text-[10px] text-muted mt-3">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i> Pagamento seguro via Mercado Pago
+          </p>
+        </div>
+      </div>
     </form>
   </div>
 </div>
@@ -1824,6 +1926,21 @@
     if (nomeMeta && !document.getElementById('checkoutNome').value) document.getElementById('checkoutNome').value = nomeMeta;
     preencherCheckoutComPerfil();
     document.getElementById('salvarPerfilBox').classList.toggle('hidden', !sessaoAtual);
+
+    document.getElementById('checkoutResumoUniverso').textContent = state.model || '—';
+    document.getElementById('checkoutResumoPersonagem').textContent = state.character || '—';
+    document.getElementById('checkoutResumoTamanho').textContent = state.size || '—';
+    document.getElementById('checkoutResumoAcabamento').textContent = state.finish || 'Sem pintura';
+    const resumoImg = document.getElementById('checkoutResumoImg');
+    const resumoIcon = document.getElementById('checkoutResumoIcon');
+    if (state.characterImg) {
+      resumoImg.src = state.characterImg; resumoImg.classList.remove('hidden'); resumoIcon.classList.add('hidden');
+    } else {
+      resumoImg.classList.add('hidden'); resumoImg.removeAttribute('src'); resumoIcon.classList.remove('hidden');
+      resumoIcon.className = 'fa-solid ' + (state.modelIcon || 'fa-cube') + ' text-2xl text-purple/80';
+    }
+    atualizarResumoFrete();
+
     checkoutModal.classList.remove('hidden');
     checkoutModal.classList.add('flex');
     document.body.classList.add('modal-open');
@@ -1850,15 +1967,21 @@
   const freteLista = document.getElementById('freteOpcoes');
   const brl = (n) => Number(n).toFixed(2).replace('.', ',');
   function atualizarResumoFrete() {
-    const el = document.getElementById('freteResumo');
-    if (!freteSel) { el.textContent = ''; return; }
-    const peca = parseFloat((document.getElementById('outPrice').textContent || '0').replace(',', '.')) || 0;
-    el.textContent = `Peça R$ ${brl(peca)} + frete R$ ${brl(freteSel.valor)} = R$ ${brl(peca + freteSel.valor)}`;
+    const peca = (state.base || 0) + (state.add || 0);
+    const frete = freteSel ? freteSel.valor : 0;
+    const precoEl = document.getElementById('checkoutResumoPreco');
+    const freteEl = document.getElementById('checkoutResumoFreteLinha');
+    const totalEl = document.getElementById('checkoutResumoTotal');
+    if (!precoEl || !freteEl || !totalEl) return;
+    precoEl.textContent = brl(peca);
+    freteEl.textContent = freteSel ? `R$ ${brl(frete)}` : 'a calcular';
+    totalEl.textContent = `R$ ${brl(peca + frete)}`;
   }
   async function buscarFrete(cep) {
     const id = ++freteReq;
     freteSel = null; freteOpcoes = [];
     freteBox.classList.remove('hidden');
+    document.getElementById('freteVazioAviso')?.classList.add('hidden');
     freteLista.innerHTML = '<p class="font-mono text-[11px] text-muted">Calculando frete... (pode levar alguns segundos)</p>';
     atualizarResumoFrete();
     const ctrl = new AbortController();
