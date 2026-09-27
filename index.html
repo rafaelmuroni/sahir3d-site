@@ -642,85 +642,74 @@
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 drops-grid">
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/deadpool.jpg" alt="Máscara Deadpool" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          <img src="images/deadpool.jpg" alt="Máscara Deadpool" width="600" height="600" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 18CM · PESO: 320G · PLA PREMIUM
+            TAMANHOS: 10 A 30 CM · PLA PREMIUM
           </div>
         </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">CAÇADOR — LINHA SOMBRA</p>
-          <h3 class="font-display font-semibold">Máscara Deadpool</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 189,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)" data-model="Heróis" data-char="Deadpool">
-              <span>PERSONALIZAR ▸</span>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-display font-semibold leading-snug md:min-h-[2.75rem]">Máscara Deadpool</h3>
+          <div class="flex items-center justify-between gap-3 mt-auto pt-3">
+            <div class="leading-tight"><span class="block font-mono text-[10px] text-muted">A PARTIR DE</span><span class="font-display font-semibold text-lg">R$ 89,90</span></div>
+            <button type="button" class="prod-btn-label shrink-0 font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 max-md:min-h-[44px] max-md:px-4 rounded-full" onclick="personalizarDrop(this)" data-produto="Máscara Deadpool" data-model="Heróis" data-char="Deadpool" aria-label="Selecionar Máscara Deadpool no configurador">
+              <span>SELECIONAR ▸</span>
             </button>
           </div>
         </div>
       </article>
-
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/wyrm-de-obsidiana.jpg" alt="Wyrm de Obsidiana" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-purple text-white px-2 py-0.5 font-semibold">BEST SELLER</span>
+          <i class="fa-solid fa-hat-wizard text-6xl text-purple/80" aria-hidden="true"></i>
+          
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 24CM · PESO: 410G · PINTURA MANUAL
+            DISPONIBILIDADE: SOB CONSULTA
           </div>
         </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">CRIATURA — LINHA ANCESTRAL</p>
-          <h3 class="font-display font-semibold">Wyrm de Obsidiana</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 249,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
-              <span>PERSONALIZAR ▸</span>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-display font-semibold leading-snug md:min-h-[2.75rem]">Harry Potter Crochê</h3>
+          <div class="flex items-center justify-between gap-3 mt-auto pt-3">
+            <div class="leading-tight"><span class="block font-mono text-[10px] text-muted">VALOR</span><span class="font-display font-semibold text-lg">Sob consulta</span></div>
+            <button type="button" class="prod-btn-label shrink-0 font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 max-md:min-h-[44px] max-md:px-4 rounded-full" onclick="personalizarDrop(this)" data-produto="Harry Potter Crochê" aria-label="Selecionar Harry Potter Crochê no configurador">
+              <span>SELECIONAR ▸</span>
             </button>
           </div>
         </div>
       </article>
-
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/mecha-vk-09.jpg" alt="Mecha VK-09" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-white/90 text-bg px-2 py-0.5 font-semibold">NOVO</span>
+          <img src="images/kratos.jpg" alt="Kratos" width="600" height="600" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 20CM · PESO: 380G · PLA REFORÇADO
+            TAMANHOS: 10 A 30 CM · PLA PREMIUM
           </div>
         </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">MECHA — LINHA VETOR</p>
-          <h3 class="font-display font-semibold">Mecha VK-09</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="4.5 de 5 estrelas">★★★★☆</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 219,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
-              <span>PERSONALIZAR ▸</span>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-display font-semibold leading-snug md:min-h-[2.75rem]">Kratos</h3>
+          <div class="flex items-center justify-between gap-3 mt-auto pt-3">
+            <div class="leading-tight"><span class="block font-mono text-[10px] text-muted">A PARTIR DE</span><span class="font-display font-semibold text-lg">R$ 89,90</span></div>
+            <button type="button" class="prod-btn-label shrink-0 font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 max-md:min-h-[44px] max-md:px-4 rounded-full" onclick="personalizarDrop(this)" data-produto="Kratos" data-model="Videogames" data-char="Kratos" aria-label="Selecionar Kratos no configurador">
+              <span>SELECIONAR ▸</span>
             </button>
           </div>
         </div>
       </article>
-
-      <article class="prod-card hud bg-surface border border-line overflow-hidden group">
+      <article class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
-          <img src="images/feiticeira-do-veu.jpg" alt="Feiticeira do Véu" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">PINTURA MANUAL</span>
+          <img src="images/aranha.jpg" alt="Suporte Headset Homem-Aranha" width="600" height="600" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
+          
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
-            ALTURA: 16CM · PESO: 290G · PLA PREMIUM
+            TAMANHOS: 10 A 30 CM · PLA PREMIUM
           </div>
         </div>
-        <div class="p-4">
-          <p class="font-mono text-[10px] text-muted mb-1">ARCANISTA — LINHA GRIMÓRIO</p>
-          <h3 class="font-display font-semibold">Feiticeira do Véu</h3>
-          <div role="img" class="text-purple text-xs my-1.5" aria-label="5 de 5 estrelas">★★★★★</div>
-          <div class="flex items-center justify-between mt-3">
-            <span class="font-display font-semibold text-lg">R$ 174,90</span>
-            <button type="button" class="prod-btn-label font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 rounded-full" onclick="personalizarDrop(this)">
-              <span>PERSONALIZAR ▸</span>
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="font-display font-semibold leading-snug md:min-h-[2.75rem]">Suporte Headset Homem-Aranha</h3>
+          <div class="flex items-center justify-between gap-3 mt-auto pt-3">
+            <div class="leading-tight"><span class="block font-mono text-[10px] text-muted">A PARTIR DE</span><span class="font-display font-semibold text-lg">R$ 89,90</span></div>
+            <button type="button" class="prod-btn-label shrink-0 font-mono text-[10px] border border-purple/50 hover:bg-purple hover:text-white transition px-2.5 py-2 max-md:min-h-[44px] max-md:px-4 rounded-full" onclick="personalizarDrop(this)" data-produto="Suporte Headset Homem-Aranha" data-model="Heróis" data-char="Homem-Aranha" aria-label="Selecionar Suporte Headset Homem-Aranha no configurador">
+              <span>SELECIONAR ▸</span>
             </button>
           </div>
         </div>
@@ -730,13 +719,18 @@
 </section>
 
 <!-- ============ CONFIGURADOR ============ -->
-<section id="configurador" class="py-14 md:py-28 pb-32 lg:pb-28 border-b border-line">
+<section id="configurador" class="scroll-mt-20 py-14 md:py-28 pb-32 lg:pb-28 border-b border-line">
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <p class="font-mono text-xs text-purple mb-2">FERRAMENTA DE PROJETO</p>
     <h2 class="font-display font-bold text-3xl md:text-4xl mb-12 max-w-lg">Monte seu colecionável</h2>
 
     <div class="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-start">
       <div class="space-y-8">
+
+        <div id="configAviso" class="hidden hud bg-surface2 border border-amber-400/40 rounded-lg px-4 py-3 text-sm" role="status" aria-live="polite">
+          <p id="configAvisoTexto" class="text-ink leading-relaxed"></p>
+          <a id="configAvisoZap" href="https://wa.me/5547992624242" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-2 font-mono text-[11px] text-neon hover:underline"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Pedir orçamento pelo WhatsApp</a>
+        </div>
 
         <div>
           <p class="font-mono text-xs text-muted mb-3">ETAPA 1 — ESCOLHA O UNIVERSO</p>
@@ -1349,14 +1343,28 @@
     menuIcon.className = 'fa-solid fa-bars text-lg';
   }));
 
-  /* ---------- drops: abre o configurador já com a peça escolhida ---------- */
+  /* ---------- drops: seleciona o produto no configurador ---------- */
+  function mostrarAvisoConfig(texto, produto) {
+    const box = document.getElementById('configAviso');
+    document.getElementById('configAvisoTexto').textContent = texto;
+    const msg = `Olá! Tenho interesse no produto "${produto}". Podem me passar valores e disponibilidade?`;
+    document.getElementById('configAvisoZap').href = 'https://wa.me/5547992624242?text=' + encodeURIComponent(msg);
+    box.classList.remove('hidden');
+  }
   function personalizarDrop(btn) {
-    const { model, char, size } = btn.dataset;
-    const clicar = (sel) => document.querySelector(sel)?.click();
-    if (model) clicar(`#modelGroup [data-model="${model}"]`);
-    if (model && char) clicar(`#characterGroup [data-char="${char}"]`);
-    if (size) clicar(`#sizeGroup [data-size="${size}"]`);
-    document.getElementById('configurador')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const { model, char, produto } = btn.dataset;
+    const clicar = (sel) => { const el = document.querySelector(sel); if (el) el.click(); return !!el; };
+    document.getElementById('configAviso')?.classList.add('hidden');
+
+    if (!model) {
+      mostrarAvisoConfig(`"${produto}" ainda não está disponível no configurador, então nada foi selecionado automaticamente e nenhum valor foi calculado para ele. Escolha um universo abaixo ou peça um orçamento pelo WhatsApp.`, produto);
+    } else {
+      clicar(`#modelGroup [data-model="${model}"]`);
+      if (char && !clicar(`#characterGroup [data-char="${char}"]`)) {
+        mostrarAvisoConfig(`O personagem "${char}" ainda não está disponível no configurador. O universo ${model} foi selecionado; escolha um personagem da lista ou peça um orçamento pelo WhatsApp.`, produto);
+      }
+    }
+    document.getElementById('configurador')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
   }
 
   /* ---------- configurador ---------- */
@@ -1438,6 +1446,8 @@
   selectGroup('finishGroup', 'fin-btn', (btn) => {
     state.finish = btn.dataset.finish; state.add = parseFloat(btn.dataset.add);
   });
+
+  document.getElementById('modelGroup').addEventListener('click', () => document.getElementById('configAviso')?.classList.add('hidden'));
 
   function updateEstimate() {
     document.getElementById('outModel').textContent = state.model || '—';
