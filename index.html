@@ -556,12 +556,12 @@
             auto-rotate
             auto-rotate-delay="800"
             rotation-per-second="14deg"
-            camera-orbit="16deg 78deg 1.55m"
-            camera-target="0m 0.58m 0m"
-            field-of-view="20deg"
-            min-camera-orbit="auto auto 1.15m"
-            max-camera-orbit="auto auto 2.4m"
-            min-field-of-view="18deg"
+            camera-orbit="16deg 76deg 1.9m"
+            camera-target="0m 0.42m 0m"
+            field-of-view="24deg"
+            min-camera-orbit="auto auto 1.4m"
+            max-camera-orbit="auto auto 2.6m"
+            min-field-of-view="20deg"
             max-field-of-view="32deg"
             shadow-intensity="1.25"
             shadow-softness="0.85"
@@ -1443,9 +1443,9 @@
         : '<i class="fa-solid fa-play mr-1" aria-hidden="true"></i><span>Ativar rotação</span>';
     });
     resetCameraButton?.addEventListener('click', () => {
-      heroModel.cameraOrbit = '16deg 78deg 1.55m';
-      heroModel.cameraTarget = '0m 0.58m 0m';
-      heroModel.fieldOfView = '20deg';
+      heroModel.cameraOrbit = '16deg 76deg 1.9m';
+      heroModel.cameraTarget = '0m 0.42m 0m';
+      heroModel.fieldOfView = '24deg';
     });
     heroModel.addEventListener('load', () => modelFallback?.classList.add('hidden'));
     heroModel.addEventListener('error', () => modelFallback?.classList.remove('hidden'));
