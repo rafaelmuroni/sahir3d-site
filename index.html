@@ -458,6 +458,43 @@
     .bust-scan { animation:none!important; display:none; }
   }
 
+
+  /* ---------- refinamento de interface e formulários ---------- */
+  :root { --sahir-purple:#8B5CF6; --sahir-line:rgba(237,233,247,.12); }
+  section[id] { scroll-margin-top:5.5rem; }
+  .catalog-control { min-height:46px; color-scheme:dark; }
+  .catalog-control:focus-visible { outline:2px solid #39FFB0; outline-offset:2px; border-color:#8B5CF6; }
+  .prod-card { border-radius:14px; transition:border-color .22s ease, transform .22s ease, box-shadow .22s ease; }
+  .prod-card:hover, .prod-card:focus-within { border-color:rgba(139,92,246,.55); box-shadow:0 16px 38px -28px rgba(139,92,246,.8); }
+  .prod-card .prod-data { opacity:1; transform:none; }
+  .prod-card .prod-img { will-change:transform; }
+  .model-control, .model-btn, .char-btn, .size-btn, .fin-btn { min-height:44px; }
+  input, select, textarea { max-width:100%; }
+  button, a { -webkit-tap-highlight-color:transparent; }
+  #dropzone { scroll-margin-top:6rem; }
+  #mobileEstimateBar { padding-bottom:calc(.75rem + env(safe-area-inset-bottom)); }
+  @media (max-width:639px) {
+    .catalog-toolbar { gap:.625rem; }
+    .catalog-control { min-height:48px; }
+    #mobileEstimateBar .max-w-7xl { padding-top:.65rem; padding-bottom:.65rem; }
+    #whatsappFloat { bottom:calc(1rem + env(safe-area-inset-bottom)); }
+  }
+  @media (hover:hover) and (min-width:768px) {
+    .prod-card:hover .prod-img { transform:scale(1.035); }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .prod-card, .prod-img, .facet-badge { transition:none!important; }
+  }
+
+
+  #galleryModal > .hud, #productDetailModal > .hud, #authModal > .hud, #novaSenhaModal > .hud {
+    max-height:calc(100dvh - 2rem); overflow-y:auto;
+  }
+  @media (max-width:639px) {
+    #productDetailModal { padding:12px; }
+    #productDetailModal > .hud { padding:18px; }
+  }
+
 </style>
 </head>
 <body class="bg-bg text-ink font-sans antialiased">
@@ -492,6 +529,7 @@
       <a href="#universos" class="hover:text-purple transition-colors">Universos</a>
       <a href="#drops" class="hover:text-purple transition-colors">Drops da semana</a>
       <a href="#configurador" class="hover:text-purple transition-colors">Monte a sua</a>
+      <a href="#upload-modelo" class="hover:text-purple transition-colors">Enviar STL</a>
       <a href="#processo" class="hover:text-purple transition-colors">Como funciona</a>
       <a href="#estante" class="hover:text-purple transition-colors">Estante da comunidade</a>
     </nav>
@@ -510,6 +548,7 @@
     <a href="#universos" class="py-1">Universos</a>
     <a href="#drops" class="py-1">Drops da semana</a>
     <a href="#configurador" class="py-1">Monte a sua</a>
+    <a href="#upload-modelo" class="py-1">Enviar STL / modelo 3D</a>
     <a href="#processo" class="py-1">Como funciona</a>
     <a href="#estante" class="py-1">Estante da comunidade</a>
     <button type="button" id="mobileConta" class="py-1 text-left flex items-center gap-2 text-purple"><i class="fa-solid fa-user"></i><span id="mobileContaLabel">Entrar</span></button>
@@ -524,7 +563,7 @@
     <div class="relative z-10 hero-copy">
       <div class="inline-flex items-center gap-2 font-mono text-[11px] text-purple/90 border border-purple/30 rounded-full px-3 py-1 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-neon animate-pulse"></span>
-        OFICINA ABERTA — PEDIDOS DA SEMANA EM ANDAMENTO
+        OFICINA DIGITAL · PEÇAS SOB ENCOMENDA
       </div>
 
       <h1 class="font-display font-bold leading-[0.98] text-5xl sm:text-6xl md:text-7xl tracking-tight">
@@ -533,7 +572,7 @@
       </h1>
 
       <p class="mt-6 text-lg text-muted max-w-md leading-relaxed">
-        Colecionáveis que saem da tela e vão para sua estante — modelados, impressos e pintados à mão, peça a peça.
+        Colecionáveis que saem da tela e chegam à sua estante. Explore a prévia 3D e escolha o tamanho e o acabamento do seu projeto.
       </p>
 
       <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -550,6 +589,7 @@
             id="heroModel"
             src="Mago-light.glb"
             alt="Mago em 3D — modelo demonstrativo do Sahir 3D"
+            aria-label="Modelo 3D demonstrativo. Arraste para girar e use pinça ou scroll para aproximar."
             camera-controls
             touch-action="pan-y"
             interaction-prompt="none"
@@ -570,6 +610,10 @@
             loading="eager"
             reveal="auto">
           </model-viewer>
+          <div id="modelLoading" class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-[#17111F]/55 p-6 text-center pointer-events-none" role="status" aria-live="polite">
+            <i class="fa-solid fa-spinner fa-spin text-2xl text-purple" aria-hidden="true"></i>
+            <p class="font-mono text-[10px] text-ink/80">CARREGANDO MODELO 3D</p>
+          </div>
           <div id="modelFallback" class="hidden absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 bg-[#17111F]/95 p-6 text-center" role="status" aria-live="polite">
             <i class="fa-solid fa-cube text-4xl text-purple" aria-hidden="true"></i>
             <p class="font-display font-semibold">Prévia 3D temporariamente indisponível</p>
@@ -667,20 +711,60 @@
   <div class="max-w-7xl mx-auto px-5 md:px-8">
     <div class="flex items-end justify-between gap-6 mb-10 md:mb-14">
       <div>
-        <p class="font-mono text-xs text-purple mb-2">LOTE ATUAL · ESTOQUE LIMITADO</p>
+        <p class="font-mono text-xs text-purple mb-2">COLEÇÃO EM DESTAQUE · PRODUÇÃO SOB ENCOMENDA</p>
         <h2 class="font-display font-bold text-3xl md:text-4xl">Drops da semana</h2>
       </div>
         <div class="flex items-center gap-3">
           <span id="catalogFilterLabel" class="hidden md:inline-block font-mono text-xs text-muted/70">TODOS OS PRODUTOS</span>
-          <button type="button" id="clearCatalogFilter" class="hidden font-mono text-[10px] text-neon underline underline-offset-4">Ver todos</button>
         </div>
       </div>
 
+      <div class="catalog-toolbar grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-5" role="search" aria-label="Filtros do catálogo">
+        <label class="sm:col-span-2 lg:col-span-2 block">
+          <span class="sr-only">Pesquisar produtos</span>
+          <span class="relative block">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-muted" aria-hidden="true"></i>
+            <input id="catalogSearch" type="search" autocomplete="off" placeholder="Buscar por nome ou universo..." class="catalog-control w-full bg-surface border border-line rounded-xl pl-11 pr-4 py-3 text-sm text-ink placeholder:text-muted/70" aria-label="Buscar por nome ou universo">
+          </span>
+        </label>
+        <label class="block">
+          <span class="sr-only">Filtrar por universo</span>
+          <select id="catalogCategory" class="catalog-control w-full bg-surface border border-line rounded-xl px-3 py-3 text-sm text-ink" aria-label="Filtrar por universo">
+            <option value="">Todos os universos</option>
+            <option value="games">Games</option><option value="anime">Anime</option><option value="heroes">Heróis</option>
+            <option value="rpg">RPG</option><option value="scifi">Ficção científica</option><option value="terror">Terror</option>
+            <option value="other">Outros</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="sr-only">Filtrar por tamanho</span>
+          <select id="catalogSize" class="catalog-control w-full bg-surface border border-line rounded-xl px-3 py-3 text-sm text-ink" aria-label="Filtrar por tamanho">
+            <option value="">Todos os tamanhos</option><option value="10">10 cm</option><option value="15">15 cm</option><option value="20">20 cm</option><option value="30">30 cm</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="sr-only">Filtrar por acabamento</span>
+          <select id="catalogFinish" class="catalog-control w-full bg-surface border border-line rounded-xl px-3 py-3 text-sm text-ink" aria-label="Filtrar por acabamento">
+            <option value="">Todos os acabamentos</option><option value="Sem pintura">Sem pintura</option><option value="Pintura básica">Pintura básica</option><option value="Pintura premium">Pintura premium</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="sr-only">Filtrar por preço inicial</span>
+          <select id="catalogPrice" class="catalog-control w-full bg-surface border border-line rounded-xl px-3 py-3 text-sm text-ink" aria-label="Filtrar por preço inicial">
+            <option value="">Qualquer preço inicial</option><option value="0-100">Até R$ 100</option><option value="100-200">R$ 100 a R$ 200</option><option value="200+">Acima de R$ 200</option><option value="quote">Sob consulta</option>
+          </select>
+        </label>
+      </div>
+      <p class="font-mono text-[10px] text-muted/80 mb-4">Tamanho e acabamento consideram as opções cadastradas no catálogo. O filtro de preço usa o preço inicial exibido.</p>
+      <div class="flex items-center justify-between gap-3 mb-6">
+        <p id="catalogResultCount" class="font-mono text-[11px] text-muted" aria-live="polite">4 produtos no catálogo</p>
+        <button type="button" id="clearCatalogFilter" class="hidden font-mono text-[10px] text-neon underline underline-offset-4 min-h-[40px] px-2">Limpar filtros</button>
+      </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 drops-grid" id="productGrid">
-      <article data-category="heroes" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
+      <article data-category="heroes" data-sizes="10,15,20,30" data-finishes="Sem pintura|Pintura básica|Pintura premium" data-price-min="89.90" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/deadpool.jpg" alt="Máscara Deadpool" width="600" height="600" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
-          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">LIMITED DROP</span>
+          <span class="absolute top-3 left-3 font-mono text-[10px] bg-neon text-bg px-2 py-0.5 font-semibold">SOB ENCOMENDA</span>
           <div class="prod-data absolute bottom-3 left-3 right-3 font-mono text-[10px] text-neon bg-bg/80 px-2 py-1.5 border border-neon/30">
             TAMANHOS: 10 A 30 CM · PLA PREMIUM
           </div>
@@ -700,7 +784,7 @@
           </div>
         </div>
       </article>
-      <article data-category="other" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
+      <article data-category="other" data-price-min="quote" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <i class="fa-solid fa-hat-wizard text-6xl text-purple/80" aria-hidden="true"></i>
           
@@ -723,7 +807,7 @@
           </div>
         </div>
       </article>
-      <article data-category="games" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
+      <article data-category="games" data-sizes="10,15,20,30" data-finishes="Sem pintura|Pintura básica|Pintura premium" data-price-min="89.90" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/kratos.jpg" alt="Kratos" width="600" height="600" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           
@@ -746,7 +830,7 @@
           </div>
         </div>
       </article>
-      <article data-category="heroes" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
+      <article data-category="heroes" data-sizes="10,15,20,30" data-finishes="Sem pintura|Pintura básica|Pintura premium" data-price-min="89.90" class="prod-card hud bg-surface border border-line overflow-hidden group flex flex-col">
         <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-[#2A1F42] to-[#120E1B] flex items-center justify-center">
           <img src="images/aranha.jpg" alt="Suporte Headset Homem-Aranha" width="600" height="600" loading="lazy" decoding="async" class="prod-img w-full h-full object-cover transition-transform duration-500" />
           
@@ -772,8 +856,8 @@
     </div>
     <div id="catalogEmpty" class="hidden mt-6 hud rounded-xl border border-line bg-surface p-6 text-center" role="status" aria-live="polite">
         <i class="fa-solid fa-cube text-3xl text-purple mb-3" aria-hidden="true"></i>
-        <p class="font-display font-semibold mb-1">Ainda não há peças publicadas neste universo.</p>
-        <p class="text-sm text-muted mb-4">Você pode consultar a disponibilidade ou iniciar um projeto personalizado.</p>
+        <p class="font-display font-semibold mb-1">Nenhum produto corresponde aos filtros.</p>
+        <p class="text-sm text-muted mb-4">Ajuste a busca ou limpe os filtros para ver os produtos disponíveis.</p>
         <a href="#configurador" class="btn-primary inline-flex items-center justify-center rounded-full px-5 py-3 text-xs font-semibold text-white">Criar meu projeto</a>
     </div>
   </div>
@@ -890,7 +974,7 @@
 
 <!-- O envio via site ainda não está integrado: o fluxo de atendimento encaminha o cliente ao WhatsApp para anexar o arquivo. -->
 <!-- ============ UPLOAD MODELO 3D ============ -->
-<section class="py-14 md:py-28 border-b border-line grid-bg">
+<section id="upload-modelo" class="py-14 md:py-28 border-b border-line grid-bg scroll-mt-20">
   <div class="max-w-4xl mx-auto px-5 md:px-8 text-center">
     <h2 class="font-display font-bold text-3xl md:text-4xl">Tem um modelo 3D?</h2>
     <p class="font-display font-bold text-3xl md:text-4xl text-purple mb-6">Mande para a gente.</p>
@@ -900,7 +984,7 @@
       <i class="fa-solid fa-cloud-arrow-up text-4xl text-purple mb-4"></i>
       <p class="font-mono text-sm mb-1" id="dzLabel" aria-live="polite">Selecione ou arraste seu arquivo aqui</p>
       <p class="font-mono text-[11px] text-muted mb-2">STL · OBJ · 3MF · até 100 MB</p>
-      <p class="text-xs text-muted max-w-lg mx-auto mb-6">O arquivo não é enviado automaticamente para o site. Ao continuar, você poderá anexá-lo à conversa do WhatsApp.</p>
+      <p class="text-xs text-muted max-w-lg mx-auto mb-6">O arquivo fica apenas no seu dispositivo. O site não o armazena: use o compartilhamento de arquivos compatível ou anexe-o manualmente no WhatsApp.</p>
       <input type="file" id="fileInput" accept=".stl,.obj,.3mf" class="sr-only" aria-label="Selecionar arquivo 3D">
       <div class="flex flex-wrap items-center justify-center gap-3">
         <button type="button" id="selectModelFile" class="btn-primary rounded-full px-7 py-3 font-semibold text-sm text-white">Selecionar meu modelo</button>
@@ -1376,12 +1460,13 @@
           </div>
 
           <dl class="space-y-2.5 font-mono text-xs text-muted py-4 border-b border-line">
+            <div class="flex justify-between"><dt>Quantidade</dt><dd class="text-ink">1 unidade</dd></div>
             <div class="flex justify-between"><dt>Peça</dt><dd class="text-ink">R$ <span id="checkoutResumoPreco">0,00</span></dd></div>
             <div class="flex justify-between"><dt>Frete</dt><dd id="checkoutResumoFreteLinha" class="text-ink">a calcular</dd></div>
           </dl>
 
           <div class="flex items-center justify-between py-4">
-            <span class="font-mono text-[11px] text-muted">TOTAL</span>
+            <span id="checkoutTotalLabel" class="font-mono text-[11px] text-muted">TOTAL DA PEÇA · FRETE PENDENTE</span>
             <span class="font-display font-bold text-3xl" id="checkoutResumoTotal">R$ 0,00</span>
           </div>
 
@@ -1427,6 +1512,7 @@
   const rotationButton = document.getElementById('toggleModelRotation');
   const resetCameraButton = document.getElementById('resetModelCamera');
   const modelFallback = document.getElementById('modelFallback');
+  const modelLoading = document.getElementById('modelLoading');
   if (heroModel && rotationButton) {
     if (reducedMotion) {
       heroModel.removeAttribute('auto-rotate');
@@ -1447,32 +1533,68 @@
       heroModel.cameraTarget = '0m 0.42m 0m';
       heroModel.fieldOfView = '24deg';
     });
-    heroModel.addEventListener('load', () => modelFallback?.classList.add('hidden'));
-    heroModel.addEventListener('error', () => modelFallback?.classList.remove('hidden'));
+    heroModel.addEventListener('load', () => { modelFallback?.classList.add('hidden'); modelLoading?.classList.add('hidden'); });
+    heroModel.addEventListener('error', () => { modelLoading?.classList.add('hidden'); modelFallback?.classList.remove('hidden'); });
   }
 
-  /* ---------- filtros por universo ---------- */
+  /* ---------- busca e filtros do catálogo ---------- */
   const products = [...document.querySelectorAll('#productGrid .prod-card')];
   const catalogEmpty = document.getElementById('catalogEmpty');
   const catalogFilterLabel = document.getElementById('catalogFilterLabel');
   const clearCatalogFilter = document.getElementById('clearCatalogFilter');
-  const filterLabels = { games:'GAMES', anime:'ANIME', rpg:'RPG', heroes:'HERÓIS', scifi:'SCI-FI', terror:'TERROR' };
-  function filtrarCatalogo(filtro = '') {
+  const catalogSearch = document.getElementById('catalogSearch');
+  const catalogCategory = document.getElementById('catalogCategory');
+  const catalogSize = document.getElementById('catalogSize');
+  const catalogFinish = document.getElementById('catalogFinish');
+  const catalogPrice = document.getElementById('catalogPrice');
+  const catalogResultCount = document.getElementById('catalogResultCount');
+  const filterLabels = { games:'GAMES', anime:'ANIME', rpg:'RPG', heroes:'HERÓIS', scifi:'FICÇÃO CIENTÍFICA', terror:'TERROR', other:'OUTROS' };
+  const normalizarBusca = (valor) => String(valor || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR').trim();
+
+  function filtrarCatalogo(filtroCategoria) {
+    if (typeof filtroCategoria === 'string') catalogCategory.value = filtroCategoria;
+    const categoria = catalogCategory.value;
+    const termo = normalizarBusca(catalogSearch.value);
+    const tamanho = catalogSize.value;
+    const acabamento = catalogFinish.value;
+    const faixaPreco = catalogPrice.value;
     let visiveis = 0;
+
     products.forEach(card => {
-      const mostrar = !filtro || card.dataset.category === filtro;
+      const texto = normalizarBusca(card.textContent);
+      const correspondeTexto = !termo || texto.includes(termo);
+      const correspondeCategoria = !categoria || card.dataset.category === categoria;
+      const tamanhos = (card.dataset.sizes || '').split(',').filter(Boolean);
+      const acabamentos = (card.dataset.finishes || '').split('|').filter(Boolean);
+      const preco = card.dataset.priceMin;
+      const correspondeTamanho = !tamanho || tamanhos.includes(tamanho);
+      const correspondeAcabamento = !acabamento || acabamentos.includes(acabamento);
+      let correspondePreco = true;
+      if (faixaPreco === 'quote') correspondePreco = preco === 'quote';
+      else if (faixaPreco) {
+        const valor = Number(preco);
+        if (!preco || preco === 'quote' || !Number.isFinite(valor)) correspondePreco = false;
+        else if (faixaPreco === '0-100') correspondePreco = valor <= 100;
+        else if (faixaPreco === '100-200') correspondePreco = valor > 100 && valor <= 200;
+        else if (faixaPreco === '200+') correspondePreco = valor > 200;
+      }
+      const mostrar = correspondeTexto && correspondeCategoria && correspondeTamanho && correspondeAcabamento && correspondePreco;
       card.classList.toggle('hidden', !mostrar);
       if (mostrar) visiveis++;
     });
+
     catalogEmpty?.classList.toggle('hidden', visiveis > 0);
-    catalogFilterLabel.textContent = filtro ? `UNIVERSO · ${filterLabels[filtro] || filtro.toUpperCase()}` : 'TODOS OS PRODUTOS';
+    if (catalogResultCount) catalogResultCount.textContent = `${visiveis} ${visiveis === 1 ? 'produto encontrado' : 'produtos encontrados'}`;
+    const filtrosAtivos = Boolean(categoria || termo || tamanho || acabamento || faixaPreco);
+    catalogFilterLabel.textContent = categoria ? `UNIVERSO · ${filterLabels[categoria] || categoria.toUpperCase()}` : (filtrosAtivos ? 'FILTROS APLICADOS' : 'TODOS OS PRODUTOS');
     catalogFilterLabel.classList.remove('hidden');
-    clearCatalogFilter?.classList.toggle('hidden', !filtro);
+    clearCatalogFilter?.classList.toggle('hidden', !filtrosAtivos);
     document.querySelectorAll('.cat-card[data-filter]').forEach(link => {
-      if (link.dataset.filter === filtro && filtro) link.setAttribute('aria-current', 'true');
+      if (link.dataset.filter === categoria && categoria) link.setAttribute('aria-current', 'true');
       else link.removeAttribute('aria-current');
     });
   }
+
   document.querySelectorAll('.cat-card[data-filter]').forEach(link => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
@@ -1480,7 +1602,19 @@
       document.getElementById('drops')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
-  clearCatalogFilter?.addEventListener('click', () => filtrarCatalogo());
+  [catalogSearch, catalogCategory, catalogSize, catalogFinish, catalogPrice].forEach(control => {
+    control?.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', () => filtrarCatalogo());
+  });
+  clearCatalogFilter?.addEventListener('click', () => {
+    catalogSearch.value = '';
+    catalogCategory.value = '';
+    catalogSize.value = '';
+    catalogFinish.value = '';
+    catalogPrice.value = '';
+    filtrarCatalogo('');
+    catalogSearch.focus();
+  });
+  filtrarCatalogo('');
 
   /* ---------- drops: seleciona o produto no configurador ---------- */
   function mostrarAvisoConfig(texto, produto) {
@@ -1554,6 +1688,9 @@
     state.modelIcon = btn.dataset.icon;
     state.character = null;
     state.characterImg = null;
+    state.size = null;
+    state.base = 0;
+    document.querySelectorAll('#sizeGroup .size-btn').forEach(b => { b.classList.remove('border-purple','bg-surface2'); b.setAttribute('aria-pressed','false'); });
 
     const step2 = document.getElementById('step2Container');
     const charGroup = document.getElementById('characterGroup');
@@ -1691,9 +1828,8 @@
     dzLabel.textContent = 'Selecione ou arraste seu arquivo aqui';
     sendModelFile.classList.add('hidden'); clearModelFile.classList.add('hidden');
   });
-  sendModelFile.addEventListener('click', async () => {
-    if (!arquivoModeloSelecionado) return;
-    const file = arquivoModeloSelecionado;
+  async function encaminharArquivoParaOrcamento(file) {
+    if (!file) return;
     const msg = `Olá! Gostaria de solicitar um orçamento para meu modelo 3D.
 Arquivo: ${file.name}
 Tamanho do arquivo: ${formatarTamanhoArquivo(file.size)}.
@@ -1709,9 +1845,10 @@ Vou anexar o arquivo nesta conversa para avaliação.`;
       }
     }
     window.open('https://wa.me/5547992624242?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
-  });
-  dropzone.addEventListener('drop', (e) => aceitarArquivo(e.dataTransfer.files[0]));
-  fileInput.addEventListener('change', () => aceitarArquivo(fileInput.files[0]));
+  }
+  sendModelFile.addEventListener('click', () => encaminharArquivoParaOrcamento(arquivoModeloSelecionado));
+  dropzone.addEventListener('drop', (e) => { if (e.dataTransfer?.files?.length) aceitarArquivo(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', () => aceitarArquivo(fileInput.files?.[0]));
 
   /* ---------- telefone / UF masks ---------- */
   const telefoneInput = document.getElementById('checkoutTel');
@@ -2188,8 +2325,12 @@ Vou anexar o arquivo nesta conversa para avaliação.`;
 
   function abrirCheckoutModal() {
     if (state.model === 'Personalizado') {
-      const msg = `Olá! Quero um orçamento para um modelo próprio (STL).${state.size ? ' Tamanho: ' + state.size + '.' : ''}${state.finish ? ' Acabamento: ' + state.finish + '.' : ''}`;
-      window.open('https://wa.me/5547992624242?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      if (arquivoModeloSelecionado) {
+        encaminharArquivoParaOrcamento(arquivoModeloSelecionado);
+      } else {
+        const msg = `Olá! Quero um orçamento para um projeto com modelo 3D próprio.${state.finish ? ' Acabamento desejado: ' + state.finish + '.' : ''} Posso enviar o arquivo ou uma referência para avaliação?`;
+        window.open('https://wa.me/5547992624242?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+      }
       return;
     }
     if (!state.model || (state.model !== 'Personalizado' && !state.character) || !state.size) {
@@ -2253,6 +2394,8 @@ Vou anexar o arquivo nesta conversa para avaliação.`;
     precoEl.textContent = brl(peca);
     freteEl.textContent = freteSel ? `R$ ${brl(frete)}` : 'a calcular';
     totalEl.textContent = `R$ ${brl(peca + frete)}`;
+    const totalLabel = document.getElementById('checkoutTotalLabel');
+    if (totalLabel) totalLabel.textContent = freteSel ? 'TOTAL COM FRETE' : 'TOTAL DA PEÇA · FRETE PENDENTE';
   }
   async function buscarFrete(cep) {
     const id = ++freteReq;
@@ -2324,7 +2467,13 @@ Vou anexar o arquivo nesta conversa para avaliação.`;
 
     const nome = document.getElementById('checkoutNome').value.trim();
     const email = document.getElementById('checkoutEmail').value.trim();
-    if (!nome || !email) return;
+    const telefone = document.getElementById('checkoutTel').value.replace(/\D/g, '');
+    const cep = document.getElementById('checkoutCep').value.replace(/\D/g, '');
+    if (nome.length < 2 || !email || telefone.length < 10 || cep.length !== 8) {
+      checkoutError.textContent = 'Confira nome, e-mail, telefone e CEP antes de continuar.';
+      checkoutError.classList.remove('hidden');
+      return;
+    }
 
     if (freteOpcoes.length && !freteSel) {
       checkoutError.textContent = 'Escolha uma opção de entrega.';
@@ -2445,11 +2594,11 @@ Vou anexar o arquivo nesta conversa para avaliação.`;
       } else if (statusAtual === 'pago' || statusAtual === 'sucesso' || statusAtual === 'approved') {
         icon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
         title.textContent = 'Pagamento aprovado! 🎉';
-        text.textContent = 'Recebemos seu pedido e já vamos começar a produção da sua peça. Você receberá atualizações por e-mail.';
+        text.textContent = 'O pagamento foi confirmado pelo servidor. Consulte “Meus pedidos” para acompanhar as próximas atualizações.';
       } else if (statusAtual === 'pendente' || statusAtual === 'in_process') {
         icon.innerHTML = '<i class="fa-solid fa-clock text-amber-400"></i>';
         title.textContent = 'Pagamento em análise';
-        text.textContent = 'Estamos aguardando a confirmação do Mercado Pago. Assim que for aprovado, iniciamos a produção da sua peça — isso pode levar algumas horas.';
+        text.textContent = 'O pagamento ainda não foi confirmado. Acompanhe o status em “Meus pedidos” e aguarde a atualização do servidor.';
       } else {
         icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
         title.textContent = 'Pagamento não concluído';
